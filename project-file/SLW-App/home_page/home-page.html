@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Smart Learning - Modern Education Platform</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(195, 198, 215, 0.3);
+        }
+        .hero-gradient {
+            background: radial-gradient(circle at top right, rgba(37, 99, 235, 0.1), transparent),
+                        radial-gradient(circle at bottom left, rgba(100, 94, 251, 0.05), transparent);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary": "#ffffff",
+                        "outline": "#737686",
+                        "surface-variant": "#e1e2ed",
+                        "background": "#faf8ff",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "inverse-on-surface": "#f0f0fb",
+                        "outline-variant": "#c3c6d7",
+                        "tertiary": "#943700",
+                        "surface-container-highest": "#e1e2ed",
+                        "surface-container-high": "#e7e7f3",
+                        "error": "#ba1a1a",
+                        "secondary": "#4b41e1",
+                        "error-container": "#ffdad6",
+                        "surface-container-low": "#f3f3fe",
+                        "on-primary": "#ffffff",
+                        "tertiary-container": "#bc4800",
+                        "on-surface": "#191b23",
+                        "on-secondary-fixed": "#0f0069",
+                        "inverse-primary": "#b4c5ff",
+                        "secondary-container": "#645efb",
+                        "tertiary-fixed-dim": "#ffb596",
+                        "on-secondary-container": "#fffbff",
+                        "secondary-fixed-dim": "#c3c0ff",
+                        "primary": "#004ac6",
+                        "on-background": "#191b23",
+                        "primary-container": "#2563eb",
+                        "surface-bright": "#faf8ff",
+                        "on-tertiary-container": "#ffede6",
+                        "on-primary-fixed": "#00174b",
+                        "secondary-fixed": "#e2dfff",
+                        "surface": "#faf8ff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-error": "#ffffff",
+                        "tertiary-fixed": "#ffdbcd",
+                        "on-primary-container": "#eeefff",
+                        "on-secondary-fixed-variant": "#3323cc",
+                        "on-tertiary-fixed": "#360f00",
+                        "on-tertiary-fixed-variant": "#7d2d00",
+                        "on-secondary": "#ffffff",
+                        "surface-tint": "#0053db",
+                        "on-surface-variant": "#434655",
+                        "on-error-container": "#93000a",
+                        "primary-fixed": "#dbe1ff",
+                        "surface-dim": "#d9d9e5",
+                        "surface-container": "#ededf9",
+                        "inverse-surface": "#2e3039"
+                    },
+                    "spacing": {
+                        "sm": "8px",
+                        "sidebar-width": "280px",
+                        "md": "16px",
+                        "gutter": "24px",
+                        "lg": "24px",
+                        "unit": "4px",
+                        "2xl": "64px",
+                        "xs": "4px",
+                        "xl": "40px",
+                        "container-max": "1440px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Inter"],
+                        "body-md": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "label-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "label-md": ["14px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "500"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background antialiased selection:bg-primary-container/30">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface/80 dark:bg-surface-dim/80 backdrop-blur-lg border-b border-outline-variant/20 shadow-sm">
+<div class="flex items-center justify-between px-gutter w-full max-w-container-max mx-auto h-16">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="menu_book">menu_book</span>
+<span class="font-headline-lg text-headline-lg font-bold text-primary dark:text-primary-fixed-dim">Smart Learning</span>
+</div>
+<nav class="hidden md:flex items-center gap-xl">
+<a class="text-primary font-bold border-b-2 border-primary py-1" href="#">Home</a>
+<a class="text-on-surface-variant hover:text-primary transition-all" href="#">Learn</a>
+<a class="text-on-surface-variant hover:text-primary transition-all" href="#">Exams</a>
+<a class="text-on-surface-variant hover:text-primary transition-all" href="#">Resources</a>
+</nav>
+<div class="flex items-center gap-md">
+<button class="hidden md:flex items-center px-md py-sm rounded-xl text-primary font-label-md hover:bg-surface-container-high transition-all">Log In</button>
+<div class="h-10 w-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container overflow-hidden border-2 border-white shadow-sm">
+<img alt="User avatar" class="w-full h-full object-cover" data-alt="A professional headshot of a friendly student for a user profile avatar. The subject is a young adult with a welcoming smile, set against a clean, softly blurred modern office background with blue-tinted lighting. The image style is polished, corporate, and optimistic, maintaining a high-key light-mode aesthetic for a modern learning application." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAPmJ7pU643D4289AC47lxgtOrFfOH2uyXZBHq2l_vnGl61xRhFqy-aIyesT_vBV-axhUMZNmE0QB-OUljJ_6B012y3PR0jTMNsDwH3rdcdmBpqVnrJcgK5tvM2ngVTNwbC6nTze-MUUKJO2_AJ9mHj9EP472NC_oxcYSqis7wP-vo8RKzy5VQOi8l9rQuj4oHGh8IKxeNCXWq9QvX43xlWpuRy5IlBS14krhBIwCczbdKc5RTu76WKFUlefFdZfdcpVUmpjU_j3YI"/>
+</div>
+</div>
+</div>
+</header>
+<main class="pt-16">
+<!-- Hero Section -->
+<section class="hero-gradient relative overflow-hidden py-2xl">
+<div class="max-w-container-max mx-auto px-gutter grid lg:grid-cols-2 gap-xl items-center">
+<div class="z-10 text-center lg:text-left">
+<span class="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary font-label-md mb-md border border-primary/20">The Future of Education</span>
+<h1 class="font-display-lg text-display-lg text-on-surface mb-md lg:pr-10">Smart Learning Platform for Modern Education</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-xl max-w-xl mx-auto lg:mx-0">Empower your academic journey with AI-driven analytics, interactive course management, and seamless exam experiences designed for the next generation.</p>
+<div class="flex flex-col sm:flex-row gap-md justify-center lg:justify-start">
+<button class="bg-primary text-white px-xl py-md rounded-xl font-headline-md shadow-lg shadow-primary/20 hover:brightness-110 active:scale-95 transition-all">Get Started</button>
+<button class="bg-white border border-outline-variant text-primary px-xl py-md rounded-xl font-headline-md hover:bg-surface-container-low active:scale-95 transition-all">Explore Courses</button>
+</div>
+</div>
+<div class="relative">
+<div class="absolute -top-10 -right-10 w-64 h-64 bg-secondary-container/20 rounded-full blur-3xl animate-pulse"></div>
+<div class="glass-card p-4 rounded-2xl shadow-2xl relative z-10 transform lg:rotate-3 hover:rotate-0 transition-transform duration-500">
+<img alt="Professional learning illustration" class="rounded-xl w-full" data-alt="A diverse group of university students collaborating in a bright, futuristic learning common space. They are interacting with sleek, translucent digital interfaces and laptops. The environment features high ceilings, glass walls, and a color palette of clean whites and vibrant blues. The lighting is bright and airy, creating a professional and focused educational atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhXEPy56JW9SVViJ13tMrw0V7ytEKAvySewcxR9O8RXUDucaZtKDFFehrJVulaFUBIvDlN5SCSzzuvL26QQZBWjyKyz9xrIWoOxadZQsJqoT7uSgZuTUcX8YYEogCpC4XwO2tZ8ltIG6gUGAbvmiSVy7CBqoZkQVKrLK04543HaSpyyGByj7D4iCntfedal9RQ0Lx1mKSiAPL4zelybrqL3pucReZD1rhneet8FFRjbsOMG7MBpOF24sjX_Vy_o_feCWkJAKbdVyc"/>
+</div>
+<div class="absolute -bottom-6 -left-6 glass-card p-6 rounded-xl shadow-lg z-20 hidden md:block">
+<div class="flex items-center gap-sm">
+<div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="trending_up">trending_up</span>
+</div>
+<div>
+<p class="text-on-surface font-bold">98% Success</p>
+<p class="text-on-surface-variant text-caption">Student performance rate</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Statistics Section -->
+<section class="py-xl bg-surface-container-lowest">
+<div class="max-w-container-max mx-auto px-gutter">
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-md md:gap-xl">
+<div class="glass-card p-lg rounded-2xl flex flex-col items-center text-center border-none shadow-sm hover:shadow-md transition-all">
+<span class="material-symbols-outlined text-primary text-4xl mb-sm" data-icon="groups">groups</span>
+<h3 class="font-headline-lg text-headline-lg text-primary">50k+</h3>
+<p class="font-label-md text-on-surface-variant">Active Students</p>
+</div>
+<div class="glass-card p-lg rounded-2xl flex flex-col items-center text-center border-none shadow-sm hover:shadow-md transition-all">
+<span class="material-symbols-outlined text-primary text-4xl mb-sm" data-icon="person_search">person_search</span>
+<h3 class="font-headline-lg text-headline-lg text-primary">1.2k+</h3>
+<p class="font-label-md text-on-surface-variant">Expert Teachers</p>
+</div>
+<div class="glass-card p-lg rounded-2xl flex flex-col items-center text-center border-none shadow-sm hover:shadow-md transition-all">
+<span class="material-symbols-outlined text-primary text-4xl mb-sm" data-icon="book_online">book_online</span>
+<h3 class="font-headline-lg text-headline-lg text-primary">450+</h3>
+<p class="font-label-md text-on-surface-variant">Modern Courses</p>
+</div>
+<div class="glass-card p-lg rounded-2xl flex flex-col items-center text-center border-none shadow-sm hover:shadow-md transition-all">
+<span class="material-symbols-outlined text-primary text-4xl mb-sm" data-icon="verified">verified</span>
+<h3 class="font-headline-lg text-headline-lg text-primary">10M+</h3>
+<p class="font-label-md text-on-surface-variant">Exams Conducted</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Features Bento Grid -->
+<section class="py-2xl bg-background">
+<div class="max-w-container-max mx-auto px-gutter">
+<div class="text-center mb-2xl">
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-sm">Everything You Need to Excel</h2>
+<p class="text-on-surface-variant font-body-md max-w-2xl mx-auto">Our platform integrates specialized tools to manage the entire learning lifecycle for students and educators alike.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-lg h-full">
+<!-- Feature 1: Online Exams -->
+<div class="md:col-span-2 group relative overflow-hidden bg-white rounded-2xl border border-outline-variant/30 p-lg hover:shadow-xl transition-all h-[400px]">
+<div class="flex flex-col h-full">
+<span class="material-symbols-outlined text-secondary text-5xl mb-md" data-icon="quiz">quiz</span>
+<h3 class="font-headline-md text-headline-md mb-sm">Online Exams</h3>
+<p class="text-on-surface-variant font-body-md mb-md max-w-md">Secure, robust, and proctored examination environments. Supports multiple formats including MCQ, theory, and coding challenges.</p>
+<div class="mt-auto flex gap-sm">
+<span class="px-3 py-1 rounded-full bg-secondary-container/10 text-secondary-container text-caption font-bold">Secure Proctored</span>
+<span class="px-3 py-1 rounded-full bg-secondary-container/10 text-secondary-container text-caption font-bold">Real-time Feedback</span>
+</div>
+</div>
+<img alt="Exam dashboard" class="absolute bottom-0 right-0 w-2/3 translate-y-12 translate-x-12 rounded-tl-2xl shadow-2xl group-hover:translate-y-4 transition-transform duration-500" data-alt="A high-tech digital exam interface showing interactive graphs, multiple-choice questions, and a timer. The screen is displayed on a sleek laptop on a clean white desk, surrounded by minimalist stationery. The lighting is bright and professional, emphasizing a modern and secure testing environment with a palette of crisp whites and primary blues." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAyoJeqr5lTKmHpavGR-RNxMJexXw3dv-jm5zwifGlbq26IDLThcqdRRgPHDlxptSdWSEiSNm9xMRGnOlN7hnLMOCHkEVqlbIx0o7FTGychBNSrzGDPdNrvbswO0oI9TxoGMD-IwKTIPvEJWcKlVYIU2-aqAuqgA7Aa7hm1Q1DNEJZJKGG9kV41rZmbXpGUuaAipv1uL1vE7CQ43vyyXtQdJ9KmSy4gFIVkid1Exz7jwD50eoUV1sN0qO6996x9yrmu11VfLu5EImg"/>
+</div>
+<!-- Feature 2: Performance Tracking -->
+<div class="bg-primary text-white rounded-2xl p-lg flex flex-col justify-between hover:shadow-xl hover:shadow-primary/20 transition-all">
+<div>
+<span class="material-symbols-outlined text-4xl mb-md" data-icon="analytics">analytics</span>
+<h3 class="font-headline-md text-headline-md mb-sm text-white">Performance Tracking</h3>
+<p class="text-primary-fixed-dim font-body-md">Visualize your growth with detailed analytics and predictive scoring powered by AI.</p>
+</div>
+<div class="mt-xl h-24 bg-white/10 rounded-xl flex items-end p-4 gap-2">
+<div class="w-full bg-white/40 h-[20%] rounded-t-sm"></div>
+<div class="w-full bg-white/60 h-[45%] rounded-t-sm"></div>
+<div class="w-full bg-white/80 h-[75%] rounded-t-sm"></div>
+<div class="w-full bg-white h-[90%] rounded-t-sm"></div>
+</div>
+</div>
+<!-- Feature 3: Course Management -->
+<div class="glass-card rounded-2xl p-lg border-outline-variant/50 hover:border-primary transition-all">
+<span class="material-symbols-outlined text-primary text-4xl mb-md" data-icon="school">school</span>
+<h3 class="font-headline-md text-headline-md mb-sm">Course Management</h3>
+<p class="text-on-surface-variant font-body-md">Syllabus tracking, deadline reminders, and centralized content delivery for every subject.</p>
+</div>
+<!-- Feature 4: Study Resources -->
+<div class="glass-card rounded-2xl p-lg border-outline-variant/50 hover:border-primary transition-all">
+<span class="material-symbols-outlined text-primary text-4xl mb-md" data-icon="folder_open">folder_open</span>
+<h3 class="font-headline-md text-headline-md mb-sm">Study Resources</h3>
+<p class="text-on-surface-variant font-body-md">Unlimited access to digital libraries, lecture notes, and video recordings 24/7.</p>
+</div>
+<!-- Feature 5: Smart Notifications -->
+<div class="glass-card rounded-2xl p-lg border-outline-variant/50 hover:border-primary transition-all">
+<span class="material-symbols-outlined text-primary text-4xl mb-md" data-icon="notifications_active">notifications_active</span>
+<h3 class="font-headline-md text-headline-md mb-sm">Smart Notifications</h3>
+<p class="text-on-surface-variant font-body-md">Never miss a class or a submission with context-aware push alerts and email sync.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- FAQ Section -->
+<section class="py-2xl bg-surface-container-low">
+<div class="max-w-container-max mx-auto px-gutter grid lg:grid-cols-2 gap-2xl">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-md">Got Questions? We have answers.</h2>
+<p class="text-on-surface-variant font-body-md mb-xl">Everything you need to know about the Smart Learning platform and how it can revolutionize your educational experience.</p>
+<button class="flex items-center gap-sm text-primary font-bold hover:underline">
+                        Visit Help Center <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+<div class="space-y-md">
+<div class="glass-card p-md rounded-xl cursor-pointer hover:bg-white transition-all group">
+<div class="flex items-center justify-between">
+<h4 class="font-headline-md text-body-md font-semibold">Is the platform accessible on mobile?</h4>
+<span class="material-symbols-outlined text-outline group-hover:text-primary" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+<div class="glass-card p-md rounded-xl cursor-pointer hover:bg-white transition-all group">
+<div class="flex items-center justify-between">
+<h4 class="font-headline-md text-body-md font-semibold">How secure are the online exams?</h4>
+<span class="material-symbols-outlined text-outline group-hover:text-primary" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+<div class="glass-card p-md rounded-xl cursor-pointer hover:bg-white transition-all group">
+<div class="flex items-center justify-between">
+<h4 class="font-headline-md text-body-md font-semibold">Can institutions customize the portal?</h4>
+<span class="material-symbols-outlined text-outline group-hover:text-primary" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+<div class="glass-card p-md rounded-xl cursor-pointer hover:bg-white transition-all group">
+<div class="flex items-center justify-between">
+<h4 class="font-headline-md text-body-md font-semibold">What kind of support do you provide?</h4>
+<span class="material-symbols-outlined text-outline group-hover:text-primary" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Testimonials -->
+<section class="py-2xl bg-background overflow-hidden">
+<div class="max-w-container-max mx-auto px-gutter">
+<div class="text-center mb-2xl">
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-sm">Hear from our students</h2>
+</div>
+<div class="flex flex-nowrap gap-lg animate-marquee lg:justify-center">
+<div class="min-w-[320px] max-w-[320px] glass-card p-lg rounded-2xl shadow-sm">
+<div class="flex gap-1 text-tertiary mb-md">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="text-on-surface font-body-md mb-lg">"The exam interface is so clean. I felt much less stressed during my finals than I usually do with paper exams."</p>
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-surface-container-high"></div>
+<div>
+<p class="text-on-surface font-bold">Sarah Jenkins</p>
+<p class="text-on-surface-variant text-caption">Computer Science Student</p>
+</div>
+</div>
+</div>
+<div class="min-w-[320px] max-w-[320px] glass-card p-lg rounded-2xl shadow-sm border-primary/20 bg-primary/5">
+<div class="flex gap-1 text-tertiary mb-md">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="text-on-surface font-body-md mb-lg">"Performance tracking helped me identify that I needed to work on Calculus. My grades improved by 20% in one semester."</p>
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-surface-container-high"></div>
+<div>
+<p class="text-on-surface font-bold">Michael Chen</p>
+<p class="text-on-surface-variant text-caption">Engineering Student</p>
+</div>
+</div>
+</div>
+<div class="min-w-[320px] max-w-[320px] glass-card p-lg rounded-2xl shadow-sm">
+<div class="flex gap-1 text-tertiary mb-md">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="text-on-surface font-body-md mb-lg">"The resource library is a game changer. All my notes and videos are in one place, searchable and organized."</p>
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-surface-container-high"></div>
+<div>
+<p class="text-on-surface font-bold">Elena Rodriguez</p>
+<p class="text-on-surface-variant text-caption">Business Management</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="py-2xl">
+<div class="max-w-container-max mx-auto px-gutter">
+<div class="bg-primary-container rounded-3xl p-xl text-center relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-br from-primary via-secondary to-primary-container opacity-90"></div>
+<div class="relative z-10">
+<h2 class="font-display-lg text-display-lg text-white mb-md">Ready to start learning?</h2>
+<p class="text-on-primary-container font-body-lg mb-xl max-w-2xl mx-auto opacity-90">Join thousands of students and teachers who are already using Smart Learning to shape their future.</p>
+<button class="bg-white text-primary px-2xl py-md rounded-xl font-headline-md shadow-xl hover:bg-surface-container-lowest transition-all">Create Free Account</button>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest dark:bg-surface-dim w-full py-12 border-t border-outline-variant">
+<div class="max-w-container-max mx-auto px-gutter grid grid-cols-1 md:grid-cols-3 gap-lg">
+<div>
+<div class="flex items-center gap-sm mb-md">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="menu_book">menu_book</span>
+<span class="font-headline-md text-headline-md text-primary">Smart Learning</span>
+</div>
+<p class="text-on-surface-variant font-body-md mb-md">Advancing global education through innovative technology and student-centric design.</p>
+<div class="flex gap-md">
+<a class="text-outline hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined">public</span></a>
+<a class="text-outline hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined">alternate_email</span></a>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-md">
+<div class="flex flex-col gap-sm">
+<h4 class="font-bold text-on-surface mb-sm">Platform</h4>
+<a class="text-on-surface-variant hover:text-primary font-caption" href="#">Courses</a>
+<a class="text-on-surface-variant hover:text-primary font-caption" href="#">Exams</a>
+<a class="text-on-surface-variant hover:text-primary font-caption" href="#">Pricing</a>
+</div>
+<div class="flex flex-col gap-sm">
+<h4 class="font-bold text-on-surface mb-sm">Support</h4>
+<a class="text-on-surface-variant hover:text-primary font-caption" href="#">Help Center</a>
+<a class="text-on-surface-variant hover:text-primary font-caption" href="#">Contact</a>
+<a class="text-on-surface-variant hover:text-primary font-caption" href="#">Privacy Policy</a>
+</div>
+</div>
+<div>
+<h4 class="font-bold text-on-surface mb-sm">Subscribe to Updates</h4>
+<div class="flex gap-sm">
+<input class="bg-surface-container px-md py-sm rounded-xl border-none focus:ring-2 focus:ring-primary w-full" placeholder="Email address" type="email"/>
+<button class="bg-primary text-white p-sm rounded-xl"><span class="material-symbols-outlined">arrow_forward</span></button>
+</div>
+<p class="text-outline font-caption mt-xl">© 2024 Smart Learning. All rights reserved.</p>
+</div>
+</div>
+</footer>
+<!-- BottomNavBar (Mobile) -->
+<nav class="lg:hidden fixed bottom-0 left-0 w-full z-50 bg-surface/90 dark:bg-surface-dim/90 backdrop-blur-md border-t border-outline-variant/30 shadow-[0_-4px_20px_rgba(0,0,0,0.05)] flex justify-around items-center px-4 py-2 pb-safe">
+<a class="flex flex-col items-center justify-center bg-primary-container/30 text-primary rounded-xl px-4 py-1" href="#">
+<span class="material-symbols-outlined" data-icon="home" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-label-md text-label-md">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined" data-icon="menu_book">menu_book</span>
+<span class="font-label-md text-label-md">Learn</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined" data-icon="quiz">quiz</span>
+<span class="font-label-md text-label-md">Exams</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-label-md text-label-md">Profile</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined" data-icon="more_horiz">more_horiz</span>
+<span class="font-label-md text-label-md">Menu</span>
+</a>
+</nav>
+<script>
+        // Micro-interactions for glass cards
+        document.querySelectorAll('.glass-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-4px)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0px)';
+            });
+        });
+    </script>
+</body></html>

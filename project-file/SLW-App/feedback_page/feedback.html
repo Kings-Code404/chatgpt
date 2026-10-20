@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Feedback - Smart Learning</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary": "#ffffff",
+                    "outline": "#737686",
+                    "surface-variant": "#e1e2ed",
+                    "background": "#faf8ff",
+                    "primary-fixed-dim": "#b4c5ff",
+                    "on-primary-fixed-variant": "#003ea8",
+                    "inverse-on-surface": "#f0f0fb",
+                    "outline-variant": "#c3c6d7",
+                    "tertiary": "#943700",
+                    "surface-container-highest": "#e1e2ed",
+                    "surface-container-high": "#e7e7f3",
+                    "error": "#ba1a1a",
+                    "secondary": "#4b41e1",
+                    "error-container": "#ffdad6",
+                    "surface-container-low": "#f3f3fe",
+                    "on-primary": "#ffffff",
+                    "tertiary-container": "#bc4800",
+                    "on-surface": "#191b23",
+                    "on-secondary-fixed": "#0f0069",
+                    "inverse-primary": "#b4c5ff",
+                    "secondary-container": "#645efb",
+                    "tertiary-fixed-dim": "#ffb596",
+                    "on-secondary-container": "#fffbff",
+                    "secondary-fixed-dim": "#c3c0ff",
+                    "primary": "#004ac6",
+                    "on-background": "#191b23",
+                    "primary-container": "#2563eb",
+                    "surface-bright": "#faf8ff",
+                    "on-tertiary-container": "#ffede6",
+                    "on-primary-fixed": "#00174b",
+                    "secondary-fixed": "#e2dfff",
+                    "surface": "#faf8ff",
+                    "surface-container-lowest": "#ffffff",
+                    "on-error": "#ffffff",
+                    "tertiary-fixed": "#ffdbcd",
+                    "on-primary-container": "#eeefff",
+                    "on-secondary-fixed-variant": "#3323cc",
+                    "on-tertiary-fixed": "#360f00",
+                    "on-tertiary-fixed-variant": "#7d2d00",
+                    "on-secondary": "#ffffff",
+                    "surface-tint": "#0053db",
+                    "on-surface-variant": "#434655",
+                    "on-error-container": "#93000a",
+                    "primary-fixed": "#dbe1ff",
+                    "surface-dim": "#d9d9e5",
+                    "surface-container": "#ededf9",
+                    "inverse-surface": "#2e3039"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "sm": "8px",
+                    "sidebar-width": "280px",
+                    "md": "16px",
+                    "gutter": "24px",
+                    "lg": "24px",
+                    "unit": "4px",
+                    "2xl": "64px",
+                    "xs": "4px",
+                    "xl": "40px",
+                    "container-max": "1440px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Inter"],
+                    "body-md": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "display-lg-mobile": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "caption": ["Inter"],
+                    "label-md": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "display-lg-mobile": ["36px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "caption": ["12px", {"lineHeight": "1.4", "fontWeight": "400"}],
+                    "label-md": ["14px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .star-active {
+            font-variation-settings: 'FILL' 1 !important;
+            color: #004ac6 !important;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(195, 198, 215, 0.3);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md min-h-screen pb-20 lg:pb-0">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface/80 dark:bg-surface-dim/80 backdrop-blur-lg bg-surface/10 border-b border-outline-variant/20 shadow-sm">
+<div class="flex items-center justify-between px-gutter w-full max-w-container-max mx-auto h-16">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed-dim">menu_book</span>
+<span class="font-headline-lg text-headline-lg font-bold text-primary dark:text-primary-fixed-dim">Smart Learning</span>
+</div>
+<div class="flex items-center gap-md">
+<div class="hidden md:flex gap-lg mr-md">
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-outline hover:text-primary transition-all duration-300" href="#">Dashboard</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-outline hover:text-primary transition-all duration-300" href="#">Courses</a>
+<a class="font-label-md text-label-md text-primary dark:text-primary-fixed-dim font-bold border-b-2 border-primary" href="#">Feedback</a>
+</div>
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center overflow-hidden border-2 border-primary/20">
+<img alt="User avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCcEYoakonveEHD7XWEwhf3d2SweEVEVrQ4KCM_HgZh1ofFczBSvEDq7QZAhVq0ekYf6mA5nJcHrBvBI6d5AWHx5okswU4G-S3-FiKJqb2x5FXac61mw22YCVi-tfIdWnNHpmDswnpWFo6xWD2eGr9FAwnLXDH4Lh8iuTcZthD5vDWyTYNUfdS82HgZucYEVUvnf2PLaDh8TmYDJJfmSGKCnZxCqdRMFV8nDnYhli9oaRDmrJ9nrhLCkO_CBrVWpm1bXdWp8USwm2A"/>
+</div>
+</div>
+</div>
+</header>
+<!-- NavigationDrawer (Desktop Only) -->
+<aside class="hidden lg:flex flex-col p-md gap-sm fixed left-0 top-0 h-full w-sidebar-width bg-surface-container-low/90 backdrop-blur-md shadow-lg z-40 pt-20">
+<div class="mb-lg px-md">
+<h3 class="font-headline-md text-headline-md font-bold text-primary">Academic Portal</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Welcome back, Student</p>
+</div>
+<nav class="flex flex-col gap-sm">
+<a class="flex items-center gap-md text-on-surface-variant hover:bg-surface-container-high rounded-xl px-md py-sm hover:translate-x-1 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-md text-on-surface-variant hover:bg-surface-container-high rounded-xl px-md py-sm hover:translate-x-1 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined">school</span>
+<span>Courses</span>
+</a>
+<a class="flex items-center gap-md text-on-surface-variant hover:bg-surface-container-high rounded-xl px-md py-sm hover:translate-x-1 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined">assignment</span>
+<span>Exams</span>
+</a>
+<a class="flex items-center gap-md text-on-surface-variant hover:bg-surface-container-high rounded-xl px-md py-sm hover:translate-x-1 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined">folder_open</span>
+<span>Resources</span>
+</a>
+<a class="flex items-center gap-md bg-primary-container text-on-primary-container rounded-xl px-md py-sm border-l-4 border-primary" href="#">
+<span class="material-symbols-outlined">feedback</span>
+<span>Feedback</span>
+</a>
+<a class="flex items-center gap-md text-on-surface-variant hover:bg-surface-container-high rounded-xl px-md py-sm hover:translate-x-1 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span>Settings</span>
+</a>
+</nav>
+</aside>
+<!-- Main Content Area -->
+<main class="lg:ml-sidebar-width pt-24 px-gutter pb-xl max-w-container-max mx-auto">
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-lg">
+<!-- Hero / Intro Section -->
+<section class="xl:col-span-12 mb-md">
+<h1 class="font-display-lg text-display-lg mb-sm">Share Your Thoughts</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">Help us evolve the Smart Learning experience. Your feedback directly shapes the future of our courses and interface.</p>
+</section>
+<!-- Feedback Submission Card -->
+<section class="xl:col-span-5">
+<div class="glass-card rounded-xl p-xl shadow-sm sticky top-24">
+<h2 class="font-headline-md text-headline-md mb-lg">Submit Feedback</h2>
+<form class="flex flex-col gap-lg" id="feedbackForm">
+<!-- Rating System -->
+<div class="flex flex-col gap-sm">
+<label class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">How was your experience?</label>
+<div class="flex gap-sm" id="starRating">
+<button class="star-btn hover:scale-110 transition-transform" data-value="1" type="button"><span class="material-symbols-outlined text-4xl text-outline-variant">star</span></button>
+<button class="star-btn hover:scale-110 transition-transform" data-value="2" type="button"><span class="material-symbols-outlined text-4xl text-outline-variant">star</span></button>
+<button class="star-btn hover:scale-110 transition-transform" data-value="3" type="button"><span class="material-symbols-outlined text-4xl text-outline-variant">star</span></button>
+<button class="star-btn hover:scale-110 transition-transform" data-value="4" type="button"><span class="material-symbols-outlined text-4xl text-outline-variant">star</span></button>
+<button class="star-btn hover:scale-110 transition-transform" data-value="5" type="button"><span class="material-symbols-outlined text-4xl text-outline-variant">star</span></button>
+</div>
+</div>
+<!-- Category -->
+<div class="flex flex-col gap-sm">
+<label class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider" for="category">Topic</label>
+<select class="w-full h-12 bg-surface-container-lowest border border-outline-variant rounded-lg px-md text-body-md focus:ring-2 focus:ring-primary focus:border-primary transition-all appearance-none outline-none" id="category">
+<option value="Course Quality">Course Content</option>
+<option value="Platform Speed">User Interface</option>
+<option value="Instructor Support">Support &amp; Mentorship</option>
+<option value="Technical Bug">Technical Issue</option>
+<option value="Other">Other</option>
+</select>
+</div>
+<!-- Textarea -->
+<div class="flex flex-col gap-sm">
+<label class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider" for="comment">Detailed Comments</label>
+<textarea class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg p-md text-body-md focus:ring-2 focus:ring-primary focus:border-primary transition-all outline-none resize-none" id="comment" placeholder="Tell us more about what you liked or how we can improve..." rows="5"></textarea>
+</div>
+<button class="w-full bg-gradient-to-r from-primary to-secondary text-on-primary py-md rounded-xl font-label-md text-lg shadow-lg hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-sm" type="submit">
+                            Submit Feedback
+                            <span class="material-symbols-outlined">send</span>
+</button>
+</form>
+</div>
+</section>
+<!-- History / Recent Feedback -->
+<section class="xl:col-span-7 flex flex-col gap-md">
+<div class="flex items-center justify-between mb-sm">
+<h2 class="font-headline-md text-headline-md">Recent Submissions</h2>
+<div class="flex items-center gap-xs text-primary font-label-md cursor-pointer hover:underline">
+<span>Filter By</span>
+<span class="material-symbols-outlined text-sm">filter_list</span>
+</div>
+</div>
+<div class="grid grid-cols-1 gap-md" id="feedbackHistory">
+<!-- Item 1 -->
+<div class="bg-surface-container-lowest border border-outline-variant/30 p-lg rounded-xl shadow-sm hover:-translate-y-1 transition-all duration-300">
+<div class="flex justify-between items-start mb-md">
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 rounded-full overflow-hidden bg-surface-container-high">
+<img alt="User avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQVEVPb9rTZv99dSI8ztUea613P5dUrRjJniumQFcuhKkHN7sVWbKVWe-74w1tHtvPXl0D63JLEXhiE3wFb4LGOvY_-C2ZygpdZeltRdTK7d-ObGj4ViGprVPX6djmhRKmcpTUbgblYeFdDo1vYJ0Y61x71h4WQvgRcSJm5A92knmdnV6fI-ir9iNR_b64Erc3SHdOHaLKqG0H0dTkHCXhFKedgkqqTJnuIsXwFlIQYidjVPsqo0RHgOvateZKRB50t3ntqZB4ksw"/>
+</div>
+<div>
+<h4 class="font-headline-md text-body-lg font-bold">Felix Anderson</h4>
+<p class="font-caption text-caption text-outline">2 hours ago • Course Quality</p>
+</div>
+</div>
+<div class="flex text-primary">
+<span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</div>
+<p class="text-on-surface-variant font-body-md leading-relaxed">
+                            The advanced React course was incredible. The practical labs really helped solidify my understanding of state management. I'd love to see more content on server-side rendering!
+                        </p>
+</div>
+<!-- Item 2 -->
+<div class="bg-surface-container-lowest border border-outline-variant/30 p-lg rounded-xl shadow-sm hover:-translate-y-1 transition-all duration-300">
+<div class="flex justify-between items-start mb-md">
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 rounded-full overflow-hidden bg-surface-container-high">
+<img alt="User avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJdt-_d2qPBC6WQK72fw5fEzL7ItXCSKUjNjJmYEry1zsIYnlxSaTYmlQBg0aKi4gTHPrVigH6NLQhdwtk7EO7GszQrZaD8YGCn5tlBoG1kMN90dV_WcEuRgVDkM8UfU3RteAYoJqeLYOrqtcm2mYV6wxmYpeMU-CU75p7uKIG9c6N4n902Ed_D1uaF9Yp134LPc4NmCwt39EyWHknvvBYu6lCtKJBts73jz5CHCfNEQZQ0XwDIs2GT_15ODI2g-6FzbGI8U_SebI"/>
+</div>
+<div>
+<h4 class="font-headline-md text-body-lg font-bold">Sara Jenkins</h4>
+<p class="font-caption text-caption text-outline">Yesterday • Platform Speed</p>
+</div>
+</div>
+<div class="flex text-primary">
+<span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-lg">star</span>
+</div>
+</div>
+<p class="text-on-surface-variant font-body-md leading-relaxed">
+                            Overall experience is great, but I noticed a bit of lag when switching between video lessons on the mobile app. The desktop version is lightning fast though!
+                        </p>
+</div>
+<!-- Item 3 -->
+<div class="bg-surface-container-lowest border border-outline-variant/30 p-lg rounded-xl shadow-sm hover:-translate-y-1 transition-all duration-300">
+<div class="flex justify-between items-start mb-md">
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 rounded-full overflow-hidden bg-surface-container-high">
+<img alt="User avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvsqPV1fPjWzUrIJ0F9a7KS8v0U5YMXrCCO7m7lGJ6ISQ-7yguaeGm4Qg4OrpHEBazIr5QgT8uJy70QgY7CpzT75EDMFqXPvZayzGZFAqUENlIWtiU3Ct2BF5idMJvYEgKKMIQwvnjmFZjngf6KkxyHH9aT5gYgJFQg2KN_Im4lFTnN6rpgz-OtvclIx2qFYtTGIg1anBgtZ4EdLePk105jb3U4P0lFCvIuc-OHMPzcbzQ9mH0Qvocsg_s1p_aGr1I2J3ibqcrssY"/>
+</div>
+<div>
+<h4 class="font-headline-md text-body-lg font-bold">Marcus Thorne</h4>
+<p class="font-caption text-caption text-outline">3 days ago • User Interface</p>
+</div>
+</div>
+<div class="flex text-primary">
+<span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</div>
+<p class="text-on-surface-variant font-body-md leading-relaxed">
+                            Love the new glassmorphic design update! It makes the workspace feel so much more modern and less cluttered compared to the old portal.
+                        </p>
+</div>
+</div>
+<div class="w-full h-48 rounded-xl relative overflow-hidden group">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="A bright and airy co-working space with large windows and plants, where a diverse group of students is collaborating on digital learning projects. The aesthetic is clean and modern, featuring soft high-key lighting that emphasizes a productive yet calm academic environment. The color scheme focuses on soft whites and vibrant blue accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDM2-m94lNrrtOPlF7idvgEUxthf62AzJvOsepqzUt8VMzh2oulez_Q4hSxkUIzRZMI7zBNziH3Ix4aiLKqPQkcMqQ1oXZWFGgIrtu5_uBcMchyrO1fsuLUzMd9PRGLrBE_uSIDfe0INOpzyprgKo0mrBUts-Q1X41HjMgwVM0WXPgT-Q774ghS9i0WyD_EHNYEKvUawe8vsk_8fEddckmROA_HJuOG_CSiHTQTs2ypMXmYRyqgxNaJSegRwkyPil1JuHQdrkSK2pg"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/60 to-transparent flex flex-col justify-end p-lg">
+<span class="text-on-primary font-bold text-lg">Community Impact</span>
+<p class="text-on-primary/90 text-sm">94% of user-suggested features were implemented in 2024.</p>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="lg:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-4 py-2 pb-safe bg-surface/90 dark:bg-surface-dim/90 backdrop-blur-md border-t border-outline-variant/30 shadow-[0_-4px_20px_rgba(0,0,0,0.05)] z-50 rounded-t-xl">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-primary/10 transition-colors" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-md text-label-md">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-primary/10 transition-colors" href="#">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="font-label-md text-label-md">Learn</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-primary/10 transition-colors" href="#">
+<span class="material-symbols-outlined">quiz</span>
+<span class="font-label-md text-label-md">Exams</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container/30 text-primary rounded-xl px-4 py-1" href="#">
+<span class="material-symbols-outlined">feedback</span>
+<span class="font-label-md text-label-md">Feedback</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-primary/10 transition-colors" href="#">
+<span class="material-symbols-outlined">more_horiz</span>
+<span class="font-label-md text-label-md">Menu</span>
+</a>
+</nav>
+<!-- Footer -->
+<footer class="lg:ml-sidebar-width bg-surface-container-lowest dark:bg-surface-dim border-t border-outline-variant w-full py-12">
+<div class="max-w-container-max mx-auto px-gutter grid grid-cols-1 md:grid-cols-3 gap-lg">
+<div>
+<span class="font-headline-md text-headline-md text-primary mb-md block">Smart Learning</span>
+<p class="font-caption text-caption text-outline">Empowering minds through innovative education technology and collaborative learning ecosystems.</p>
+</div>
+<div class="flex flex-col gap-sm">
+<span class="font-label-md text-on-surface font-bold uppercase mb-sm">Resources</span>
+<a class="font-caption text-on-surface-variant hover:text-primary transition-opacity duration-200" href="#">Privacy Policy</a>
+<a class="font-caption text-on-surface-variant hover:text-primary transition-opacity duration-200" href="#">Terms of Service</a>
+<a class="font-caption text-on-surface-variant hover:text-primary transition-opacity duration-200" href="#">Help Center</a>
+<a class="font-caption text-on-surface-variant hover:text-primary transition-opacity duration-200" href="#">Contact</a>
+</div>
+<div class="flex flex-col gap-md">
+<span class="font-label-md text-on-surface font-bold uppercase">Stay Updated</span>
+<div class="flex gap-sm">
+<input class="bg-surface border border-outline-variant rounded-lg px-md py-xs text-sm outline-none flex-grow" placeholder="Email address" type="email"/>
+<button class="bg-primary text-on-primary px-md py-xs rounded-lg text-sm font-bold">Join</button>
+</div>
+<p class="font-caption text-outline">© 2024 Smart Learning. All rights reserved.</p>
+</div>
+</div>
+</footer>
+<script>
+        // Interactive Star Rating
+        const starBtn = document.querySelectorAll('.star-btn');
+        let selectedRating = 0;
+
+        starBtn.forEach(btn => {
+            btn.addEventListener('click', () => {
+                selectedRating = btn.getAttribute('data-value');
+                updateStars(selectedRating);
+            });
+
+            btn.addEventListener('mouseenter', () => {
+                const hoverValue = btn.getAttribute('data-value');
+                updateStars(hoverValue);
+            });
+
+            btn.addEventListener('mouseleave', () => {
+                updateStars(selectedRating);
+            });
+        });
+
+        function updateStars(value) {
+            starBtn.forEach(btn => {
+                const icon = btn.querySelector('.material-symbols-outlined');
+                if (btn.getAttribute('data-value') <= value) {
+                    icon.classList.add('star-active');
+                } else {
+                    icon.classList.remove('star-active');
+                }
+            });
+        }
+
+        // Form Submission Interaction
+        const form = document.getElementById('feedbackForm');
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const originalContent = submitBtn.innerHTML;
+            
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="material-symbols-outlined animate-spin">sync</span> Sending...';
+            
+            // Artificial delay for feedback
+            setTimeout(() => {
+                submitBtn.innerHTML = '<span class="material-symbols-outlined">check_circle</span> Sent!';
+                submitBtn.classList.remove('from-primary', 'to-secondary');
+                submitBtn.classList.add('bg-green-600');
+                
+                // Reset form after short wait
+                setTimeout(() => {
+                    form.reset();
+                    selectedRating = 0;
+                    updateStars(0);
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalContent;
+                    submitBtn.classList.add('from-primary', 'to-secondary');
+                    submitBtn.classList.remove('bg-green-600');
+                    alert('Thank you for your feedback! We have received your submission.');
+                }, 2000);
+            }, 1200);
+        });
+
+        // Simple animation for list items
+        document.addEventListener('DOMContentLoaded', () => {
+            const items = document.querySelectorAll('#feedbackHistory > div');
+            items.forEach((item, index) => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(10px)';
+                setTimeout(() => {
+                    item.style.transition = 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
+                    item.style.opacity = '1';
+                    item.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
+</body></html>

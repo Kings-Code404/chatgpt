@@ -1,0 +1,31 @@
+# Render Blueprint for the Smart Learning Web App (SLWA).
+# MySQL is provisioned separately; this app does not use Render Postgres.
+# For durable uploads, attach a paid disk at /var/data and set
+# UPLOAD_DIR=/var/data/uploads in the service environment. No disk is
+# provisioned here, to avoid creating a billable resource without instruction.
+services:
+  - type: web
+    name: slwa-web
+    runtime: node
+    buildCommand: npm ci
+    startCommand: npm start
+    healthCheckPath: /healthz
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: DB_HOST
+        sync: false
+      - key: DB_PORT
+        value: "3306"
+      - key: DB_USER
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      - key: DB_NAME
+        sync: false
+      - key: BASE_URL
+        sync: false
+      - key: MAX_FILE_SIZE_MB
+        value: "10"

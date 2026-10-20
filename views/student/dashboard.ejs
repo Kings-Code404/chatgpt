@@ -1,0 +1,212 @@
+<%- include('../partials/head', { title: 'Student Dashboard – Smart Learning' }) %>
+<%- include('../partials/topbar') %>
+<%- include('../partials/sidebar') %>
+
+<main class="slw-content">
+  <%- include('../partials/flash') %>
+
+  <!-- Welcome Banner -->
+  <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+    <div>
+      <h1 class="page-title">Welcome back, <%= currentUser.full_name %></h1>
+      <div class="page-subtitle mb-0">Track your courses, upcoming exams, and academic performance.</div>
+    </div>
+    <div class="d-flex gap-2">
+      <a href="/student/courses" class="btn btn-primary-slw">
+        <span class="material-symbols-outlined fs-5">search</span>
+        <span>Browse Courses</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Real Statistics Metric Cards -->
+  <div class="row g-3 mb-4">
+    <div class="col-sm-6 col-xl-3">
+      <div class="stat-card">
+        <div class="stat-icon stat-icon-blue">
+          <span class="material-symbols-outlined">school</span>
+        </div>
+        <div>
+          <div class="stat-value"><%= enrollments ? enrollments.length : 0 %></div>
+          <div class="stat-label">Enrolled Courses</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6 col-xl-3">
+      <div class="stat-card">
+        <div class="stat-icon stat-icon-purple">
+          <span class="material-symbols-outlined">quiz</span>
+        </div>
+        <div>
+          <div class="stat-value"><%= availableExams ? availableExams.length : 0 %></div>
+          <div class="stat-label">Available Exams</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6 col-xl-3">
+      <div class="stat-card">
+        <div class="stat-icon stat-icon-green">
+          <span class="material-symbols-outlined">analytics</span>
+        </div>
+        <div>
+          <div class="stat-value"><%= recentAttempts ? recentAttempts.length : 0 %></div>
+          <div class="stat-label">Exams Taken</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6 col-xl-3">
+      <div class="stat-card">
+        <div class="stat-icon stat-icon-orange">
+          <span class="material-symbols-outlined">notifications</span>
+        </div>
+        <div>
+          <div class="stat-value"><%= unreadNotifs || 0 %></div>
+          <div class="stat-label">Unread Alerts</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Grid: Enrolled Courses & Upcoming Exams -->
+  <div class="row g-4 mb-4">
+    <!-- Enrolled Courses -->
+    <div class="col-lg-7">
+      <div class="card-slw p-4 h-100">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h2 class="h5 fw-bold mb-0">My Enrolled Courses</h2>
+          <a href="/student/courses" class="small text-decoration-none fw-semibold">View All</a>
+        </div>
+
+        <% if (enrollments && enrollments.length > 0) { %>
+          <div class="list-group list-group-flush">
+            <% enrollments.forEach(e => { %>
+              <div class="list-group-item px-0 py-3 d-flex justify-content-between align-items-center flex-wrap gap-2">
+                <div>
+                  <div class="d-flex align-items-center gap-2 mb-1">
+                    <span class="badge-slw badge-primary"><%= e.code %></span>
+                    <h3 class="h6 mb-0 fw-semibold">
+                      <a href="/student/courses/<%= e.course_id %>" class="text-dark text-decoration-none"><%= e.title %></a>
+                    </h3>
+                  </div>
+                  <div class="small text-muted">
+                    <span><%= e.credits %> Credits</span> &bull; 
+                    <span class="text-capitalize text-success">Active Enrollment</span>
+                  </div>
+                </div>
+                <div class="d-flex gap-2">
+                  <a href="/student/courses/<%= e.course_id %>/resources" class="btn btn-sm btn-outline-slw" title="Study Materials">
+                    <span class="material-symbols-outlined fs-6">folder_open</span>
+                    <span>Materials</span>
+                  </a>
+                  <a href="/student/feedback/<%= e.course_id %>/new" class="btn btn-sm btn-outline-secondary" title="Leave Feedback">
+                    <span class="material-symbols-outlined fs-6">star</span>
+                  </a>
+                </div>
+              </div>
+            <% }) %>
+          </div>
+        <% } else { %>
+          <div class="text-center py-5 text-muted">
+            <span class="material-symbols-outlined fs-1 mb-2">school</span>
+            <p class="mb-3">You are not enrolled in any courses yet.</p>
+            <a href="/student/courses" class="btn btn-sm btn-primary-slw">Explore Course Catalog</a>
+          </div>
+        <% } %>
+      </div>
+    </div>
+
+    <!-- Available Exams -->
+    <div class="col-lg-5">
+      <div class="card-slw p-4 h-100">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h2 class="h5 fw-bold mb-0">Active Exams</h2>
+          <a href="/student/exams" class="small text-decoration-none fw-semibold">All Exams</a>
+        </div>
+
+        <% if (availableExams && availableExams.length > 0) { %>
+          <div class="d-flex flex-column gap-3">
+            <% availableExams.slice(0, 4).forEach(exam => { %>
+              <div class="p-3 rounded-3 bg-light border">
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                  <span class="badge-slw badge-primary"><%= exam.code %></span>
+                  <span class="small text-muted"><%= exam.duration_minutes %> mins</span>
+                </div>
+                <div class="fw-semibold mb-2"><%= exam.title %></div>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="small text-muted">Pass: <%= exam.pass_marks %> / <%= exam.total_marks %></div>
+                  <form action="/student/exams/<%= exam.id %>/start" method="POST" class="m-0">
+                    <button type="submit" class="btn btn-sm btn-primary-slw py-1 px-3">
+                      <span>Start</span>
+                      <span class="material-symbols-outlined fs-6">play_arrow</span>
+                    </button>
+                  </form>
+                </div>
+              </div>
+            <% }) %>
+          </div>
+        <% } else { %>
+          <div class="text-center py-5 text-muted">
+            <span class="material-symbols-outlined fs-1 mb-2">event_available</span>
+            <p class="small mb-0">No active exams scheduled right now.</p>
+          </div>
+        <% } %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Exam Attempts Table -->
+  <div class="card-slw p-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h2 class="h5 fw-bold mb-0">Recent Exam Results</h2>
+      <a href="/student/results" class="small text-decoration-none fw-semibold">View Full History</a>
+    </div>
+
+    <% if (recentAttempts && recentAttempts.length > 0) { %>
+      <div class="table-responsive">
+        <table class="table-slw">
+          <thead>
+            <tr>
+              <th>Course</th>
+              <th>Exam Title</th>
+              <th>Date</th>
+              <th>Score</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% recentAttempts.slice(0, 5).forEach(att => { %>
+              <tr>
+                <td><strong><%= att.course_code %></strong></td>
+                <td><%= att.exam_title %></td>
+                <td class="small text-muted"><%= new Date(att.started_at).toLocaleDateString() %></td>
+                <td>
+                  <strong><%= att.score !== null ? att.score : '--' %></strong> / <%= att.total_marks %>
+                </td>
+                <td>
+                  <% if (att.score !== null && att.score >= att.pass_marks) { %>
+                    <span class="badge-slw badge-success">Passed</span>
+                  <% } else if (att.score !== null) { %>
+                    <span class="badge-slw badge-error">Needs Improvement</span>
+                  <% } else { %>
+                    <span class="badge-slw badge-warning">In Progress</span>
+                  <% } %>
+                </td>
+                <td>
+                  <a href="/student/results/<%= att.id %>" class="btn btn-sm btn-outline-slw py-1 px-2">Review</a>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    <% } else { %>
+      <p class="text-muted small mb-0">No exam attempts recorded yet.</p>
+    <% } %>
+  </div>
+</main>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,58 @@
+<%- include('../partials/head', { title: 'Broadcast Announcements – Smart Learning' }) %>
+<%- include('../partials/topbar') %>
+<%- include('../partials/sidebar') %>
+
+<main class="slw-content">
+  <%- include('../partials/flash') %>
+
+  <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+    <div>
+      <h1 class="page-title">Broadcast Announcements</h1>
+      <div class="page-subtitle mb-0">Publish platform announcements to students, faculty, or campus-wide.</div>
+    </div>
+    <a href="/admin/notifications/new" class="btn btn-primary-slw">
+      <span class="material-symbols-outlined fs-5">campaign</span>
+      <span>Broadcast New Announcement</span>
+    </a>
+  </div>
+
+  <% if (notifications && notifications.length > 0) { %>
+    <div class="d-flex flex-column gap-3 mb-4">
+      <% notifications.forEach(n => { %>
+        <div class="card-slw p-4">
+          <div class="d-flex justify-content-between align-items-start mb-2">
+            <div class="d-flex align-items-center gap-2">
+              <span class="badge-slw badge-primary text-uppercase">Target: <%= n.target_role %></span>
+              <h2 class="h5 fw-bold mb-0 text-dark"><%= n.title %></h2>
+            </div>
+            <div class="small text-muted"><%= new Date(n.created_at).toLocaleString() %></div>
+          </div>
+
+          <p class="text-muted small mb-3" style="white-space: pre-line;"><%= n.message %></p>
+
+          <div class="d-flex justify-content-between align-items-center pt-2 border-top">
+            <span class="small text-muted">Posted to authorized student/faculty notification centers</span>
+            <button type="button" 
+                    class="btn btn-sm btn-outline-danger py-0 px-2" 
+                    data-method="delete" 
+                    data-action="/admin/notifications/<%= n.id %>"
+                    data-confirm="Delete this announcement? It will be removed from all recipient inboxes."
+                    title="Delete Announcement">
+              <span class="material-symbols-outlined fs-6">delete</span>
+              <span>Delete</span>
+            </button>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  <% } else { %>
+    <div class="card-slw p-5 text-center text-muted">
+      <span class="material-symbols-outlined fs-1 mb-2">campaign</span>
+      <h2 class="h5">No broadcast announcements recorded</h2>
+      <p class="small mb-3">Broadcast announcements will appear in user inboxes according to their selected roles.</p>
+      <a href="/admin/notifications/new" class="btn btn-primary-slw">Create Announcement</a>
+    </div>
+  <% } %>
+</main>
+
+<%- include('../partials/footer') %>

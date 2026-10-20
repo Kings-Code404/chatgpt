@@ -1,0 +1,84 @@
+<%- include('../partials/head', { title: 'Course Feedback – Smart Learning' }) %>
+<%- include('../partials/topbar') %>
+<%- include('../partials/sidebar') %>
+
+<main class="slw-content">
+  <%- include('../partials/flash') %>
+
+  <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+    <div>
+      <h1 class="page-title">Course Feedback & Reviews</h1>
+      <div class="page-subtitle mb-0">Share academic impressions to improve instructional quality.</div>
+    </div>
+  </div>
+
+  <!-- Available Courses to Review -->
+  <div class="card-slw p-4 mb-4">
+    <h2 class="h5 fw-bold mb-3">Enrolled Courses to Review</h2>
+    <% if (enrollments && enrollments.length > 0) { %>
+      <div class="row g-3">
+        <% enrollments.forEach(e => { %>
+          <% const alreadyReviewed = feedbackList && feedbackList.some(f => f.course_id === e.course_id); %>
+          <div class="col-md-6 col-lg-4">
+            <div class="p-3 rounded-3 bg-light border d-flex justify-content-between align-items-center">
+              <div>
+                <span class="badge-slw badge-primary mb-1"><%= e.code %></span>
+                <div class="fw-semibold text-truncate" style="max-width: 180px;"><%= e.title %></div>
+              </div>
+              <div>
+                <% if (alreadyReviewed) { %>
+                  <span class="badge-slw badge-success small">Submitted</span>
+                <% } else { %>
+                  <a href="/student/feedback/<%= e.course_id %>/new" class="btn btn-sm btn-primary-slw py-1 px-2">
+                    <span class="material-symbols-outlined fs-6">rate_review</span>
+                    <span>Review</span>
+                  </a>
+                <% } %>
+              </div>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    <% } else { %>
+      <p class="text-muted small mb-0">Enroll in courses to provide instructor feedback.</p>
+    <% } %>
+  </div>
+
+  <!-- Previous Submitted Reviews -->
+  <div class="card-slw p-4">
+    <h2 class="h5 fw-bold mb-3">Your Submitted Feedback</h2>
+    <% if (feedbackList && feedbackList.length > 0) { %>
+      <div class="d-flex flex-column gap-3">
+        <% feedbackList.forEach(fb => { %>
+          <div class="p-3 rounded-3 bg-light border">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <h3 class="h6 fw-bold mb-0 text-primary"><%= fb.course_title %></h3>
+              <div class="small text-muted"><%= new Date(fb.created_at).toLocaleDateString() %></div>
+            </div>
+
+            <!-- Star Rating Display -->
+            <div class="d-flex align-items-center gap-1 mb-2">
+              <% for (let i = 1; i <= 5; i++) { %>
+                <span class="material-symbols-outlined fs-6 <%= i <= fb.rating ? 'text-warning' : 'text-muted' %>">
+                  star
+                </span>
+              <% } %>
+              <span class="small fw-semibold ms-1"><%= fb.rating %> / 5</span>
+            </div>
+
+            <p class="small text-muted mb-0" style="white-space: pre-line;">
+              <%= fb.comment || 'No additional comments provided.' %>
+            </p>
+          </div>
+        <% }) %>
+      </div>
+    <% } else { %>
+      <div class="text-center py-4 text-muted">
+        <span class="material-symbols-outlined fs-1 mb-2">rate_review</span>
+        <p class="small mb-0">You have not submitted any course feedback yet.</p>
+      </div>
+    <% } %>
+  </div>
+</main>
+
+<%- include('../partials/footer') %>

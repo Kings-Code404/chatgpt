@@ -1,0 +1,232 @@
+<%- include('../partials/head', { title: 'Smart Learning – Modern Academic Web Platform' }) %>
+<%- include('../partials/topbar') %>
+
+<!-- Hero Section -->
+<section class="hero-section position-relative overflow-hidden py-5">
+  <div class="container py-lg-4">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-7 text-center text-lg-start">
+        <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill bg-white shadow-sm border mb-4">
+          <span class="badge-slw badge-primary">Institutional EdTech</span>
+          <span class="small fw-medium text-muted">Focused, Structured Learning Management</span>
+        </div>
+        <h1 class="text-display mb-3">
+          Empowering Education with <span class="text-gradient">Focus & Clarity</span>
+        </h1>
+        <p class="text-body-lg text-muted mb-4 pe-lg-4">
+          Smart Learning brings students, faculty, and administrators onto a single purposeful workspace for course enrollment, timed examinations with instant scoring, verified study resources, and direct academic feedback.
+        </p>
+        <div class="d-flex justify-content-center justify-content-lg-start gap-3 flex-wrap mb-4">
+          <% if (typeof currentUser !== 'undefined' && currentUser) { %>
+            <a href="/<%= currentUser.role %>/dashboard" class="btn btn-primary-slw px-4 py-2 fs-6">
+              <span>Go to <%= currentUser.role.charAt(0).toUpperCase() + currentUser.role.slice(1) %> Dashboard</span>
+              <span class="material-symbols-outlined">arrow_forward</span>
+            </a>
+          <% } else { %>
+            <a href="/auth/register" class="btn btn-primary-slw px-4 py-2 fs-6">
+              <span>Get Started Free</span>
+              <span class="material-symbols-outlined">arrow_forward</span>
+            </a>
+            <a href="/courses" class="btn btn-outline-slw px-4 py-2 fs-6">
+              <span>Browse Catalog</span>
+            </a>
+          <% } %>
+        </div>
+        <div class="d-flex align-items-center justify-content-center justify-content-lg-start gap-4 pt-2 border-top text-muted small">
+          <div class="d-flex align-items-center gap-2">
+            <span class="material-symbols-outlined text-success fs-5">verified</span>
+            <span>Accredited Courses</span>
+          </div>
+          <div class="d-flex align-items-center gap-2">
+            <span class="material-symbols-outlined text-primary fs-5">timer</span>
+            <span>Timed Online Exams</span>
+          </div>
+          <div class="d-flex align-items-center gap-2">
+            <span class="material-symbols-outlined text-purple fs-5" style="color: #4b41e1;">lock</span>
+            <span>Role-Based Security</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Visual Feature Mockup -->
+      <div class="col-lg-5">
+        <div class="position-relative">
+          <div class="card-slw p-4 shadow-lg border-0 bg-white position-relative" style="border-radius: 1.25rem;">
+            <div class="d-flex align-items-center justify-content-between mb-3 pb-3 border-bottom">
+              <div class="d-flex align-items-center gap-2">
+                <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center" style="width: 38px; height: 38px;">
+                  <span class="material-symbols-outlined fs-5">school</span>
+                </div>
+                <div>
+                  <div class="fw-bold small">Smart Learning Hub</div>
+                  <div class="text-caption text-muted">Active Academic Term</div>
+                </div>
+              </div>
+              <span class="badge-slw badge-success">Live Session</span>
+            </div>
+
+            <!-- Mini Preview Cards -->
+            <div class="d-flex flex-column gap-3 mb-3">
+              <div class="p-3 rounded-3 bg-light border d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center gap-3">
+                  <span class="material-symbols-outlined text-primary fs-3">auto_stories</span>
+                  <div>
+                    <div class="fw-semibold small">Computer Science & AI</div>
+                    <div class="text-caption text-muted">12 Study Materials Available</div>
+                  </div>
+                </div>
+                <span class="badge-slw badge-primary">CS101</span>
+              </div>
+
+              <div class="p-3 rounded-3 bg-light border d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center gap-3">
+                  <span class="material-symbols-outlined text-success fs-3">quiz</span>
+                  <div>
+                    <div class="fw-semibold small">Mid-Term Assessment</div>
+                    <div class="text-caption text-muted">Auto-Graded Timed Exam</div>
+                  </div>
+                </div>
+                <span class="badge-slw badge-warning">60 Mins</span>
+              </div>
+            </div>
+
+            <!-- Visual Progress Bar -->
+            <div class="p-3 rounded-3 bg-light">
+              <div class="d-flex justify-content-between align-items-center small mb-1">
+                <span class="fw-semibold">Semester Milestone Completion</span>
+                <span class="text-primary fw-bold">85%</span>
+              </div>
+              <div class="progress-slw">
+                <div class="progress-slw-fill" style="width: 85%;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Core Academic Roles Section -->
+<section class="py-5 bg-white border-top border-bottom">
+  <div class="container py-4">
+    <div class="text-center mb-5">
+      <h2 class="text-headline-lg mb-2">Designed for Every Campus Role</h2>
+      <p class="text-muted">A dedicated workspace built specifically for students, educators, and administrators.</p>
+    </div>
+
+    <div class="row g-4">
+      <!-- Student Role -->
+      <div class="col-md-4">
+        <div class="card-slw p-4 h-100">
+          <div class="stat-icon stat-icon-blue mb-3">
+            <span class="material-symbols-outlined">school</span>
+          </div>
+          <h3 class="h5 fw-bold mb-2">For Students</h3>
+          <p class="text-muted small mb-3">
+            Enroll in semester courses, access verified class notes and syllabus resources, take timed online examinations, view objective scores instantly, and submit course reviews.
+          </p>
+          <ul class="list-unstyled small text-muted mb-0">
+            <li class="mb-2 d-flex align-items-center gap-2">
+              <span class="material-symbols-outlined text-primary fs-6">check</span>
+              Structured course enrollments
+            </li>
+            <li class="mb-2 d-flex align-items-center gap-2">
+              <span class="material-symbols-outlined text-primary fs-6">check</span>
+              Secure online exams & timers
+            </li>
+            <li class="d-flex align-items-center gap-2">
+              <span class="material-symbols-outlined text-primary fs-6">check</span>
+              Direct performance feedback
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Teacher Role -->
+      <div class="col-md-4">
+        <div class="card-slw p-4 h-100">
+          <div class="stat-icon stat-icon-purple mb-3">
+            <span class="material-symbols-outlined">menu_book</span>
+          </div>
+          <h3 class="h5 fw-bold mb-2">For Teachers</h3>
+          <p class="text-muted small mb-3">
+            Manage assigned curriculums, upload authorized study materials, schedule exams with MCQ and subjective questions, review student submissions, and analyze academic outcomes.
+          </p>
+          <ul class="list-unstyled small text-muted mb-0">
+            <li class="mb-2 d-flex align-items-center gap-2">
+              <span class="material-symbols-outlined text-primary fs-6">check</span>
+              Course syllabus & file distribution
+            </li>
+            <li class="mb-2 d-flex align-items-center gap-2">
+              <span class="material-symbols-outlined text-primary fs-6">check</span>
+              Exam authoring with auto-grading
+            </li>
+            <li class="d-flex align-items-center gap-2">
+              <span class="material-symbols-outlined text-primary fs-6">check</span>
+              Student attempt review & marks
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Admin Role -->
+      <div class="col-md-4">
+        <div class="card-slw p-4 h-100">
+          <div class="stat-icon stat-icon-green mb-3">
+            <span class="material-symbols-outlined">admin_panel_settings</span>
+          </div>
+          <h3 class="h5 fw-bold mb-2">For Administrators</h3>
+          <p class="text-muted small mb-3">
+            Maintain institutional users and account status, oversee course offerings, pair faculty to courses, monitor student enrollments, broadcast announcements, and audit feedback.
+          </p>
+          <ul class="list-unstyled small text-muted mb-0">
+            <li class="mb-2 d-flex align-items-center gap-2">
+              <span class="material-symbols-outlined text-primary fs-6">check</span>
+              User account & role controls
+            </li>
+            <li class="mb-2 d-flex align-items-center gap-2">
+              <span class="material-symbols-outlined text-primary fs-6">check</span>
+              Faculty-course assignments
+            </li>
+            <li class="d-flex align-items-center gap-2">
+              <span class="material-symbols-outlined text-primary fs-6">check</span>
+              Campus-wide notification broadcasts
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Call to action -->
+<section class="py-5 bg-surface text-center">
+  <div class="container py-4">
+    <div class="row justify-content-center">
+      <div class="col-lg-6">
+        <h2 class="text-headline-md mb-2">Ready to Start Learning?</h2>
+        <p class="text-muted mb-4">Browse available courses or sign in to access your assigned academic materials.</p>
+        <div class="d-flex justify-content-center gap-3">
+          <a href="/courses" class="btn btn-outline-slw">Browse All Courses</a>
+          <a href="/auth/register" class="btn btn-primary-slw">Register Account</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="py-4 border-top bg-white text-center text-muted small">
+  <div class="container">
+    <div class="mb-2">
+      <a href="/" class="text-muted me-3 text-decoration-none">Home</a>
+      <a href="/about" class="text-muted me-3 text-decoration-none">About</a>
+      <a href="/courses" class="text-muted me-3 text-decoration-none">Courses</a>
+      <a href="/auth/login" class="text-muted text-decoration-none">Sign In</a>
+    </div>
+    <div>&copy; <%= new Date().getFullYear() %> Smart Learning Web App (SLWA). All rights reserved.</div>
+  </div>
+</footer>
+
+<%- include('../partials/footer') %>

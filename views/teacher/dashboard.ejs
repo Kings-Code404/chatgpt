@@ -1,0 +1,203 @@
+<%- include('../partials/head', { title: 'Teacher Dashboard – Smart Learning' }) %>
+<%- include('../partials/topbar') %>
+<%- include('../partials/sidebar') %>
+
+<main class="slw-content">
+  <%- include('../partials/flash') %>
+
+  <!-- Welcome Header -->
+  <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+    <div>
+      <h1 class="page-title">Faculty Dashboard</h1>
+      <div class="page-subtitle mb-0">Welcome, <%= currentUser.full_name %>. Manage coursework, resources, and examinations.</div>
+    </div>
+    <div class="d-flex gap-2">
+      <a href="/teacher/exams/new" class="btn btn-primary-slw">
+        <span class="material-symbols-outlined fs-5">add</span>
+        <span>Create Exam</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Stat Cards -->
+  <div class="row g-3 mb-4">
+    <div class="col-sm-6 col-xl-3">
+      <div class="stat-card">
+        <div class="stat-icon stat-icon-blue">
+          <span class="material-symbols-outlined">menu_book</span>
+        </div>
+        <div>
+          <div class="stat-value"><%= courses ? courses.length : 0 %></div>
+          <div class="stat-label">Assigned Courses</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6 col-xl-3">
+      <div class="stat-card">
+        <div class="stat-icon stat-icon-purple">
+          <span class="material-symbols-outlined">group</span>
+        </div>
+        <div>
+          <div class="stat-value"><%= totalStudents || 0 %></div>
+          <div class="stat-label">Enrolled Students</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6 col-xl-3">
+      <div class="stat-card">
+        <div class="stat-icon stat-icon-green">
+          <span class="material-symbols-outlined">quiz</span>
+        </div>
+        <div>
+          <div class="stat-value"><%= exams ? exams.length : 0 %></div>
+          <div class="stat-label">Examinations</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6 col-xl-3">
+      <div class="stat-card">
+        <div class="stat-icon stat-icon-orange">
+          <span class="material-symbols-outlined">assignment_turned_in</span>
+        </div>
+        <div>
+          <div class="stat-value"><%= typeof totalSubmissions !== 'undefined' ? totalSubmissions : (recentAttempts ? recentAttempts.length : 0) %></div>
+          <div class="stat-label">Submissions</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Grid: Assigned Courses & Recent Submissions -->
+  <div class="row g-4 mb-4">
+    <!-- Assigned Courses -->
+    <div class="col-lg-7">
+      <div class="card-slw p-4 h-100">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h2 class="h5 fw-bold mb-0">Assigned Courses</h2>
+          <a href="/teacher/courses" class="small text-decoration-none fw-semibold">View All</a>
+        </div>
+
+        <% if (courses && courses.length > 0) { %>
+          <div class="list-group list-group-flush">
+            <% courses.forEach(c => { %>
+              <div class="list-group-item px-0 py-3 d-flex justify-content-between align-items-center flex-wrap gap-2">
+                <div>
+                  <div class="d-flex align-items-center gap-2 mb-1">
+                    <span class="badge-slw badge-primary"><%= c.code %></span>
+                    <h3 class="h6 mb-0 fw-semibold"><%= c.title %></h3>
+                  </div>
+                  <div class="small text-muted"><%= c.credits %> Credits &bull; <%= c.category || 'General' %></div>
+                </div>
+                <div class="d-flex gap-2">
+                  <a href="/teacher/courses/<%= c.id %>/resources" class="btn btn-sm btn-outline-slw">
+                    <span class="material-symbols-outlined fs-6">folder</span>
+                    <span>Materials</span>
+                  </a>
+                  <a href="/teacher/exams/new" class="btn btn-sm btn-outline-secondary" title="Schedule Exam">
+                    <span class="material-symbols-outlined fs-6">quiz</span>
+                  </a>
+                </div>
+              </div>
+            <% }) %>
+          </div>
+        <% } else { %>
+          <div class="text-center py-5 text-muted">
+            <span class="material-symbols-outlined fs-1 mb-2">menu_book</span>
+            <p class="small mb-0">No courses assigned to your account yet. Contact an administrator.</p>
+          </div>
+        <% } %>
+      </div>
+    </div>
+
+    <!-- Quick Exam Oversight -->
+    <div class="col-lg-5">
+      <div class="card-slw p-4 h-100">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h2 class="h5 fw-bold mb-0">Scheduled Exams</h2>
+          <a href="/teacher/exams" class="small text-decoration-none fw-semibold">All Exams</a>
+        </div>
+
+        <% if (exams && exams.length > 0) { %>
+          <div class="d-flex flex-column gap-3">
+            <% exams.slice(0, 4).forEach(e => { %>
+              <div class="p-3 rounded-3 bg-light border">
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                  <span class="badge-slw badge-primary"><%= e.code %></span>
+                  <span class="badge-slw badge-neutral text-capitalize"><%= e.status %></span>
+                </div>
+                <div class="fw-semibold mb-2"><%= e.title %></div>
+                <div class="d-flex justify-content-between align-items-center">
+                  <span class="small text-muted"><%= e.duration_minutes %> mins &bull; <%= e.total_marks %> marks</span>
+                  <a href="/teacher/exams/<%= e.id %>/results" class="btn btn-sm btn-outline-slw py-1 px-2">Results</a>
+                </div>
+              </div>
+            <% }) %>
+          </div>
+        <% } else { %>
+          <div class="text-center py-5 text-muted">
+            <span class="material-symbols-outlined fs-1 mb-2">quiz</span>
+            <p class="small mb-2">No exams created yet.</p>
+            <a href="/teacher/exams/new" class="btn btn-sm btn-primary-slw">Create First Exam</a>
+          </div>
+        <% } %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Student Submissions -->
+  <div class="card-slw p-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h2 class="h5 fw-bold mb-0">Recent Student Exam Submissions</h2>
+    </div>
+
+    <% if (recentAttempts && recentAttempts.length > 0) { %>
+      <div class="table-responsive">
+        <table class="table-slw">
+          <thead>
+            <tr>
+              <th>Student Name</th>
+              <th>Exam Title</th>
+              <th>Submitted Date</th>
+              <th>Score</th>
+              <th>Status</th>
+              <th class="text-end">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% recentAttempts.forEach(att => { %>
+              <tr>
+                <td><strong><%= att.student_name %></strong></td>
+                <td><%= att.exam_title %></td>
+                <td class="small text-muted">
+                  <%= att.submitted_at ? new Date(att.submitted_at).toLocaleDateString() : 'In Progress' %>
+                </td>
+                <td>
+                  <strong><%= att.score !== null ? att.score : '--' %></strong> / <%= att.total_marks %>
+                </td>
+                <td>
+                  <% if (att.score !== null && att.score >= att.pass_marks) { %>
+                    <span class="badge-slw badge-success">Passed</span>
+                  <% } else if (att.score !== null) { %>
+                    <span class="badge-slw badge-error">Failed</span>
+                  <% } else { %>
+                    <span class="badge-slw badge-warning">In Progress</span>
+                  <% } %>
+                </td>
+                <td class="text-end">
+                  <a href="/teacher/exams/<%= att.exam_id %>/results" class="btn btn-sm btn-outline-slw py-1 px-2">View Attempts</a>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    <% } else { %>
+      <p class="text-muted small mb-0">No student exam attempts recorded yet.</p>
+    <% } %>
+  </div>
+</main>
+
+<%- include('../partials/footer') %>

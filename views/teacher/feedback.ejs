@@ -1,0 +1,56 @@
+<%- include('../partials/head', { title: 'Student Feedback – Smart Learning' }) %>
+<%- include('../partials/topbar') %>
+<%- include('../partials/sidebar') %>
+
+<main class="slw-content">
+  <%- include('../partials/flash') %>
+
+  <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+    <div>
+      <h1 class="page-title">Student Feedback</h1>
+      <div class="page-subtitle mb-0">Evaluations and constructive reviews submitted by enrolled students.</div>
+    </div>
+  </div>
+
+  <% if (feedbackList && feedbackList.length > 0) { %>
+    <div class="row g-3">
+      <% feedbackList.forEach(fb => { %>
+        <div class="col-md-6">
+          <div class="card-slw p-4 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+              <div>
+                <span class="badge-slw badge-primary mb-1"><%= fb.course_code %></span>
+                <h2 class="h6 fw-bold mb-0 text-dark"><%= fb.course_title %></h2>
+              </div>
+              <div class="small text-muted"><%= new Date(fb.created_at).toLocaleDateString() %></div>
+            </div>
+
+            <!-- Stars -->
+            <div class="d-flex align-items-center gap-1 mb-2">
+              <% for (let i = 1; i <= 5; i++) { %>
+                <span class="material-symbols-outlined fs-6 <%= i <= fb.rating ? 'text-warning' : 'text-muted' %>">star</span>
+              <% } %>
+              <span class="small fw-semibold ms-1"><%= fb.rating %> / 5</span>
+            </div>
+
+            <p class="small text-muted mb-3 flex-grow-1" style="white-space: pre-line;">
+              <%= fb.comment || 'No specific comment left.' %>
+            </p>
+
+            <div class="pt-2 border-top small text-muted">
+              Submitted by: <strong class="text-dark"><%= fb.student_name %></strong>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  <% } else { %>
+    <div class="card-slw p-5 text-center text-muted">
+      <span class="material-symbols-outlined fs-1 mb-2">rate_review</span>
+      <h2 class="h5">No student feedback submitted yet</h2>
+      <p class="small mb-0">Reviews submitted by students in your assigned courses will appear here.</p>
+    </div>
+  <% } %>
+</main>
+
+<%- include('../partials/footer') %>

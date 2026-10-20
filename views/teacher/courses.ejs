@@ -1,0 +1,73 @@
+<%- include('../partials/head', { title: 'Assigned Courses – Smart Learning' }) %>
+<%- include('../partials/topbar') %>
+<%- include('../partials/sidebar') %>
+
+<main class="slw-content">
+  <%- include('../partials/flash') %>
+
+  <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+    <div>
+      <h1 class="page-title">Assigned Courses</h1>
+      <div class="page-subtitle mb-0">Courses you are officially appointed to instruct and manage.</div>
+    </div>
+  </div>
+
+  <% if (courses && courses.length > 0) { %>
+    <div class="row g-4">
+      <% courses.forEach(c => { %>
+        <div class="col-md-6 col-lg-4">
+          <div class="course-card h-100">
+            <div class="course-card-header"></div>
+            <div class="course-card-body">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <span class="badge-slw badge-primary"><%= c.code %></span>
+                <span class="badge-slw badge-neutral"><%= c.credits %> Credits</span>
+              </div>
+              <h2 class="h5 fw-bold mb-2"><%= c.title %></h2>
+              <p class="text-muted small mb-3" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
+                <%= c.description || 'No description provided.' %>
+              </p>
+
+              <!-- Course Statistics -->
+              <div class="p-2 rounded-2 bg-light border d-flex justify-content-around text-center small mb-3">
+                <div>
+                  <div class="fw-bold"><%= c.studentCount || 0 %></div>
+                  <div class="text-muted" style="font-size: 0.75rem;">Students</div>
+                </div>
+                <div class="border-start"></div>
+                <div>
+                  <div class="fw-bold"><%= c.resourceCount || 0 %></div>
+                  <div class="text-muted" style="font-size: 0.75rem;">Materials</div>
+                </div>
+                <div class="border-start"></div>
+                <div>
+                  <div class="fw-bold"><%= c.examCount || 0 %></div>
+                  <div class="text-muted" style="font-size: 0.75rem;">Exams</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="course-card-footer d-flex justify-content-between align-items-center">
+              <a href="/teacher/courses/<%= c.id %>/resources" class="btn btn-sm btn-outline-slw">
+                <span class="material-symbols-outlined fs-6">folder</span>
+                <span>Materials</span>
+              </a>
+              <a href="/teacher/exams/new" class="btn btn-sm btn-primary-slw">
+                <span class="material-symbols-outlined fs-6">add</span>
+                <span>Create Exam</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  <% } else { %>
+    <div class="card-slw p-5 text-center text-muted">
+      <span class="material-symbols-outlined fs-1 mb-2">school</span>
+      <h2 class="h5">No assigned courses found</h2>
+      <p class="small mb-0">Courses assigned by your institution administrator will appear here.</p>
+    </div>
+  <% } %>
+</main>
+
+<%- include('../partials/footer') %>

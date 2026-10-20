@@ -1,0 +1,8 @@
+node_modules/
+.env
+uploads/*
+!uploads/.gitkeep
+*.log
+SLWA-Render-Ready.zip
+.DS_Store
+Thumbs.db

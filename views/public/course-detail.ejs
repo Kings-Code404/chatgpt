@@ -1,0 +1,75 @@
+<%- include('../partials/head', { title: `${course.code} – ${course.title}` }) %>
+<%- include('../partials/topbar') %>
+
+<div class="container py-5 mt-4">
+  <div class="row justify-content-center">
+    <div class="col-lg-9">
+      <div class="card-slw p-4 p-md-5 mb-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <span class="badge-slw badge-primary fs-6"><%= course.code %></span>
+          <span class="badge-slw badge-neutral"><%= course.category || 'General' %></span>
+        </div>
+
+        <h1 class="text-headline-lg mb-3"><%= course.title %></h1>
+        
+        <div class="d-flex align-items-center gap-4 text-muted small mb-4 flex-wrap">
+          <div>
+            <span class="material-symbols-outlined fs-6 align-middle">credit_card</span>
+            <span><%= course.credits %> Credits</span>
+          </div>
+          <div>
+            <span class="material-symbols-outlined fs-6 align-middle">school</span>
+            <span>Status: <strong class="text-capitalize"><%= course.status %></strong></span>
+          </div>
+        </div>
+
+        <h2 class="h5 fw-bold mb-2">Course Overview</h2>
+        <p class="text-muted mb-4" style="white-space: pre-line;">
+          <%= course.description || 'No detailed syllabus has been posted for this course yet.' %>
+        </p>
+
+        <h2 class="h5 fw-bold mb-3">Assigned Faculty</h2>
+        <% if (teachers && teachers.length > 0) { %>
+          <div class="row g-3 mb-4">
+            <% teachers.forEach(t => { %>
+              <div class="col-md-6">
+                <div class="p-3 rounded-3 bg-light d-flex align-items-center gap-3">
+                  <div class="avatar" style="width: 42px; height: 42px;">
+                    <%= t.full_name.charAt(0).toUpperCase() %>
+                  </div>
+                  <div>
+                    <div class="fw-semibold"><%= t.full_name %></div>
+                    <div class="small text-muted"><%= t.email %></div>
+                  </div>
+                </div>
+              </div>
+            <% }) %>
+          </div>
+        <% } else { %>
+          <p class="text-muted small mb-4">Faculty assignments are currently being scheduled.</p>
+        <% } %>
+
+        <hr class="my-4">
+
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+          <a href="/courses" class="btn btn-outline-slw">
+            <span class="material-symbols-outlined fs-6">arrow_back</span>
+            <span>All Courses</span>
+          </a>
+
+          <div>
+            <% if (currentUser && currentUser.role === 'student') { %>
+              <form action="/student/courses/<%= course.id %>/enroll" method="POST" class="d-inline">
+                <button type="submit" class="btn btn-primary-slw">Enroll in Course</button>
+              </form>
+            <% } else if (!currentUser) { %>
+              <a href="/auth/login" class="btn btn-primary-slw">Sign in to Enroll</a>
+            <% } %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

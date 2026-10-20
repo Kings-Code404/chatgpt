@@ -1,0 +1,57 @@
+<%- include('../partials/head', { title: `Edit User: ${user.full_name}` }) %>
+<%- include('../partials/topbar') %>
+<%- include('../partials/sidebar') %>
+
+<main class="slw-content">
+  <%- include('../partials/flash') %>
+
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card-slw p-4 p-md-5">
+        <h1 class="page-title mb-1">Edit User Account</h1>
+        <div class="page-subtitle mb-4">Modify account status, role, and details for <%= user.full_name %>.</div>
+
+        <form action="/admin/users/<%= user.id %>" method="POST">
+          <div class="row g-3 mb-3">
+            <div class="col-md-6">
+              <label for="full_name" class="form-label">Full Name</label>
+              <input type="text" class="form-control" id="full_name" name="full_name" value="<%= user.full_name %>" required>
+            </div>
+            <div class="col-md-6">
+              <label for="email" class="form-label">Email Address</label>
+              <input type="email" class="form-control" id="email" name="email" value="<%= user.email %>" required>
+            </div>
+          </div>
+
+          <div class="row g-3 mb-4">
+            <div class="col-md-6">
+              <label for="role_id" class="form-label">System Role</label>
+              <select class="form-select" id="role_id" name="role_id" required>
+                <% (roles || []).forEach(r => { %>
+                  <option value="<%= r.id %>" <%= user.role_id === r.id ? 'selected' : '' %>>
+                    <%= r.name.charAt(0).toUpperCase() + r.name.slice(1) %>
+                  </option>
+                <% }) %>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label for="status" class="form-label">Account Status</label>
+              <select class="form-select" id="status" name="status" required>
+                <option value="active" <%= user.status === 'active' ? 'selected' : '' %>>Active (Full access)</option>
+                <option value="inactive" <%= user.status === 'inactive' ? 'selected' : '' %>>Inactive (Login disabled)</option>
+                <option value="suspended" <%= user.status === 'suspended' ? 'selected' : '' %>>Suspended (Action blocked)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-between align-items-center">
+            <a href="/admin/users" class="btn btn-outline-slw">Cancel</a>
+            <button type="submit" class="btn btn-primary-slw px-4">Save Changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</main>
+
+<%- include('../partials/footer') %>

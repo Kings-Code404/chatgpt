@@ -1,0 +1,64 @@
+<header class="slw-topbar">
+  <div class="d-flex align-items-center gap-3">
+    <% if (typeof currentUser !== 'undefined' && currentUser) { %>
+      <button class="icon-btn sidebar-toggle" id="sidebarToggle" aria-label="Toggle navigation">
+        <span class="material-symbols-outlined">menu</span>
+      </button>
+    <% } %>
+    <a href="<%= (typeof currentUser !== 'undefined' && currentUser) ? '/' + currentUser.role + '/dashboard' : '/' %>" class="brand">
+      <img src="/images/logo.png" alt="Smart Learning Logo" onerror="this.style.display='none'">
+      <span class="brand-name">Smart Learning</span>
+    </a>
+  </div>
+
+  <div class="topbar-actions">
+    <% if (typeof currentUser !== 'undefined' && currentUser) { %>
+      <!-- Notification link -->
+      <a href="/<%= currentUser.role %>/notifications" class="icon-btn text-decoration-none" title="Notifications">
+        <span class="material-symbols-outlined">notifications</span>
+        <span class="notif-dot" id="notifBadge" hidden></span>
+      </a>
+
+      <!-- User menu -->
+      <div class="dropdown">
+        <button class="btn btn-link p-0 d-flex align-items-center gap-2 text-decoration-none dropdown-toggle text-dark" data-bs-toggle="dropdown" aria-expanded="false">
+          <div class="avatar">
+            <%= currentUser.full_name ? currentUser.full_name.charAt(0).toUpperCase() : 'U' %>
+          </div>
+          <div class="d-none d-sm-block text-start">
+            <div class="text-label text-truncate" style="max-width: 150px;"><%= currentUser.full_name %></div>
+            <div class="text-caption text-muted text-capitalize"><%= currentUser.role %></div>
+          </div>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 mt-2">
+          <li class="px-3 py-2 border-bottom">
+            <div class="fw-semibold text-truncate"><%= currentUser.full_name %></div>
+            <div class="small text-muted text-truncate"><%= currentUser.email %></div>
+          </li>
+          <li>
+            <a class="dropdown-item d-flex align-items-center gap-2 py-2" href="/<%= currentUser.role %>/profile">
+              <span class="material-symbols-outlined fs-5">person</span>
+              Profile
+            </a>
+          </li>
+          <li><hr class="dropdown-divider my-1"></li>
+          <li>
+            <form action="/auth/logout" method="POST" class="m-0">
+              <button type="submit" class="dropdown-item d-flex align-items-center gap-2 py-2 text-danger">
+                <span class="material-symbols-outlined fs-5">logout</span>
+                Sign out
+              </button>
+            </form>
+          </li>
+        </ul>
+      </div>
+    <% } else { %>
+      <div class="d-flex align-items-center gap-2">
+        <a href="/auth/login" class="btn btn-outline-slw">Sign in</a>
+        <a href="/auth/register" class="btn btn-primary-slw">Get Started</a>
+      </div>
+    <% } %>
+  </div>
+</header>
+
+<div class="sidebar-overlay" id="sidebarOverlay"></div>

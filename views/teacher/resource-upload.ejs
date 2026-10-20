@@ -1,0 +1,49 @@
+<%- include('../partials/head', { title: `Upload Resource – ${course.title}` }) %>
+<%- include('../partials/topbar') %>
+<%- include('../partials/sidebar') %>
+
+<main class="slw-content">
+  <%- include('../partials/flash') %>
+
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card-slw p-4 p-md-5">
+        <div class="d-flex align-items-center gap-2 mb-2">
+          <span class="badge-slw badge-primary"><%= course.code %></span>
+          <span class="page-subtitle mb-0"><%= course.title %></span>
+        </div>
+
+        <h1 class="page-title mb-1">Upload Study Material</h1>
+        <div class="page-subtitle mb-4">Provide reference documents, lecture slides, or reading materials.</div>
+
+        <form action="/teacher/courses/<%= course.id %>/resources" method="POST" enctype="multipart/form-data">
+          <div class="mb-3">
+            <label for="title" class="form-label">Resource Title</label>
+            <input type="text" class="form-control" id="title" name="title" placeholder="e.g. Chapter 4 - Data Structures Presentation" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="resource_file" class="form-label">Select File to Upload</label>
+            <input type="file" class="form-control" id="resource_file" name="resource_file" required>
+            <div class="form-text small">Accepted file types: PDF, Word, PowerPoint, Text, Image, Video. Maximum size: 10 MB.</div>
+          </div>
+
+          <div class="mb-4">
+            <label for="description" class="form-label">Description / Instructions</label>
+            <textarea class="form-control" id="description" name="description" rows="3" placeholder="Context or study guidance for students..."></textarea>
+          </div>
+
+          <div class="d-flex justify-content-between align-items-center">
+            <a href="/teacher/courses/<%= course.id %>/resources" class="btn btn-outline-slw">Cancel</a>
+            <button type="submit" class="btn btn-primary-slw px-4">
+              <span>Upload Resource</span>
+              <span class="material-symbols-outlined fs-6">cloud_upload</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</main>
+
+<%- include('../partials/footer') %>

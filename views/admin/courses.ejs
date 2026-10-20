@@ -1,0 +1,104 @@
+<%- include('../partials/head', { title: 'Manage Courses – Smart Learning' }) %>
+<%- include('../partials/topbar') %>
+<%- include('../partials/sidebar') %>
+
+<main class="slw-content">
+  <%- include('../partials/flash') %>
+
+  <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+    <div>
+      <h1 class="page-title">Manage Courses</h1>
+      <div class="page-subtitle mb-0">Oversee course offerings, statuses, and faculty appointments.</div>
+    </div>
+    <a href="/admin/courses/new" class="btn btn-primary-slw">
+      <span class="material-symbols-outlined fs-5">add</span>
+      <span>Create New Course</span>
+    </a>
+  </div>
+
+  <!-- Courses Table -->
+  <% if (courses && courses.length > 0) { %>
+    <div class="card-slw overflow-hidden mb-4">
+      <div class="table-responsive">
+        <table class="table-slw">
+          <thead>
+            <tr>
+              <th>Code</th>
+              <th>Course Title</th>
+              <th>Category</th>
+              <th>Credits</th>
+              <th>Assigned Faculty</th>
+              <th>Status</th>
+              <th class="text-end">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% courses.forEach(c => { %>
+              <tr>
+                <td><span class="badge-slw badge-primary"><%= c.code %></span></td>
+                <td>
+                  <div class="fw-semibold"><%= c.title %></div>
+                </td>
+                <td class="small text-muted"><%= c.category || 'General' %></td>
+                <td><%= c.credits %></td>
+                <td>
+                  <div class="small fw-semibold text-dark mb-1">
+                    <%= c.teacher_names || 'None assigned' %>
+                  </div>
+                  <!-- Quick assign button opening small collapse -->
+                  <button class="btn btn-sm btn-link text-primary p-0 small text-decoration-none" 
+                          data-bs-toggle="collapse" 
+                          data-bs-target="#assignTeacher_<%= c.id %>">
+                    + Assign Teacher
+                  </button>
+                  <div class="collapse mt-2" id="assignTeacher_<%= c.id %>">
+                    <form action="/admin/courses/<%= c.id %>/assign" method="POST" class="d-flex gap-1">
+                      <select name="teacher_id" class="form-select form-select-sm" required style="height: 32px; font-size: 0.8rem;">
+                        <option value="">Choose teacher...</option>
+                        <% (teachers || []).forEach(t => { %>
+                          <option value="<%= t.id %>"><%= t.full_name %></option>
+                        <% }) %>
+                      </select>
+                      <button type="submit" class="btn btn-sm btn-primary-slw py-0 px-2" style="font-size: 0.75rem;">Assign</button>
+                    </form>
+                  </div>
+                </td>
+                <td>
+                  <% if (c.status === 'active') { %>
+                    <span class="badge-slw badge-success">Active</span>
+                  <% } else { %>
+                    <span class="badge-slw badge-neutral text-capitalize"><%= c.status %></span>
+                  <% } %>
+                </td>
+                <td class="text-end">
+                  <div class="d-inline-flex gap-1">
+                    <a href="/admin/courses/<%= c.id %>/edit" class="btn btn-sm btn-outline-slw py-1 px-2" title="Edit Course">
+                      <span class="material-symbols-outlined fs-6">edit</span>
+                    </a>
+                    <button type="button" 
+                            class="btn btn-sm btn-outline-danger py-1 px-2" 
+                            data-method="delete" 
+                            data-action="/admin/courses/<%= c.id %>"
+                            data-confirm="Delete course <%= c.code %>? All study materials, exams, and enrollments will be deleted."
+                            title="Delete Course">
+                      <span class="material-symbols-outlined fs-6">delete</span>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  <% } else { %>
+    <div class="card-slw p-5 text-center text-muted">
+      <span class="material-symbols-outlined fs-1 mb-2">school</span>
+      <h2 class="h5">No courses found</h2>
+      <p class="small mb-3">Get started by creating your first academic course.</p>
+      <a href="/admin/courses/new" class="btn btn-primary-slw">Create Course</a>
+    </div>
+  <% } %>
+</main>
+
+<%- include('../partials/footer') %>

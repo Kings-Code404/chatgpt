@@ -1,0 +1,33 @@
+{
+  "name": "slw-app",
+  "version": "1.0.0",
+  "description": "Smart Learning Web Application (SLWA) - Three-tier education platform",
+  "license": "ISC",
+  "author": "ABHISHEK KUMAR",
+  "type": "commonjs",
+  "main": "server.js",
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "test": "node --test",
+    "migrate": "node database/migrate.js",
+    "seed": "node database/seed.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "connect-flash": "^0.1.1",
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.4.1",
+    "express-session": "^1.18.1",
+    "express-validator": "^7.2.0",
+    "method-override": "^3.0.0",
+    "multer": "^2.4.0",
+    "mysql2": "^3.11.4",
+    "nodemailer": "^10.1.7"
+  }
+}

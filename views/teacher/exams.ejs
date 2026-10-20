@@ -1,0 +1,102 @@
+<%- include('../partials/head', { title: 'Manage Examinations – Smart Learning' }) %>
+<%- include('../partials/topbar') %>
+<%- include('../partials/sidebar') %>
+
+<main class="slw-content">
+  <%- include('../partials/flash') %>
+
+  <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+    <div>
+      <h1 class="page-title">Manage Examinations</h1>
+      <div class="page-subtitle mb-0">Schedule, author, and evaluate online tests for your courses.</div>
+    </div>
+    <a href="/teacher/exams/new" class="btn btn-primary-slw">
+      <span class="material-symbols-outlined fs-5">add</span>
+      <span>Create New Exam</span>
+    </a>
+  </div>
+
+  <% if (exams && exams.length > 0) { %>
+    <div class="card-slw overflow-hidden">
+      <div class="table-responsive">
+        <table class="table-slw">
+          <thead>
+            <tr>
+              <th>Course</th>
+              <th>Exam Title</th>
+              <th>Duration</th>
+              <th>Marks</th>
+              <th>Questions</th>
+              <th>Attempts</th>
+              <th>Status</th>
+              <th class="text-end">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% exams.forEach(e => { %>
+              <tr>
+                <td>
+                  <span class="badge-slw badge-primary"><%= e.course_code %></span>
+                  <div class="small text-muted"><%= e.course_title %></div>
+                </td>
+                <td class="fw-semibold"><%= e.title %></td>
+                <td><%= e.duration_minutes %> mins</td>
+                <td>
+                  <strong><%= e.total_marks %></strong>
+                  <span class="text-muted small">(Pass: <%= e.pass_marks %>)</span>
+                </td>
+                <td>
+                  <span class="badge-slw badge-neutral"><%= e.questionCount || 0 %> Qs</span>
+                </td>
+                <td>
+                  <span class="badge-slw badge-neutral"><%= e.attemptCount || 0 %> Submissions</span>
+                </td>
+                <td>
+                  <% if (e.status === 'published') { %>
+                    <span class="badge-slw badge-success">Published</span>
+                  <% } else if (e.status === 'draft') { %>
+                    <span class="badge-slw badge-warning">Draft</span>
+                  <% } else { %>
+                    <span class="badge-slw badge-neutral">Closed</span>
+                  <% } %>
+                </td>
+                <td class="text-end">
+                  <div class="d-inline-flex gap-1 flex-wrap">
+                    <a href="/teacher/exams/<%= e.id %>/questions/new" class="btn btn-sm btn-outline-slw py-1 px-2" title="Manage Questions">
+                      <span class="material-symbols-outlined fs-6">help</span>
+                      <span>Questions</span>
+                    </a>
+                    <a href="/teacher/exams/<%= e.id %>/results" class="btn btn-sm btn-outline-secondary py-1 px-2" title="View Results">
+                      <span class="material-symbols-outlined fs-6">analytics</span>
+                      <span>Results</span>
+                    </a>
+                    <a href="/teacher/exams/<%= e.id %>/edit" class="btn btn-sm btn-outline-secondary py-1 px-2" title="Edit Settings">
+                      <span class="material-symbols-outlined fs-6">edit</span>
+                    </a>
+                    <button type="button" 
+                            class="btn btn-sm btn-outline-danger py-1 px-2" 
+                            data-method="delete" 
+                            data-action="/teacher/exams/<%= e.id %>"
+                            data-confirm="Delete this exam and all student attempts? This cannot be undone."
+                            title="Delete Exam">
+                      <span class="material-symbols-outlined fs-6">delete</span>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  <% } else { %>
+    <div class="card-slw p-5 text-center text-muted">
+      <span class="material-symbols-outlined fs-1 mb-2">quiz</span>
+      <h2 class="h5">No exams scheduled yet</h2>
+      <p class="small mb-3">Create your first online exam with questions, passing marks, and time limits.</p>
+      <a href="/teacher/exams/new" class="btn btn-primary-slw">Create Examination</a>
+    </div>
+  <% } %>
+</main>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,54 @@
+<%- include('../partials/head', { title: `Feedback – ${course.title}` }) %>
+<%- include('../partials/topbar') %>
+<%- include('../partials/sidebar') %>
+
+<main class="slw-content">
+  <%- include('../partials/flash') %>
+
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card-slw p-4 p-md-5">
+        <div class="d-flex align-items-center gap-2 mb-2">
+          <span class="badge-slw badge-primary"><%= course.code %></span>
+          <span class="badge-slw badge-neutral"><%= course.category || 'General' %></span>
+        </div>
+
+        <h1 class="page-title mb-1">Submit Course Feedback</h1>
+        <div class="page-subtitle mb-4">Provide constructive insights on <%= course.title %>.</div>
+
+        <form action="/student/feedback/<%= course.id %>" method="POST">
+          <div class="mb-4">
+            <label class="form-label fw-bold">Overall Rating (1 - 5 Stars)</label>
+            <div class="d-flex gap-3 align-items-center flex-wrap">
+              <% for (let r = 5; r >= 1; r--) { %>
+                <div class="form-check form-check-inline m-0">
+                  <input class="form-check-input" type="radio" name="rating" id="rating_<%= r %>" value="<%= r %>" <%= r === 5 ? 'checked' : '' %>>
+                  <label class="form-check-label d-flex align-items-center gap-1" for="rating_<%= r %>">
+                    <span class="fw-bold"><%= r %></span>
+                    <span class="material-symbols-outlined text-warning fs-5">star</span>
+                  </label>
+                </div>
+              <% } %>
+            </div>
+            <div class="form-text small">5 = Excellent, 1 = Needs significant improvement.</div>
+          </div>
+
+          <div class="mb-4">
+            <label for="comment" class="form-label fw-bold">Detailed Comments & Feedback</label>
+            <textarea class="form-control" id="comment" name="comment" rows="5" placeholder="Share your experience regarding syllabus clarity, lecture quality, study materials, or difficulty of exams..."></textarea>
+          </div>
+
+          <div class="d-flex justify-content-between align-items-center">
+            <a href="/student/feedback" class="btn btn-outline-slw">Cancel</a>
+            <button type="submit" class="btn btn-primary-slw px-4">
+              <span>Submit Feedback</span>
+              <span class="material-symbols-outlined fs-6">send</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</main>
+
+<%- include('../partials/footer') %>

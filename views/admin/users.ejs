@@ -1,0 +1,133 @@
+<%- include('../partials/head', { title: 'User Accounts – Smart Learning' }) %>
+<%- include('../partials/topbar') %>
+<%- include('../partials/sidebar') %>
+
+<main class="slw-content">
+  <%- include('../partials/flash') %>
+
+  <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+    <div>
+      <h1 class="page-title">User Accounts</h1>
+      <div class="page-subtitle mb-0">Manage platform users, roles, and account access statuses.</div>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="card-slw p-3 mb-4">
+    <form action="/admin/users" method="GET" class="row g-2 align-items-center">
+      <div class="col-md-5">
+        <div class="input-group">
+          <span class="input-group-text bg-white border-end-0">
+            <span class="material-symbols-outlined text-muted">search</span>
+          </span>
+          <input type="text" name="search" class="form-control border-start-0" placeholder="Search by name or email..." value="<%= search %>">
+        </div>
+      </div>
+      <div class="col-md-3">
+        <select name="roleId" class="form-select">
+          <option value="">All Roles</option>
+          <% (roles || []).forEach(r => { %>
+            <option value="<%= r.id %>" <%= String(roleId) === String(r.id) ? 'selected' : '' %>>
+              <%= r.name.charAt(0).toUpperCase() + r.name.slice(1) %>
+            </option>
+          <% }) %>
+        </select>
+      </div>
+      <div class="col-md-2">
+        <select name="status" class="form-select">
+          <option value="">All Statuses</option>
+          <option value="active" <%= status === 'active' ? 'selected' : '' %>>Active</option>
+          <option value="inactive" <%= status === 'inactive' ? 'selected' : '' %>>Inactive</option>
+          <option value="suspended" <%= status === 'suspended' ? 'selected' : '' %>>Suspended</option>
+        </select>
+      </div>
+      <div class="col-md-2">
+        <button type="submit" class="btn btn-outline-slw w-100 justify-content-center">Filter</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Users Table -->
+  <% if (users && users.length > 0) { %>
+    <div class="card-slw overflow-hidden mb-4">
+      <div class="table-responsive">
+        <table class="table-slw">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Full Name</th>
+              <th>Email Address</th>
+              <th>Role</th>
+              <th>Account Status</th>
+              <th>Registered</th>
+              <th class="text-end">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% users.forEach(u => { %>
+              <tr>
+                <td class="text-muted small">#<%= u.id %></td>
+                <td>
+                  <div class="fw-semibold"><%= u.full_name %></div>
+                </td>
+                <td class="small text-muted"><%= u.email %></td>
+                <td>
+                  <span class="badge-slw badge-primary text-capitalize"><%= u.role %></span>
+                </td>
+                <td>
+                  <% if (u.status === 'active') { %>
+                    <span class="badge-slw badge-success">Active</span>
+                  <% } else if (u.status === 'suspended') { %>
+                    <span class="badge-slw badge-error">Suspended</span>
+                  <% } else { %>
+                    <span class="badge-slw badge-neutral text-capitalize"><%= u.status %></span>
+                  <% } %>
+                </td>
+                <td class="small text-muted"><%= new Date(u.created_at).toLocaleDateString() %></td>
+                <td class="text-end">
+                  <div class="d-inline-flex gap-1">
+                    <a href="/admin/users/<%= u.id %>/edit" class="btn btn-sm btn-outline-slw py-1 px-2" title="Edit User">
+                      <span class="material-symbols-outlined fs-6">edit</span>
+                    </a>
+                    <% if (u.id !== currentUser.id) { %>
+                      <button type="button" 
+                              class="btn btn-sm btn-outline-danger py-1 px-2" 
+                              data-method="delete" 
+                              data-action="/admin/users/<%= u.id %>"
+                              data-confirm="Delete user <%= u.full_name %>? All profile data and attempts will be deleted."
+                              title="Delete User">
+                        <span class="material-symbols-outlined fs-6">delete</span>
+                      </button>
+                    <% } %>
+                  </div>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <% if (totalPages > 1) { %>
+      <nav class="d-flex justify-content-center">
+        <ul class="pagination">
+          <% for (let i = 1; i <= totalPages; i++) { %>
+            <li class="page-item <%= page === i ? 'active' : '' %>">
+              <a class="page-link" href="/admin/users?page=<%= i %>&search=<%= encodeURIComponent(search) %>&roleId=<%= roleId %>&status=<%= status %>"><%= i %></a>
+            </li>
+          <% } %>
+        </ul>
+      </nav>
+    <% } %>
+
+  <% } else { %>
+    <div class="card-slw p-5 text-center text-muted">
+      <span class="material-symbols-outlined fs-1 mb-2">person_search</span>
+      <h2 class="h5">No users found</h2>
+      <p class="small mb-0">Try clearing filters or adjusting search keywords.</p>
+    </div>
+  <% } %>
+</main>
+
+<%- include('../partials/footer') %>

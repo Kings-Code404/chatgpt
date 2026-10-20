@@ -1,0 +1,161 @@
+<%- include('../partials/head', { title: `Questions: ${exam.title}` }) %>
+<%- include('../partials/topbar') %>
+<%- include('../partials/sidebar') %>
+
+<main class="slw-content">
+  <%- include('../partials/flash') %>
+
+  <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+    <div>
+      <div class="d-flex align-items-center gap-2 mb-1">
+        <span class="badge-slw badge-primary"><%= exam.course_code %></span>
+        <h1 class="page-title mb-0"><%= exam.title %></h1>
+      </div>
+      <div class="page-subtitle mb-0">Manage examination questions and multiple choice options.</div>
+    </div>
+    <div class="d-flex gap-2">
+      <a href="/teacher/exams" class="btn btn-outline-slw">
+        <span class="material-symbols-outlined fs-6">arrow_back</span>
+        <span>Back to Exams</span>
+      </a>
+      <button class="btn btn-primary-slw" data-bs-toggle="collapse" data-bs-target="#newQuestionCollapse">
+        <span class="material-symbols-outlined fs-6">add</span>
+        <span>Add New Question</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Collapsible Add Question Form -->
+  <div class="collapse mb-4" id="newQuestionCollapse">
+    <div class="card-slw p-4">
+      <h2 class="h5 fw-bold mb-3">Add Question</h2>
+
+      <form action="/teacher/exams/<%= exam.id %>/questions" method="POST">
+        <div class="row g-3 mb-3">
+          <div class="col-md-8">
+            <label for="question_text" class="form-label">Question Text</label>
+            <textarea class="form-control" id="question_text" name="question_text" rows="2" placeholder="e.g. Which keyword is used to declare a constant in JavaScript?" required></textarea>
+          </div>
+          <div class="col-md-2">
+            <label for="question_type" class="form-label">Question Type</label>
+            <select class="form-select" id="question_type" name="question_type" onchange="toggleOptionFields(this.value)">
+              <option value="mcq" selected>MCQ (Multiple Choice)</option>
+              <option value="true_false">True / False</option>
+              <option value="short_answer">Short Answer (Subjective)</option>
+            </select>
+          </div>
+          <div class="col-md-2">
+            <label for="marks" class="form-label">Marks</label>
+            <input type="number" class="form-control" id="marks" name="marks" value="2" min="1" max="50" required>
+          </div>
+        </div>
+
+        <!-- MCQ Options Section -->
+        <div id="mcqOptionsSection" class="p-3 rounded-3 bg-light border mb-3">
+          <label class="form-label fw-bold mb-2">Options (Fill text and select the radio for the correct option):</label>
+          <div class="row g-2">
+            <% for (let i = 0; i < 4; i++) { %>
+              <div class="col-md-6">
+                <div class="input-group">
+                  <div class="input-group-text">
+                    <input class="form-check-input mt-0" type="radio" name="correct_option" value="<%= i %>" <%= i === 0 ? 'checked' : '' %> title="Mark as correct">
+                  </div>
+                  <input type="text" class="form-control" name="options[]" placeholder="Option <%= String.fromCharCode(65 + i) %>" <%= i < 2 ? 'required' : '' %>>
+                </div>
+              </div>
+            <% } %>
+          </div>
+        </div>
+
+        <!-- True/False Section (hidden by default) -->
+        <div id="tfOptionsSection" class="p-3 rounded-3 bg-light border mb-3" style="display: none;">
+          <label class="form-label fw-bold mb-2">Select Correct Answer:</label>
+          <div class="d-flex gap-4">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="tf_correct" id="tf_true" value="True" checked>
+              <label class="form-check-label fw-semibold" for="tf_true">True</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="tf_correct" id="tf_false" value="False">
+              <label class="form-check-label fw-semibold" for="tf_false">False</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-end gap-2">
+          <button type="button" class="btn btn-outline-slw" data-bs-toggle="collapse" data-bs-target="#newQuestionCollapse">Cancel</button>
+          <button type="submit" class="btn btn-primary-slw px-4">
+            <span>Save Question</span>
+            <span class="material-symbols-outlined fs-6">save</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Existing Questions List -->
+  <% if (questions && questions.length > 0) { %>
+    <div class="d-flex flex-column gap-3">
+      <% questions.forEach((q, idx) => { %>
+        <div class="card-slw p-4">
+          <div class="d-flex justify-content-between align-items-start mb-2">
+            <div class="d-flex align-items-center gap-2">
+              <span class="badge-slw badge-primary">Q<%= idx + 1 %></span>
+              <span class="badge-slw badge-neutral"><%= q.marks %> Marks</span>
+              <span class="badge-slw badge-neutral text-uppercase small"><%= q.question_type.replace('_', ' ') %></span>
+            </div>
+            <form action="/teacher/questions/<%= q.id %>" method="POST" class="m-0" onsubmit="return confirm('Delete this question?');">
+              <input type="hidden" name="_method" value="DELETE">
+              <button type="submit" class="btn btn-sm btn-outline-danger py-0 px-2" title="Delete Question">
+                <span class="material-symbols-outlined fs-6">delete</span>
+              </button>
+            </form>
+          </div>
+
+          <div class="fs-6 fw-medium text-dark mb-3"><%= q.question_text %></div>
+
+          <!-- Options Preview -->
+          <% if (q.options && q.options.length > 0) { %>
+            <div class="row g-2">
+              <% q.options.forEach(opt => { %>
+                <div class="col-md-6">
+                  <div class="p-2 rounded-2 border <%= opt.is_correct ? 'bg-success-subtle border-success' : 'bg-light' %> d-flex align-items-center justify-content-between small">
+                    <span><%= opt.option_text %></span>
+                    <% if (opt.is_correct) { %>
+                      <span class="badge bg-success">Correct</span>
+                    <% } %>
+                  </div>
+                </div>
+              <% }) %>
+            </div>
+          <% } %>
+        </div>
+      <% }) %>
+    </div>
+  <% } else { %>
+    <div class="card-slw p-5 text-center text-muted">
+      <span class="material-symbols-outlined fs-1 mb-2">help</span>
+      <h2 class="h5">No questions added yet</h2>
+      <p class="small mb-3">Click the "Add New Question" button above to add MCQs, True/False, or Short Answer questions.</p>
+    </div>
+  <% } %>
+</main>
+
+<script>
+function toggleOptionFields(type) {
+  const mcq = document.getElementById('mcqOptionsSection');
+  const tf = document.getElementById('tfOptionsSection');
+  if (type === 'mcq') {
+    mcq.style.display = 'block';
+    tf.style.display = 'none';
+  } else if (type === 'true_false') {
+    mcq.style.display = 'none';
+    tf.style.display = 'block';
+  } else {
+    mcq.style.display = 'none';
+    tf.style.display = 'none';
+  }
+}
+</script>
+
+<%- include('../partials/footer') %>

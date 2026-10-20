@@ -1,0 +1,211 @@
+<%- include('../partials/head', { title: 'Admin Dashboard – Smart Learning' }) %>
+<%- include('../partials/topbar') %>
+<%- include('../partials/sidebar') %>
+
+<main class="slw-content">
+  <%- include('../partials/flash') %>
+
+  <!-- Header -->
+  <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+    <div>
+      <h1 class="page-title">Institutional Overview</h1>
+      <div class="page-subtitle mb-0">System metrics, active user accounts, and academic operations.</div>
+    </div>
+    <div class="d-flex gap-2">
+      <a href="/admin/courses/new" class="btn btn-outline-slw">
+        <span class="material-symbols-outlined fs-5">add</span>
+        <span>Add Course</span>
+      </a>
+      <a href="/admin/notifications/new" class="btn btn-primary-slw">
+        <span class="material-symbols-outlined fs-5">campaign</span>
+        <span>Broadcast Alert</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Real Statistics Metric Cards -->
+  <div class="row g-3 mb-4">
+    <div class="col-sm-6 col-xl-3">
+      <div class="stat-card">
+        <div class="stat-icon stat-icon-blue">
+          <span class="material-symbols-outlined">group</span>
+        </div>
+        <div>
+          <div class="stat-value"><%= stats.users || 0 %></div>
+          <div class="stat-label">Total Users (<%= stats.students %> Stu / <%= stats.teachers %> Fac)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6 col-xl-3">
+      <div class="stat-card">
+        <div class="stat-icon stat-icon-purple">
+          <span class="material-symbols-outlined">school</span>
+        </div>
+        <div>
+          <div class="stat-value"><%= stats.courses || 0 %></div>
+          <div class="stat-label">Active Courses</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6 col-xl-3">
+      <div class="stat-card">
+        <div class="stat-icon stat-icon-green">
+          <span class="material-symbols-outlined">how_to_reg</span>
+        </div>
+        <div>
+          <div class="stat-value"><%= stats.enrollments || 0 %></div>
+          <div class="stat-label">Total Enrollments</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6 col-xl-3">
+      <div class="stat-card">
+        <div class="stat-icon stat-icon-orange">
+          <span class="material-symbols-outlined">quiz</span>
+        </div>
+        <div>
+          <div class="stat-value"><%= stats.exams || 0 %></div>
+          <div class="stat-label">Exams Created</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Grid: Recent Users & Recent Courses -->
+  <div class="row g-4 mb-4">
+    <!-- Recent Registered Users -->
+    <div class="col-lg-6">
+      <div class="card-slw p-4 h-100">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h2 class="h5 fw-bold mb-0">Recent User Registrations</h2>
+          <a href="/admin/users" class="small text-decoration-none fw-semibold">Manage All</a>
+        </div>
+
+        <% if (recentUsers && recentUsers.length > 0) { %>
+          <div class="table-responsive">
+            <table class="table-slw">
+              <thead>
+                <tr>
+                  <th>User</th>
+                  <th>Role</th>
+                  <th>Status</th>
+                  <th>Registered</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% recentUsers.forEach(u => { %>
+                  <tr>
+                    <td>
+                      <div class="fw-semibold"><%= u.full_name %></div>
+                      <div class="small text-muted"><%= u.email %></div>
+                    </td>
+                    <td>
+                      <span class="badge-slw badge-primary text-capitalize"><%= u.role_name %></span>
+                    </td>
+                    <td>
+                      <% if (u.status === 'active') { %>
+                        <span class="badge-slw badge-success">Active</span>
+                      <% } else { %>
+                        <span class="badge-slw badge-error text-capitalize"><%= u.status %></span>
+                      <% } %>
+                    </td>
+                    <td class="small text-muted"><%= new Date(u.created_at).toLocaleDateString() %></td>
+                  </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          </div>
+        <% } else { %>
+          <p class="text-muted small mb-0">No registered users found.</p>
+        <% } %>
+      </div>
+    </div>
+
+    <!-- Recent Courses -->
+    <div class="col-lg-6">
+      <div class="card-slw p-4 h-100">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h2 class="h5 fw-bold mb-0">Course Offerings</h2>
+          <a href="/admin/courses" class="small text-decoration-none fw-semibold">View All Courses</a>
+        </div>
+
+        <% if (recentCourses && recentCourses.length > 0) { %>
+          <div class="table-responsive">
+            <table class="table-slw">
+              <thead>
+                <tr>
+                  <th>Code</th>
+                  <th>Course Title</th>
+                  <th>Category</th>
+                  <th>Enrolled</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% recentCourses.forEach(c => { %>
+                  <tr>
+                    <td><span class="badge-slw badge-primary"><%= c.code %></span></td>
+                    <td class="fw-semibold"><%= c.title %></td>
+                    <td class="small text-muted"><%= c.category || 'General' %></td>
+                    <td>
+                      <span class="badge-slw badge-neutral"><%= c.student_count || 0 %> Students</span>
+                    </td>
+                  </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          </div>
+        <% } else { %>
+          <p class="text-muted small mb-0">No courses listed yet.</p>
+        <% } %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Admin Links -->
+  <div class="card-slw p-4">
+    <h2 class="h5 fw-bold mb-3">Administrative Operations Quick Access</h2>
+    <div class="row g-3">
+      <div class="col-md-3">
+        <a href="/admin/users" class="p-3 rounded-3 bg-light border d-flex align-items-center gap-3 text-dark text-decoration-none hover-shadow">
+          <span class="material-symbols-outlined text-primary fs-4">manage_accounts</span>
+          <div>
+            <div class="fw-semibold">User Accounts</div>
+            <div class="small text-muted">Manage roles & status</div>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-3">
+        <a href="/admin/enrollments" class="p-3 rounded-3 bg-light border d-flex align-items-center gap-3 text-dark text-decoration-none hover-shadow">
+          <span class="material-symbols-outlined text-success fs-4">how_to_reg</span>
+          <div>
+            <div class="fw-semibold">Enrollments</div>
+            <div class="small text-muted">Student-course rosters</div>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-3">
+        <a href="/admin/resources" class="p-3 rounded-3 bg-light border d-flex align-items-center gap-3 text-dark text-decoration-none hover-shadow">
+          <span class="material-symbols-outlined text-purple fs-4" style="color: #4b41e1;">folder_open</span>
+          <div>
+            <div class="fw-semibold">Study Resources</div>
+            <div class="small text-muted">Files & documents audit</div>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-3">
+        <a href="/admin/feedback" class="p-3 rounded-3 bg-light border d-flex align-items-center gap-3 text-dark text-decoration-none hover-shadow">
+          <span class="material-symbols-outlined text-warning fs-4">rate_review</span>
+          <div>
+            <div class="fw-semibold">Course Reviews</div>
+            <div class="small text-muted">Student feedback moderation</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<%- include('../partials/footer') %>

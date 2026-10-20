@@ -1,0 +1,86 @@
+<%- include('../partials/head', { title: 'Online Examinations – Smart Learning' }) %>
+<%- include('../partials/topbar') %>
+<%- include('../partials/sidebar') %>
+
+<main class="slw-content">
+  <%- include('../partials/flash') %>
+
+  <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+    <div>
+      <h1 class="page-title">Online Examinations</h1>
+      <div class="page-subtitle mb-0">Active and upcoming examinations for your enrolled courses.</div>
+    </div>
+    <a href="/student/results" class="btn btn-outline-slw">
+      <span class="material-symbols-outlined fs-6">analytics</span>
+      <span>View Past Results</span>
+    </a>
+  </div>
+
+  <% if (exams && exams.length > 0) { %>
+    <div class="row g-4">
+      <% exams.forEach(exam => { %>
+        <div class="col-md-6 col-lg-6">
+          <div class="card-slw p-4 h-100 d-flex flex-column">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <span class="badge-slw badge-primary"><%= exam.code %></span>
+              <span class="badge-slw badge-neutral"><%= exam.duration_minutes %> Minutes</span>
+            </div>
+
+            <h2 class="h5 fw-bold mb-2"><%= exam.title %></h2>
+            <div class="text-muted small mb-1"><%= exam.course_title %></div>
+
+            <% if (exam.description) { %>
+              <p class="text-muted small mb-3"><%= exam.description %></p>
+            <% } %>
+
+            <div class="p-3 rounded-3 bg-light border mb-4 mt-auto">
+              <div class="row g-2 text-center small">
+                <div class="col-4 border-end">
+                  <div class="text-muted">Total Marks</div>
+                  <div class="fw-bold"><%= exam.total_marks %></div>
+                </div>
+                <div class="col-4 border-end">
+                  <div class="text-muted">Passing</div>
+                  <div class="fw-bold text-success"><%= exam.pass_marks %></div>
+                </div>
+                <div class="col-4">
+                  <div class="text-muted">Attempts</div>
+                  <div class="fw-bold"><%= exam.attempts_count || 0 %> / <%= exam.attempt_limit %></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="small text-muted">
+                <% if (exam.best_score !== null && typeof exam.best_score !== 'undefined') { %>
+                  Best Score: <strong class="text-primary"><%= exam.best_score %></strong> / <%= exam.total_marks %>
+                <% } else { %>
+                  Not attempted yet
+                <% } %>
+              </div>
+
+              <% if ((exam.attempts_count || 0) < exam.attempt_limit) { %>
+                <form action="/student/exams/<%= exam.id %>/start" method="POST" class="m-0" onsubmit="return confirm('Starting this exam will begin the timer. Are you ready?');">
+                  <button type="submit" class="btn btn-primary-slw">
+                    <span>Start Exam</span>
+                    <span class="material-symbols-outlined fs-6">play_arrow</span>
+                  </button>
+                </form>
+              <% } else { %>
+                <button type="button" class="btn btn-secondary disabled" disabled>Max Attempts Reached</button>
+              <% } %>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  <% } else { %>
+    <div class="card-slw p-5 text-center text-muted">
+      <span class="material-symbols-outlined fs-1 mb-2">quiz</span>
+      <h2 class="h5">No exams scheduled at this time</h2>
+      <p class="small mb-0">Examinations for your enrolled courses will appear here once published by faculty.</p>
+    </div>
+  <% } %>
+</main>
+
+<%- include('../partials/footer') %>

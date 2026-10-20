@@ -1,0 +1,85 @@
+<%- include('../partials/head', { title: 'Study Resources Oversight – Smart Learning' }) %>
+<%- include('../partials/topbar') %>
+<%- include('../partials/sidebar') %>
+
+<main class="slw-content">
+  <%- include('../partials/flash') %>
+
+  <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+    <div>
+      <h1 class="page-title">Study Resources Oversight</h1>
+      <div class="page-subtitle mb-0">Audit all academic documents and course materials uploaded to the system.</div>
+    </div>
+  </div>
+
+  <% if (resources && resources.length > 0) { %>
+    <div class="card-slw overflow-hidden">
+      <div class="table-responsive">
+        <table class="table-slw">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Course</th>
+              <th>Uploaded By</th>
+              <th>File Name</th>
+              <th>Format</th>
+              <th>Size</th>
+              <th>Uploaded Date</th>
+              <th class="text-end">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% resources.forEach(res => { %>
+              <tr>
+                <td>
+                  <div class="fw-semibold"><%= res.title %></div>
+                  <% if (res.description) { %>
+                    <div class="small text-muted"><%= res.description %></div>
+                  <% } %>
+                </td>
+                <td>
+                  <span class="badge-slw badge-primary"><%= res.course_code %></span>
+                  <div class="small text-muted"><%= res.course_title %></div>
+                </td>
+                <td class="small text-muted"><%= res.uploader_name || 'Faculty' %></td>
+                <td class="small text-muted"><%= res.original_name %></td>
+                <td>
+                  <span class="badge-slw badge-neutral small">
+                    <%= res.file_type ? res.file_type.split('/').pop().toUpperCase() : 'FILE' %>
+                  </span>
+                </td>
+                <td class="small text-muted">
+                  <%= res.file_size ? (res.file_size / (1024 * 1024)).toFixed(2) + ' MB' : '--' %>
+                </td>
+                <td class="small text-muted"><%= new Date(res.created_at).toLocaleDateString() %></td>
+                <td class="text-end">
+                  <div class="d-inline-flex gap-1">
+                    <a href="/student/resources/<%= res.id %>/download" class="btn btn-sm btn-outline-slw py-1 px-2" title="Download">
+                      <span class="material-symbols-outlined fs-6">download</span>
+                    </a>
+                    <button type="button" 
+                            class="btn btn-sm btn-outline-danger py-1 px-2" 
+                            data-method="delete" 
+                            data-action="/admin/resources/<%= res.id %>"
+                            data-confirm="Delete this study resource file from the server?"
+                            title="Delete File">
+                      <span class="material-symbols-outlined fs-6">delete</span>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  <% } else { %>
+    <div class="card-slw p-5 text-center text-muted">
+      <span class="material-symbols-outlined fs-1 mb-2">folder_open</span>
+      <h2 class="h5">No study materials uploaded yet</h2>
+      <p class="small mb-0">Documents uploaded by faculty will appear here for administrative oversight.</p>
+    </div>
+  <% } %>
+</main>
+
+<%- include('../partials/footer') %>

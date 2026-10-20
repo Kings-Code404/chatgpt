@@ -1,0 +1,79 @@
+<%- include('../partials/head', { title: 'Notification Center – Smart Learning' }) %>
+<%- include('../partials/topbar') %>
+<%- include('../partials/sidebar') %>
+
+<main class="slw-content">
+  <%- include('../partials/flash') %>
+
+  <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+    <div>
+      <h1 class="page-title">Notification Center</h1>
+      <div class="page-subtitle mb-0">Official announcements and academic updates.</div>
+    </div>
+    <% if (unreadCount > 0) { %>
+      <form action="/student/notifications/read-all" method="POST" class="m-0">
+        <button type="submit" class="btn btn-outline-slw btn-sm">
+          <span class="material-symbols-outlined fs-6">mark_email_read</span>
+          <span>Mark All as Read (<%= unreadCount %>)</span>
+        </button>
+      </form>
+    <% } %>
+  </div>
+
+  <% if (notifications && notifications.length > 0) { %>
+    <div class="d-flex flex-column gap-3 mb-4">
+      <% notifications.forEach(n => { %>
+        <div class="card-slw p-4 <%= n.is_read ? 'opacity-75' : 'border-primary' %> position-relative">
+          <div class="d-flex justify-content-between align-items-start gap-3 mb-2">
+            <div class="d-flex align-items-center gap-2">
+              <% if (!n.is_read) { %>
+                <span class="badge-slw badge-primary">New</span>
+              <% } %>
+              <h2 class="h5 fw-bold mb-0"><%= n.title %></h2>
+            </div>
+            <div class="small text-muted"><%= new Date(n.created_at).toLocaleString() %></div>
+          </div>
+
+          <p class="text-muted small mb-3" style="white-space: pre-line;"><%= n.message %></p>
+
+          <div class="d-flex justify-content-between align-items-center pt-2 border-top">
+            <span class="badge-slw badge-neutral text-capitalize">Target: <%= n.target_role %></span>
+
+            <% if (!n.is_read) { %>
+              <form action="/student/notifications/<%= n.id %>/read" method="POST" class="m-0">
+                <button type="submit" class="btn btn-sm btn-link text-primary text-decoration-none p-0">Mark as Read</button>
+              </form>
+            <% } else { %>
+              <span class="small text-muted d-flex align-items-center gap-1">
+                <span class="material-symbols-outlined fs-6 text-success">done_all</span>
+                <span>Read <%= n.read_at ? new Date(n.read_at).toLocaleDateString() : '' %></span>
+              </span>
+            <% } %>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+
+    <!-- Pagination -->
+    <% if (totalPages > 1) { %>
+      <nav class="d-flex justify-content-center">
+        <ul class="pagination">
+          <% for (let i = 1; i <= totalPages; i++) { %>
+            <li class="page-item <%= page === i ? 'active' : '' %>">
+              <a class="page-link" href="/student/notifications?page=<%= i %>"><%= i %></a>
+            </li>
+          <% } %>
+        </ul>
+      </nav>
+    <% } %>
+
+  <% } else { %>
+    <div class="card-slw p-5 text-center text-muted">
+      <span class="material-symbols-outlined fs-1 mb-2">notifications_off</span>
+      <h2 class="h5">No notifications in your inbox</h2>
+      <p class="small mb-0">Announcements from administration or your teachers will be delivered here.</p>
+    </div>
+  <% } %>
+</main>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,128 @@
+<% if (typeof currentUser !== 'undefined' && currentUser) { %>
+<aside class="slw-sidebar" id="slwSidebar">
+  <div class="px-3 mb-2">
+    <div class="p-2 rounded-3 bg-light d-flex align-items-center gap-2">
+      <div class="avatar flex-shrink-0" style="width: 32px; height: 32px; font-size: 0.8rem;">
+        <%= currentUser.full_name ? currentUser.full_name.charAt(0).toUpperCase() : 'U' %>
+      </div>
+      <div class="overflow-hidden">
+        <div class="fw-semibold text-truncate small"><%= currentUser.full_name %></div>
+        <span class="badge-slw badge-primary text-uppercase" style="font-size: 0.65rem;"><%= currentUser.role %></span>
+      </div>
+    </div>
+  </div>
+
+  <% if (currentUser.role === 'student') { %>
+    <div class="nav-section-title">Academic Learning</div>
+    <a href="/student/dashboard" class="slw-nav-item">
+      <span class="material-symbols-outlined">dashboard</span>
+      <span>Dashboard</span>
+    </a>
+    <a href="/student/courses" class="slw-nav-item">
+      <span class="material-symbols-outlined">school</span>
+      <span>Courses Catalog</span>
+    </a>
+    <a href="/student/exams" class="slw-nav-item">
+      <span class="material-symbols-outlined">quiz</span>
+      <span>Online Exams</span>
+    </a>
+    <a href="/student/results" class="slw-nav-item">
+      <span class="material-symbols-outlined">analytics</span>
+      <span>Exam Results</span>
+    </a>
+
+    <div class="nav-section-title">Support & Communication</div>
+    <a href="/student/notifications" class="slw-nav-item">
+      <span class="material-symbols-outlined">notifications</span>
+      <span>Notifications</span>
+    </a>
+    <a href="/student/feedback" class="slw-nav-item">
+      <span class="material-symbols-outlined">rate_review</span>
+      <span>Course Feedback</span>
+    </a>
+    <a href="/student/profile" class="slw-nav-item">
+      <span class="material-symbols-outlined">person</span>
+      <span>My Profile</span>
+    </a>
+
+  <% } else if (currentUser.role === 'teacher') { %>
+    <div class="nav-section-title">Academic Management</div>
+    <a href="/teacher/dashboard" class="slw-nav-item">
+      <span class="material-symbols-outlined">dashboard</span>
+      <span>Dashboard</span>
+    </a>
+    <a href="/teacher/courses" class="slw-nav-item">
+      <span class="material-symbols-outlined">menu_book</span>
+      <span>Assigned Courses</span>
+    </a>
+    <a href="/teacher/exams" class="slw-nav-item">
+      <span class="material-symbols-outlined">quiz</span>
+      <span>Manage Exams</span>
+    </a>
+
+    <div class="nav-section-title">Feedback & Records</div>
+    <a href="/teacher/feedback" class="slw-nav-item">
+      <span class="material-symbols-outlined">rate_review</span>
+      <span>Student Feedback</span>
+    </a>
+    <a href="/teacher/notifications" class="slw-nav-item">
+      <span class="material-symbols-outlined">notifications</span>
+      <span>Notifications</span>
+    </a>
+    <a href="/teacher/profile" class="slw-nav-item">
+      <span class="material-symbols-outlined">person</span>
+      <span>Profile & Bio</span>
+    </a>
+
+  <% } else if (currentUser.role === 'admin') { %>
+    <div class="nav-section-title">System Management</div>
+    <a href="/admin/dashboard" class="slw-nav-item">
+      <span class="material-symbols-outlined">dashboard</span>
+      <span>Admin Overview</span>
+    </a>
+    <a href="/admin/users" class="slw-nav-item">
+      <span class="material-symbols-outlined">group</span>
+      <span>Users & Accounts</span>
+    </a>
+    <a href="/admin/courses" class="slw-nav-item">
+      <span class="material-symbols-outlined">school</span>
+      <span>Courses</span>
+    </a>
+    <a href="/admin/enrollments" class="slw-nav-item">
+      <span class="material-symbols-outlined">how_to_reg</span>
+      <span>Enrollments</span>
+    </a>
+
+    <div class="nav-section-title">Academic Operations</div>
+    <a href="/admin/resources" class="slw-nav-item">
+      <span class="material-symbols-outlined">folder_open</span>
+      <span>Study Resources</span>
+    </a>
+    <a href="/admin/exams" class="slw-nav-item">
+      <span class="material-symbols-outlined">quiz</span>
+      <span>Examinations</span>
+    </a>
+    <a href="/admin/results" class="slw-nav-item">
+      <span class="material-symbols-outlined">analytics</span>
+      <span>Exam Results</span>
+    </a>
+    <a href="/admin/notifications" class="slw-nav-item">
+      <span class="material-symbols-outlined">campaign</span>
+      <span>Announcements</span>
+    </a>
+    <a href="/admin/feedback" class="slw-nav-item">
+      <span class="material-symbols-outlined">rate_review</span>
+      <span>Feedback Moderation</span>
+    </a>
+  <% } %>
+
+  <div class="mt-auto pt-3 border-top px-3">
+    <form action="/auth/logout" method="POST" class="m-0">
+      <button type="submit" class="slw-nav-item text-danger m-0 border-0 bg-transparent w-100 text-start">
+        <span class="material-symbols-outlined">logout</span>
+        <span>Sign Out</span>
+      </button>
+    </form>
+  </div>
+</aside>
+<% } %>

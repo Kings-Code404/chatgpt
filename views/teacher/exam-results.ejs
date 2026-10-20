@@ -1,0 +1,80 @@
+<%- include('../partials/head', { title: `Results: ${exam.title}` }) %>
+<%- include('../partials/topbar') %>
+<%- include('../partials/sidebar') %>
+
+<main class="slw-content">
+  <%- include('../partials/flash') %>
+
+  <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+    <div>
+      <div class="d-flex align-items-center gap-2 mb-1">
+        <span class="badge-slw badge-primary"><%= exam.course_code %></span>
+        <h1 class="page-title mb-0"><%= exam.title %> – Results</h1>
+      </div>
+      <div class="page-subtitle mb-0">Total Marks: <%= exam.total_marks %> &bull; Passing Threshold: <%= exam.pass_marks %></div>
+    </div>
+    <a href="/teacher/exams" class="btn btn-outline-slw">
+      <span class="material-symbols-outlined fs-6">arrow_back</span>
+      <span>Back to Exams</span>
+    </a>
+  </div>
+
+  <% if (attempts && attempts.length > 0) { %>
+    <div class="card-slw overflow-hidden">
+      <div class="table-responsive">
+        <table class="table-slw">
+          <thead>
+            <tr>
+              <th>Student Name</th>
+              <th>Student Email</th>
+              <th>Started At</th>
+              <th>Submitted At</th>
+              <th>Score Awarded</th>
+              <th>Status</th>
+              <th class="text-end">Details</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% attempts.forEach(att => { %>
+              <% const isPass = att.score !== null && att.score >= att.pass_marks; %>
+              <tr>
+                <td class="fw-semibold"><%= att.student_name %></td>
+                <td class="small text-muted"><%= att.student_email %></td>
+                <td class="small text-muted"><%= new Date(att.started_at).toLocaleString() %></td>
+                <td class="small text-muted">
+                  <%= att.submitted_at ? new Date(att.submitted_at).toLocaleString() : 'In Progress' %>
+                </td>
+                <td>
+                  <strong><%= att.score !== null ? att.score : '--' %></strong> / <%= att.total_marks %>
+                </td>
+                <td>
+                  <% if (att.status === 'in_progress') { %>
+                    <span class="badge-slw badge-warning">In Progress</span>
+                  <% } else if (isPass) { %>
+                    <span class="badge-slw badge-success">Passed</span>
+                  <% } else { %>
+                    <span class="badge-slw badge-error">Failed</span>
+                  <% } %>
+                </td>
+                <td class="text-end">
+                  <a href="/student/results/<%= att.id %>" class="btn btn-sm btn-outline-slw py-1 px-2" title="Inspect Attempt">
+                    <span class="material-symbols-outlined fs-6">visibility</span>
+                    <span>Review</span>
+                  </a>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  <% } else { %>
+    <div class="card-slw p-5 text-center text-muted">
+      <span class="material-symbols-outlined fs-1 mb-2">analytics</span>
+      <h2 class="h5">No student submissions for this exam yet</h2>
+      <p class="small mb-0">Once enrolled students take and submit this exam, their scores will be recorded here.</p>
+    </div>
+  <% } %>
+</main>
+
+<%- include('../partials/footer') %>

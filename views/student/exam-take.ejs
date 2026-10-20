@@ -1,0 +1,159 @@
+<%- include('../partials/head', { title: `Exam: ${exam.title}` }) %>
+
+<!-- Sticky Exam Header -->
+<header class="bg-white border-bottom shadow-sm sticky-top py-2 px-3 px-md-4">
+  <div class="container-fluid d-flex justify-content-between align-items-center">
+    <div>
+      <div class="d-flex align-items-center gap-2">
+        <span class="badge-slw badge-primary"><%= exam.code %></span>
+        <h1 class="h6 mb-0 fw-bold d-none d-sm-inline"><%= exam.title %></h1>
+      </div>
+      <div class="small text-muted"><%= questions ? questions.length : 0 %> Questions &bull; <%= exam.total_marks %> Total Marks</div>
+    </div>
+
+    <!-- Countdown Timer -->
+    <div class="d-flex align-items-center gap-3">
+      <div class="text-end">
+        <div class="small text-muted text-uppercase" style="font-size: 0.65rem; font-weight: 600;">Time Remaining</div>
+        <div class="exam-timer" id="examTimer" data-remaining="<%= remainingSeconds %>">
+          --:--
+        </div>
+      </div>
+      <button type="button" class="btn btn-primary-slw btn-sm px-3" data-bs-toggle="modal" data-bs-target="#submitExamModal">
+        <span>Submit Exam</span>
+        <span class="material-symbols-outlined fs-6">send</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="container-fluid py-4 px-3 px-md-4">
+  <div class="row g-4">
+    <!-- Left / Center: Question List -->
+    <div class="col-lg-9">
+      <form id="examForm" action="/student/attempts/<%= attempt.id %>/submit" method="POST" data-attempt-id="<%= attempt.id %>">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <% if (questions && questions.length > 0) { %>
+          <% questions.forEach((q, idx) => { %>
+            <% const currentAns = answersMap[q.id] || null; %>
+            <div class="card-slw p-4 mb-4 question-block" id="question_<%= idx + 1 %>" data-question-id="<%= q.id %>">
+              <div class="d-flex justify-content-between align-items-start mb-3">
+                <div class="d-flex align-items-center gap-2">
+                  <span class="badge-slw badge-primary fs-6">Q<%= idx + 1 %></span>
+                  <span class="badge-slw badge-neutral"><%= q.marks %> Mark<%= q.marks > 1 ? 's' : '' %></span>
+                </div>
+                <span class="badge-slw badge-neutral text-uppercase small"><%= q.question_type.replace('_', ' ') %></span>
+              </div>
+
+              <div class="fs-5 mb-4 fw-medium text-dark">
+                <%= q.question_text %>
+              </div>
+
+              <!-- Options by question type -->
+              <% if (q.question_type === 'mcq' || q.question_type === 'true_false') { %>
+                <div class="d-flex flex-column gap-2">
+                  <% (q.options || []).forEach(opt => { %>
+                    <% const isChecked = currentAns && currentAns.selected_option === opt.id; %>
+                    <label class="p-3 rounded-3 border bg-light d-flex align-items-center gap-3 cursor-pointer hover-bg-white transition" style="cursor: pointer;">
+                      <input type="radio" 
+                             name="answers[<%= q.id %>]" 
+                             value="opt_<%= opt.id %>" 
+                             class="form-check-input mt-0"
+                             <%= isChecked ? 'checked' : '' %>>
+                      <span class="fs-6"><%= opt.option_text %></span>
+                    </label>
+                  <% }) %>
+                </div>
+
+              <% } else if (q.question_type === 'short_answer') { %>
+                <div>
+                  <textarea name="answers[<%= q.id %>]" 
+                            class="form-control" 
+                            rows="4" 
+                            placeholder="Type your explanation or response here..."><%= currentAns ? (currentAns.text_answer || '') : '' %></textarea>
+                </div>
+              <% } %>
+            </div>
+          <% }) %>
+
+          <!-- Bottom Submit Button -->
+          <div class="card-slw p-4 text-center mb-5">
+            <h2 class="h5 fw-bold mb-2">Ready to Submit?</h2>
+            <p class="text-muted small mb-3">Ensure all questions have been reviewed before final submission. Time remaining will not roll over.</p>
+            <button type="button" class="btn btn-primary-slw px-5 py-2 mx-auto justify-content-center" data-bs-toggle="modal" data-bs-target="#submitExamModal">
+              <span>Finalize & Submit Exam</span>
+              <span class="material-symbols-outlined fs-5">check_circle</span>
+            </button>
+          </div>
+
+        <% } else { %>
+          <div class="card-slw p-5 text-center text-muted">
+            <h2 class="h5">No questions found for this exam.</h2>
+          </div>
+        <% } %>
+      </form>
+    </div>
+
+    <!-- Right Sidebar: Question Navigator -->
+    <div class="col-lg-3">
+      <div class="card-slw p-4 sticky-top" style="top: 80px;">
+        <h3 class="h6 fw-bold mb-3 d-flex justify-content-between align-items-center">
+          <span>Question Navigator</span>
+          <span class="badge-slw badge-neutral small"><%= questions ? questions.length : 0 %> Total</span>
+        </h3>
+
+        <div class="d-flex flex-wrap gap-2 mb-4">
+          <% (questions || []).forEach((q, idx) => { %>
+            <% const currentAns = answersMap[q.id]; %>
+            <% const isAnswered = currentAns && (currentAns.selected_option || currentAns.text_answer); %>
+            <button type="button" 
+                    class="q-nav-btn <%= isAnswered ? 'answered' : '' %>"
+                    data-question-index="<%= idx + 1 %>"
+                    data-target-question="question_<%= idx + 1 %>"
+                    title="Jump to Question <%= idx + 1 %>">
+              <%= idx + 1 %>
+            </button>
+          <% }) %>
+        </div>
+
+        <div class="small border-top pt-3 text-muted">
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <span class="q-nav-btn answered" style="width: 18px; height: 18px; font-size: 0.6rem;"></span>
+            <span>Answered</span>
+          </div>
+          <div class="d-flex align-items-center gap-2">
+            <span class="q-nav-btn" style="width: 18px; height: 18px; font-size: 0.6rem;"></span>
+            <span>Unanswered</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- Submit Confirmation Modal -->
+<div class="modal fade" id="submitExamModal" tabindex="-1" aria-labelledby="submitExamModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow-lg rounded-4">
+      <div class="modal-header border-bottom-0 pb-0">
+        <h5 class="modal-title fw-bold" id="submitExamModalLabel">Submit Examination?</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body py-3 text-muted">
+        <p class="mb-2">Are you sure you want to finalize your exam attempt? Once submitted:</p>
+        <ul class="small mb-0">
+          <li>Your answers will be permanently saved and auto-graded.</li>
+          <li>You cannot modify your responses after submission.</li>
+          <li>Remaining time will not be saved.</li>
+        </ul>
+      </div>
+      <div class="modal-footer border-top-0 pt-0 d-flex gap-2">
+        <button type="button" class="btn btn-outline-secondary px-3" data-bs-dismiss="modal">Continue Exam</button>
+        <button type="button" class="btn btn-primary-slw px-4" onclick="document.getElementById('examForm').submit();">Confirm & Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Exam JavaScript -->
+<script src="/js/exam.js"></script>
+
+<%- include('../partials/footer') %>

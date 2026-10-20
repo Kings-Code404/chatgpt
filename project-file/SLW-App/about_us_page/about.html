@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>About Us | Smart Learning</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(195, 198, 215, 0.3);
+        }
+        .hero-gradient {
+            background: radial-gradient(circle at top right, #e2dfff 0%, #faf8ff 100%);
+        }
+        @media (max-width: 1024px) {
+            .sidebar-collapsed { display: none; }
+        }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary": "#ffffff",
+                    "outline": "#737686",
+                    "surface-variant": "#e1e2ed",
+                    "background": "#faf8ff",
+                    "primary-fixed-dim": "#b4c5ff",
+                    "on-primary-fixed-variant": "#003ea8",
+                    "inverse-on-surface": "#f0f0fb",
+                    "outline-variant": "#c3c6d7",
+                    "tertiary": "#943700",
+                    "surface-container-highest": "#e1e2ed",
+                    "surface-container-high": "#e7e7f3",
+                    "error": "#ba1a1a",
+                    "secondary": "#4b41e1",
+                    "error-container": "#ffdad6",
+                    "surface-container-low": "#f3f3fe",
+                    "on-primary": "#ffffff",
+                    "tertiary-container": "#bc4800",
+                    "on-surface": "#191b23",
+                    "on-secondary-fixed": "#0f0069",
+                    "inverse-primary": "#b4c5ff",
+                    "secondary-container": "#645efb",
+                    "tertiary-fixed-dim": "#ffb596",
+                    "on-secondary-container": "#fffbff",
+                    "secondary-fixed-dim": "#c3c0ff",
+                    "primary": "#004ac6",
+                    "on-background": "#191b23",
+                    "primary-container": "#2563eb",
+                    "surface-bright": "#faf8ff",
+                    "on-tertiary-container": "#ffede6",
+                    "on-primary-fixed": "#00174b",
+                    "secondary-fixed": "#e2dfff",
+                    "surface": "#faf8ff",
+                    "surface-container-lowest": "#ffffff",
+                    "on-error": "#ffffff",
+                    "tertiary-fixed": "#ffdbcd",
+                    "on-primary-container": "#eeefff",
+                    "on-secondary-fixed-variant": "#3323cc",
+                    "on-tertiary-fixed": "#360f00",
+                    "on-tertiary-fixed-variant": "#7d2d00",
+                    "on-secondary": "#ffffff",
+                    "surface-tint": "#0053db",
+                    "on-surface-variant": "#434655",
+                    "on-error-container": "#93000a",
+                    "primary-fixed": "#dbe1ff",
+                    "surface-dim": "#d9d9e5",
+                    "surface-container": "#ededf9",
+                    "inverse-surface": "#2e3039"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "sm": "8px",
+                    "sidebar-width": "280px",
+                    "md": "16px",
+                    "gutter": "24px",
+                    "lg": "24px",
+                    "unit": "4px",
+                    "2xl": "64px",
+                    "xs": "4px",
+                    "xl": "40px",
+                    "container-max": "1440px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Inter"],
+                    "body-md": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "display-lg-mobile": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "caption": ["Inter"],
+                    "label-md": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "display-lg-mobile": ["36px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "caption": ["12px", {"lineHeight": "1.4", "fontWeight": "400"}],
+                    "label-md": ["14px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md selection:bg-primary-container/30">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-lg border-b border-outline-variant/20 shadow-sm">
+<div class="flex items-center justify-between px-gutter w-full max-w-container-max mx-auto h-16">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary font-headline-lg" data-icon="menu_book">menu_book</span>
+<span class="font-headline-lg text-headline-lg font-bold text-primary">Smart Learning</span>
+</div>
+<nav class="hidden md:flex gap-lg items-center">
+<a class="text-on-surface-variant hover:text-primary font-label-md text-label-md transition-all duration-300" href="#">Dashboard</a>
+<a class="text-on-surface-variant hover:text-primary font-label-md text-label-md transition-all duration-300" href="#">Courses</a>
+<a class="text-primary font-bold border-b-2 border-primary font-label-md text-label-md" href="#">About Us</a>
+<a class="text-on-surface-variant hover:text-primary font-label-md text-label-md transition-all duration-300" href="#">Contact</a>
+</nav>
+<div class="flex items-center gap-md">
+<button class="material-symbols-outlined p-sm hover:bg-surface-container-high/50 rounded-full transition-all" data-icon="search">search</button>
+<img alt="User avatar" class="w-10 h-10 rounded-full border-2 border-primary/20 scale-95 active:opacity-80 transition-transform cursor-pointer" data-alt="A professional close-up portrait of a friendly young male educator with a modern aesthetic, set against a blurred academic background. The lighting is soft and natural, emphasizing a bright and trustworthy atmosphere. The overall style is clean and professional, using a cool-toned color palette consistent with a high-end educational web application." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAPszlI4es9AE0BxQkCbOYZeSQHPnbU-TbtOpXUQjRTL4FYSmIB5f9DSjPV8EEMt2oujTdOHsvWUuiIUBboRv_zI-Fklt9JfTFhKFm8kxQQSVBQMzE_1XdatIV1qIMusERwnSGOA4BQ9D2xDJtHMk-84RSkS8ZeD2eNOvImM4tBfZNZ84PixudkXnBSw-vjwy8nIMEdSNGX-RqDWvNj7OtkIrYO_FxTjl0MtWr53hHzjkgCDkxGYhg3mSqtsBK3_5gebnItcMNSjcA"/>
+</div>
+</div>
+</header>
+<main class="pt-16 pb-20 lg:pb-0">
+<!-- Hero Section: Project Overview -->
+<section class="hero-gradient relative py-2xl overflow-hidden">
+<div class="absolute inset-0 opacity-10">
+<div class="absolute top-0 right-0 w-96 h-96 bg-primary rounded-full blur-[120px]"></div>
+<div class="absolute bottom-0 left-0 w-72 h-72 bg-secondary rounded-full blur-[100px]"></div>
+</div>
+<div class="max-w-container-max mx-auto px-gutter relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-xl items-center">
+<div class="space-y-md">
+<span class="inline-block px-sm py-1 bg-primary-container/20 text-primary rounded-full font-label-md text-label-md uppercase tracking-wider">Our Story</span>
+<h1 class="font-display-lg text-display-lg text-on-surface leading-tight">Empowering Minds Through <span class="text-primary">Smart Technology</span>.</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
+                        Smart Learning was born from a simple vision: to make high-quality education accessible, interactive, and personalized for every student on the planet. We combine advanced AI with human-centric design.
+                    </p>
+<div class="flex flex-wrap gap-md pt-sm">
+<button class="px-xl py-md bg-primary text-on-primary rounded-xl font-headline-md text-headline-md shadow-lg shadow-primary/20 hover:scale-105 transition-all">Get Started</button>
+<button class="px-xl py-md border-2 border-primary text-primary rounded-xl font-headline-md text-headline-md hover:bg-primary/5 transition-all">Our Vision</button>
+</div>
+</div>
+<div class="relative group">
+<div class="absolute -inset-1 bg-gradient-to-r from-primary to-secondary rounded-2xl blur opacity-25 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
+<img alt="Team collaboration" class="relative rounded-2xl shadow-2xl w-full object-cover aspect-video" data-alt="A diverse group of modern professionals collaborating in a bright, glass-walled office space that overlooks a metropolitan skyline at dusk. They are engaged in creative discussion around a large digital interactive display showing educational data visualizations. The lighting is crisp and cool, featuring vibrant blue and indigo accents that align with a premium, forward-thinking educational technology brand." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2CqY2QIRSLzxhsiHzWPJpyb4yfha580salN_AK-oIKQWHAkPM9cIfD4eRvvHsFIPzahi9YDmtpXR_4nfA7Hsin5nldayEdRhuCcWlxbNtOfjBqG6jBfNlK5oNAH2x74SpqAkB-SmCx4vGwoc-cEqCmr1X6GmscrWEJQ0xKrSoMQ2w1P5XE-ISt4j3KxEh2qA6_cSfkiqZCBsAFccrmzjpk_yyAEh2WDW84kT49aywKLyIyrhT9gs0PY72TjNBKsALcezp-Vx-qmw"/>
+</div>
+</div>
+</section>
+<!-- Mission & Vision: Asymmetric Layout -->
+<section class="py-2xl bg-surface">
+<div class="max-w-container-max mx-auto px-gutter grid grid-cols-1 md:grid-cols-2 gap-xl">
+<div class="glass-card p-xl rounded-2xl space-y-md hover:translate-y-[-4px] transition-transform duration-300">
+<div class="w-12 h-12 bg-primary-container/20 rounded-xl flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="rocket_launch" style="font-variation-settings: 'FILL' 1;">rocket_launch</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg text-primary">Our Mission</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                        To provide a seamless, AI-enhanced learning environment that identifies student gaps in real-time and provides personalized resources to bridge them, fostering a lifelong love for discovery.
+                    </p>
+</div>
+<div class="glass-card p-xl rounded-2xl space-y-md md:mt-12 hover:translate-y-[-4px] transition-transform duration-300">
+<div class="w-12 h-12 bg-secondary-container/20 rounded-xl flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined" data-icon="visibility" style="font-variation-settings: 'FILL' 1;">visibility</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg text-secondary">Our Vision</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                        We envision a world where geography and economic status are no longer barriers to world-class education, powered by community-driven insights and cutting-edge technology.
+                    </p>
+</div>
+</div>
+</section>
+<!-- Benefits: Why Choose Us (Bento Grid) -->
+<section class="py-2xl bg-surface-container-low">
+<div class="max-w-container-max mx-auto px-gutter">
+<div class="text-center mb-xl">
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Why Choose Smart Learning?</h2>
+<p class="text-on-surface-variant mt-sm">Transforming the educational experience with purpose-built features.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-md">
+<!-- Bento Box 1: Large Content -->
+<div class="md:col-span-2 md:row-span-2 bg-primary-container text-on-primary-container p-xl rounded-2xl flex flex-col justify-between">
+<div>
+<span class="material-symbols-outlined text-4xl mb-md" data-icon="psychology">psychology</span>
+<h3 class="font-headline-lg text-headline-lg mb-sm">AI-Driven Pathfinding</h3>
+<p class="font-body-md opacity-90">Our proprietary algorithms analyze your learning patterns to create a bespoke curriculum that evolves as you do.</p>
+</div>
+<img alt="Technology Pattern" class="mt-xl rounded-xl mix-blend-overlay opacity-50 h-40 object-cover" data-alt="A sophisticated, abstract digital visualization of neural networks and glowing data points flowing through a dark blue space. The aesthetic is highly technical and futuristic, representing artificial intelligence and advanced computing. Soft light trails in indigo and cyan create a sense of movement and intelligence, perfectly fitting a high-end educational technology interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-f7_mKtBkwdKTjQx02mBe4LMAg-uj7dyfC1rYX0jzZFbBkwVfWu7fZrrBpaCM5hb2GPTQMNvu0fbsztHwPVUUholOD_JpKnw5fSOnqp2OXspMR4qubMs7eQGvq1Dv5iNzdu6lCe5RHj8g9-BhGJ1KazqNjYJxNxR7ovTgmVBPfmbWnwr9DHRHCVJq1PCq5BIHOPb_81RzCAtSrbsXocK20-_vovVuYXc05wBjtlkO4ovrNVeyncFenj9uBaq6bj15II6CENwA85w"/>
+</div>
+<!-- Bento Box 2 -->
+<div class="bg-surface-container-highest p-lg rounded-2xl border border-outline-variant/30 flex flex-col gap-sm">
+<span class="material-symbols-outlined text-primary" data-icon="verified">verified</span>
+<h4 class="font-headline-md text-headline-md">Accredited Content</h4>
+<p class="font-caption text-caption opacity-75">Courses verified by top global institutions.</p>
+</div>
+<!-- Bento Box 3 -->
+<div class="bg-surface-container-highest p-lg rounded-2xl border border-outline-variant/30 flex flex-col gap-sm">
+<span class="material-symbols-outlined text-secondary" data-icon="group_work">group_work</span>
+<h4 class="font-headline-md text-headline-md">Peer Learning</h4>
+<p class="font-caption text-caption opacity-75">Collaborate with thousands of peers worldwide.</p>
+</div>
+<!-- Bento Box 4: Wide -->
+<div class="md:col-span-2 bg-secondary text-on-secondary p-lg rounded-2xl flex items-center gap-xl">
+<div class="flex-1">
+<h4 class="font-headline-md text-headline-md">24/7 Academic Support</h4>
+<p class="font-caption text-caption opacity-80 mt-2">Get help from tutors and our smart-bot whenever you need it.</p>
+</div>
+<span class="material-symbols-outlined text-5xl" data-icon="support_agent">support_agent</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Team Section -->
+<section class="py-2xl bg-surface">
+<div class="max-w-container-max mx-auto px-gutter">
+<div class="flex justify-between items-end mb-xl">
+<div>
+<h2 class="font-headline-lg text-headline-lg">Meet the Innovators</h2>
+<p class="text-on-surface-variant">The minds behind the future of education.</p>
+</div>
+<button class="hidden md:flex items-center gap-sm text-primary font-bold group">
+                        Join the team <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-lg">
+<!-- Member 1 -->
+<div class="group">
+<div class="relative overflow-hidden rounded-2xl aspect-[3/4] mb-md">
+<img alt="Sarah Chen" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-100 group-hover:scale-110" data-alt="A professional portrait of a confident Asian female tech executive in a minimalist studio setting. She is wearing a modern navy blazer, and the lighting is bright and clean with soft shadows. The overall aesthetic is professional, sophisticated, and polished, aligning with a high-end educational platform's leadership style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhkovyjsjvH6aQGLHLww3Udps08yytZjGIVAtnp4pFie3HpSPZDyLw0i3DFdrmpCx-cdx6KFYoaRkNcwt7nHBnd4EpTa5TWmzrAu8h3kxA9SuLEw04dw9JPG6dX_57YIScooq6YSeLyMBkEwynkFQfrATzh5au5RefQNNQMezN_jVZDD00WeIXQKcHr8YXsTNHa5TjK8wqzuOCEFq0hgtG_JO9rLUohG9F_WpxAaNMvkAIhnjuwfcdQCywetWPefMux2JqNZF6a6s"/>
+<div class="absolute bottom-0 left-0 right-0 p-md bg-gradient-to-t from-primary/80 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+<div class="flex gap-sm justify-center">
+<button class="w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white"><span class="material-symbols-outlined text-sm" data-icon="link">link</span></button>
+<button class="w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white"><span class="material-symbols-outlined text-sm" data-icon="alternate_email">alternate_email</span></button>
+</div>
+</div>
+</div>
+<h5 class="font-headline-md text-headline-md text-on-surface">Dr. Sarah Chen</h5>
+<p class="font-label-md text-label-md text-primary font-bold">CEO &amp; Founder</p>
+</div>
+<!-- Member 2 -->
+<div class="group">
+<div class="relative overflow-hidden rounded-2xl aspect-[3/4] mb-md">
+<img alt="Marcus Thorne" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-100 group-hover:scale-110" data-alt="A portrait of a male technology leader with a thoughtful expression, standing in a brightly lit, modern architectural space with glass elements. He is dressed in business casual attire. The photography style is high-key and airy, emphasizing clarity and innovation, using a clean color palette of whites and soft blues." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZU8wq3usGF0U_a6QJ5iIbjrb5leofJrnshLMBzbY0ouNmhhK52bB_8cLgwfes1feVlvkKUOcOFya46lt8uJN9RkSpzKL0f41L2hcL4cOpnWXmjcDvRT9r4OMlhjbl17dC_faHg-_dcufMldUU4BMvxcjGNLHchoJOg4KMkt90Q-EPYyAdBH-AfEN_4ArcU5HcBCNex_sWaZWg3HXvZwvMVcvQku9Zne1dBdBUu0ZVAtxdGaAzhraHhk7lB8DQajpWYnE7JnN_v8U"/>
+<div class="absolute bottom-0 left-0 right-0 p-md bg-gradient-to-t from-primary/80 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+<div class="flex gap-sm justify-center">
+<button class="w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white"><span class="material-symbols-outlined text-sm" data-icon="link">link</span></button>
+</div>
+</div>
+</div>
+<h5 class="font-headline-md text-headline-md text-on-surface">Marcus Thorne</h5>
+<p class="font-label-md text-label-md text-primary font-bold">CTO</p>
+</div>
+<!-- Member 3 -->
+<div class="group">
+<div class="relative overflow-hidden rounded-2xl aspect-[3/4] mb-md">
+<img alt="Elena Rodriguez" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-100 group-hover:scale-110" data-alt="A vibrant professional portrait of a female creative director with a warm smile. She is set against a soft-focus background of a collaborative creative workspace. The lighting is bright and cheerful, with a sophisticated blue and neutral-toned color palette. The image conveys a sense of passion, creativity, and leadership within a modern educational context." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCm1z6jkupP2q41z5WQy9NkusABpi2qCk_nQWlO4nc1-3izUMe2gOZoYVZSPmUGMfd8skGEXlXinQG5_vv3kzFgqBAV7J8yx7rX5OJ-ldVllVE4s34bNMQPOMWW18FhTRSPmvFGrq1XHn-sGQLpHS33dsOiID1Gnpi8yxE1rG4JvckY9XV1ezbI9OrO0e4ZfU8tQNdC5UNCLtO5UMkaPYh2K0zbpLHJl5Bun_UbuwGLTZY5OktlQiOwKabFu2AGeTi8OtHRUSJb-T0"/>
+<div class="absolute bottom-0 left-0 right-0 p-md bg-gradient-to-t from-primary/80 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+<div class="flex gap-sm justify-center">
+<button class="w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white"><span class="material-symbols-outlined text-sm" data-icon="link">link</span></button>
+</div>
+</div>
+</div>
+<h5 class="font-headline-md text-headline-md text-on-surface">Elena Rodriguez</h5>
+<p class="font-label-md text-label-md text-primary font-bold">Head of Pedagogy</p>
+</div>
+<!-- Member 4 -->
+<div class="group">
+<div class="relative overflow-hidden rounded-2xl aspect-[3/4] mb-md">
+<img alt="David Kim" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-100 group-hover:scale-110" data-alt="A portrait of a male product designer with a sleek, modern aesthetic. He is standing in a minimalist, high-tech workspace with subtle integrated lighting. The photography uses a clean, professional style with a focus on sharp detail and a balanced color palette of primary blues and soft greys, representing a forward-thinking tech-driven educational brand." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZVP8sTcosQnN4stasjyOjvWm8EX93GygUBUhhw8bAS_a9Ih40azKeg_Ozx5yzpSMH-lS52lpxkmSKTJh-7J9jzhaf5p8O5HQavjy5z9fnIEWGU2EAe2dD_LY3tTS43j7_f2CsABuj77bvn3Vp6xvvkiFXSl5d6joHUkAZHWWt_DWdiy0aT2v18iGTNgdBkisQEXfwSRWYFwQ7EEbVDwW4VuT57y_7ficqNW9gL9hOJmnb6FW3mey-UO-CBC1cVX7cDGq1IUnTQrE"/>
+<div class="absolute bottom-0 left-0 right-0 p-md bg-gradient-to-t from-primary/80 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+<div class="flex gap-sm justify-center">
+<button class="w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white"><span class="material-symbols-outlined text-sm" data-icon="link">link</span></button>
+</div>
+</div>
+</div>
+<h5 class="font-headline-md text-headline-md text-on-surface">David Kim</h5>
+<p class="font-label-md text-label-md text-primary font-bold">Lead UI/UX</p>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="py-2xl">
+<div class="max-w-container-max mx-auto px-gutter">
+<div class="bg-primary rounded-[2rem] p-xl lg:p-2xl text-center relative overflow-hidden group">
+<div class="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 bg-white/10 rounded-full blur-3xl group-hover:scale-110 transition-transform duration-700"></div>
+<div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-64 h-64 bg-secondary/20 rounded-full blur-3xl"></div>
+<div class="relative z-10 max-w-2xl mx-auto space-y-md">
+<h2 class="font-display-lg text-display-lg text-on-primary">Ready to change how you learn?</h2>
+<p class="font-body-lg text-body-lg text-on-primary/80">
+                            Join over 1 million students already mastering new skills every day. Start your free 14-day trial now.
+                        </p>
+<div class="flex flex-col sm:flex-row gap-md justify-center pt-md">
+<button class="px-xl py-md bg-white text-primary rounded-xl font-headline-md text-headline-md hover:shadow-xl transition-all active:scale-95">Get Started Today</button>
+<button class="px-xl py-md bg-primary-container text-white border border-white/20 rounded-xl font-headline-md text-headline-md hover:bg-white/10 transition-all active:scale-95">Contact Sales</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest border-t border-outline-variant py-12">
+<div class="max-w-container-max mx-auto px-gutter grid grid-cols-1 md:grid-cols-3 gap-lg">
+<div class="space-y-md">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary" data-icon="menu_book">menu_book</span>
+<span class="font-headline-md text-headline-md text-primary font-bold">Smart Learning</span>
+</div>
+<p class="font-body-md text-on-surface-variant max-w-xs">
+                    Building the future of digital education with AI and community support.
+                </p>
+</div>
+<div class="grid grid-cols-2 gap-md">
+<div class="space-y-sm">
+<h6 class="font-label-md text-label-md text-on-surface font-bold uppercase tracking-wider">Company</h6>
+<ul class="space-y-xs">
+<li><a class="text-on-surface-variant hover:text-primary font-caption text-caption transition-all" href="#">About Us</a></li>
+<li><a class="text-on-surface-variant hover:text-primary font-caption text-caption transition-all" href="#">Careers</a></li>
+<li><a class="text-on-surface-variant hover:text-primary font-caption text-caption transition-all" href="#">Privacy Policy</a></li>
+<li><a class="text-on-surface-variant hover:text-primary font-caption text-caption transition-all" href="#">Terms of Service</a></li>
+</ul>
+</div>
+<div class="space-y-sm">
+<h6 class="font-label-md text-label-md text-on-surface font-bold uppercase tracking-wider">Resources</h6>
+<ul class="space-y-xs">
+<li><a class="text-on-surface-variant hover:text-primary font-caption text-caption transition-all" href="#">Help Center</a></li>
+<li><a class="text-on-surface-variant hover:text-primary font-caption text-caption transition-all" href="#">Contact</a></li>
+<li><a class="text-on-surface-variant hover:text-primary font-caption text-caption transition-all" href="#">Blog</a></li>
+</ul>
+</div>
+</div>
+<div class="space-y-md">
+<h6 class="font-label-md text-label-md text-on-surface font-bold uppercase tracking-wider">Subscribe to our newsletter</h6>
+<div class="flex gap-xs">
+<input class="flex-1 bg-surface-container-low border-outline-variant rounded-lg focus:ring-primary focus:border-primary px-md py-sm text-body-md" placeholder="Email address" type="email"/>
+<button class="bg-primary text-white p-sm rounded-lg hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined" data-icon="send">send</span>
+</button>
+</div>
+<p class="font-caption text-caption text-outline">© 2024 Smart Learning. All rights reserved.</p>
+</div>
+</div>
+</footer>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="lg:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-4 py-2 pb-safe bg-surface/90 backdrop-blur-md border-t border-outline-variant/30 z-50 rounded-t-xl shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-primary/10 transition-colors px-4 py-1 rounded-xl" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-md text-label-md">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-primary/10 transition-colors px-4 py-1 rounded-xl" href="#">
+<span class="material-symbols-outlined" data-icon="menu_book">menu_book</span>
+<span class="font-label-md text-label-md">Learn</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container/30 text-primary rounded-xl px-4 py-1" href="#">
+<span class="material-symbols-outlined" data-icon="info" style="font-variation-settings: 'FILL' 1;">info</span>
+<span class="font-label-md text-label-md font-bold">About</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-primary/10 transition-colors px-4 py-1 rounded-xl" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-label-md text-label-md">Profile</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-primary/10 transition-colors px-4 py-1 rounded-xl" href="#">
+<span class="material-symbols-outlined" data-icon="more_horiz">more_horiz</span>
+<span class="font-label-md text-label-md">Menu</span>
+</a>
+</nav>
+<script>
+        // Micro-interactions and hover effects
+        document.querySelectorAll('.glass-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-8px)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Simple smooth scroll for vision link
+        document.querySelector('button:contains("Our Vision")')?.addEventListener('click', () => {
+            window.scrollTo({
+                top: 800,
+                behavior: 'smooth'
+            });
+        });
+    </script>
+</body></html>

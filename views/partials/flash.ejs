@@ -1,0 +1,23 @@
+<% if (typeof success_msg !== 'undefined' && success_msg.length > 0) { %>
+  <div class="alert-slw alert-success mb-4" data-auto-dismiss="5000" role="alert">
+    <span class="material-symbols-outlined text-success">check_circle</span>
+    <div class="flex-grow-1"><%= success_msg %></div>
+    <button type="button" class="btn-close ms-2" onclick="this.parentElement.remove()" aria-label="Close"></button>
+  </div>
+<% } %>
+
+<% if (typeof error_msg !== 'undefined' && error_msg.length > 0) { %>
+  <div class="alert-slw alert-error mb-4" data-auto-dismiss="6000" role="alert">
+    <span class="material-symbols-outlined text-danger">error</span>
+    <div class="flex-grow-1"><%= error_msg %></div>
+    <button type="button" class="btn-close ms-2" onclick="this.parentElement.remove()" aria-label="Close"></button>
+  </div>
+<% } %>
+
+<% if (typeof info_msg !== 'undefined' && info_msg.length > 0) { %>
+  <div class="alert-slw alert-info mb-4" data-auto-dismiss="5000" role="alert">
+    <span class="material-symbols-outlined text-primary">info</span>
+    <div class="flex-grow-1"><%= info_msg %></div>
+    <button type="button" class="btn-close ms-2" onclick="this.parentElement.remove()" aria-label="Close"></button>
+  </div>
+<% } %>

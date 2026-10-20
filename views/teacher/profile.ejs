@@ -1,0 +1,76 @@
+<%- include('../partials/head', { title: 'Faculty Profile – Smart Learning' }) %>
+<%- include('../partials/topbar') %>
+<%- include('../partials/sidebar') %>
+
+<main class="slw-content">
+  <%- include('../partials/flash') %>
+
+  <div class="row justify-content-center">
+    <div class="col-lg-9">
+      <div class="card-slw p-4 p-md-5">
+        <div class="d-flex align-items-center gap-3 mb-4 pb-3 border-bottom">
+          <div class="avatar fs-4" style="width: 64px; height: 64px;">
+            <%= user.full_name.charAt(0).toUpperCase() %>
+          </div>
+          <div>
+            <h1 class="page-title mb-1"><%= user.full_name %></h1>
+            <div class="d-flex align-items-center gap-2">
+              <span class="badge-slw badge-primary text-uppercase">Faculty / <%= user.role %></span>
+              <span class="small text-muted">&bull; Member since <%= new Date(user.created_at).toLocaleDateString() %></span>
+            </div>
+          </div>
+        </div>
+
+        <form action="/teacher/profile" method="POST">
+          <h2 class="h6 fw-bold text-uppercase text-muted mb-3">Basic Information</h2>
+
+          <div class="row g-3 mb-4">
+            <div class="col-md-6">
+              <label for="full_name" class="form-label">Full Name</label>
+              <input type="text" class="form-control" id="full_name" name="full_name" value="<%= user.full_name %>" required>
+            </div>
+            <div class="col-md-6">
+              <label for="email" class="form-label">Email Address (Read-only)</label>
+              <input type="email" class="form-control bg-light" id="email" value="<%= user.email %>" readonly disabled>
+            </div>
+          </div>
+
+          <h2 class="h6 fw-bold text-uppercase text-muted mb-3">Faculty Academic Credentials</h2>
+
+          <div class="row g-3 mb-4">
+            <div class="col-md-6">
+              <label for="employee_id" class="form-label">Employee / Staff ID</label>
+              <input type="text" class="form-control" id="employee_id" name="employee_id" value="<%= profile.employee_id || '' %>" placeholder="e.g. EMP-2024-001">
+            </div>
+            <div class="col-md-6">
+              <label for="department" class="form-label">Department / School</label>
+              <input type="text" class="form-control" id="department" name="department" value="<%= profile.department || '' %>" placeholder="e.g. Computer Science & Engineering">
+            </div>
+            <div class="col-md-6">
+              <label for="qualification" class="form-label">Highest Qualification</label>
+              <input type="text" class="form-control" id="qualification" name="qualification" value="<%= profile.qualification || '' %>" placeholder="e.g. PhD Computer Science, M.Tech">
+            </div>
+            <div class="col-md-6">
+              <label for="phone" class="form-label">Office / Contact Phone</label>
+              <input type="tel" class="form-control" id="phone" name="phone" value="<%= profile.phone || '' %>" placeholder="+1 (555) 000-0000">
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <label for="bio" class="form-label">Academic Biography & Research Areas</label>
+            <textarea class="form-control" id="bio" name="bio" rows="4" placeholder="Brief summary of instructional focus, research interests, and office hours..."><%= profile.bio || '' %></textarea>
+          </div>
+
+          <div class="d-flex justify-content-end gap-2">
+            <button type="submit" class="btn btn-primary-slw px-4">
+              <span>Save Profile Changes</span>
+              <span class="material-symbols-outlined fs-6">save</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</main>
+
+<%- include('../partials/footer') %>

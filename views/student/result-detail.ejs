@@ -1,0 +1,118 @@
+<%- include('../partials/head', { title: `Result: ${attempt.exam_title}` }) %>
+<%- include('../partials/topbar') %>
+<%- include('../partials/sidebar') %>
+
+<main class="slw-content">
+  <%- include('../partials/flash') %>
+
+  <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+    <div>
+      <div class="d-flex align-items-center gap-2 mb-1">
+        <span class="badge-slw badge-primary"><%= attempt.course_code %></span>
+        <h1 class="page-title mb-0"><%= attempt.exam_title %></h1>
+      </div>
+      <div class="page-subtitle mb-0">Detailed attempt result breakdown and feedback.</div>
+    </div>
+    <a href="/student/results" class="btn btn-outline-slw">
+      <span class="material-symbols-outlined fs-6">arrow_back</span>
+      <span>Back to Results</span>
+    </a>
+  </div>
+
+  <!-- Score Summary Card -->
+  <% const pct = attempt.total_marks > 0 && attempt.score !== null ? Math.round((attempt.score / attempt.total_marks) * 100) : 0; %>
+  <% const isPass = attempt.score !== null && attempt.score >= attempt.pass_marks; %>
+  <div class="card-slw p-4 mb-4">
+    <div class="row g-3 align-items-center">
+      <div class="col-md-3 text-center border-end-md">
+        <div class="stat-value text-primary mb-1"><%= attempt.score !== null ? attempt.score : 0 %> / <%= attempt.total_marks %></div>
+        <div class="small text-muted">Final Score (<%= pct %>%)</div>
+        <div class="mt-2">
+          <% if (isPass) { %>
+            <span class="badge-slw badge-success px-3 py-1 fs-6">Passed</span>
+          <% } else { %>
+            <span class="badge-slw badge-error px-3 py-1 fs-6">Failed</span>
+          <% } %>
+        </div>
+      </div>
+
+      <div class="col-md-9 ps-md-4">
+        <div class="row g-2 small">
+          <div class="col-sm-4">
+            <div class="text-muted">Student Name</div>
+            <div class="fw-semibold"><%= attempt.student_name %></div>
+          </div>
+          <div class="col-sm-4">
+            <div class="text-muted">Started At</div>
+            <div class="fw-semibold"><%= new Date(attempt.started_at).toLocaleString() %></div>
+          </div>
+          <div class="col-sm-4">
+            <div class="text-muted">Submitted At</div>
+            <div class="fw-semibold"><%= attempt.submitted_at ? new Date(attempt.submitted_at).toLocaleString() : '--' %></div>
+          </div>
+          <div class="col-sm-4 mt-2">
+            <div class="text-muted">Course</div>
+            <div class="fw-semibold"><%= attempt.course_title %></div>
+          </div>
+          <div class="col-sm-4 mt-2">
+            <div class="text-muted">Passing Marks Required</div>
+            <div class="fw-semibold"><%= attempt.pass_marks %> / <%= attempt.total_marks %></div>
+          </div>
+          <div class="col-sm-4 mt-2">
+            <div class="text-muted">Status</div>
+            <div class="fw-semibold text-capitalize"><%= attempt.status %></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Question by Question Breakdown -->
+  <h2 class="h5 fw-bold mb-3">Question Breakdown</h2>
+  <% if (answers && answers.length > 0) { %>
+    <div class="d-flex flex-column gap-3 mb-4">
+      <% answers.forEach((ans, idx) => { %>
+        <div class="card-slw p-4">
+          <div class="d-flex justify-content-between align-items-start mb-2">
+            <div class="d-flex align-items-center gap-2">
+              <span class="badge-slw badge-primary">Q<%= idx + 1 %></span>
+              <span class="badge-slw badge-neutral"><%= ans.marks_awarded || 0 %> / <%= ans.max_marks %> Marks</span>
+            </div>
+            <% if (ans.is_correct === 1) { %>
+              <span class="badge-slw badge-success d-flex align-items-center gap-1">
+                <span class="material-symbols-outlined fs-6">check</span>
+                <span>Correct</span>
+              </span>
+            <% } else if (ans.is_correct === 0) { %>
+              <span class="badge-slw badge-error d-flex align-items-center gap-1">
+                <span class="material-symbols-outlined fs-6">close</span>
+                <span>Incorrect</span>
+              </span>
+            <% } else { %>
+              <span class="badge-slw badge-warning">Subjective / Under Review</span>
+            <% } %>
+          </div>
+
+          <div class="fs-6 fw-medium text-dark mb-3"><%= ans.question_text %></div>
+
+          <div class="p-3 rounded-3 bg-light border small">
+            <div class="text-muted mb-1">Your Submitted Response:</div>
+            <% if (ans.selected_option_text) { %>
+              <div class="fw-semibold text-dark"><%= ans.selected_option_text %></div>
+            <% } else if (ans.text_answer) { %>
+              <div class="fw-semibold text-dark" style="white-space: pre-line;"><%= ans.text_answer %></div>
+            <% } else { %>
+              <div class="text-muted fst-italic">No answer recorded</div>
+            <% } %>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  <% } else { %>
+    <div class="card-slw p-4 text-center text-muted">
+      <p class="mb-0">No recorded question answers for this attempt.</p>
+    </div>
+  <% } %>
+</main>
+
+<%- include('../partials/footer') %>

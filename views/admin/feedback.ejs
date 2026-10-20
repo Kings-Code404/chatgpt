@@ -1,0 +1,75 @@
+<%- include('../partials/head', { title: 'Feedback Moderation – Smart Learning' }) %>
+<%- include('../partials/topbar') %>
+<%- include('../partials/sidebar') %>
+
+<main class="slw-content">
+  <%- include('../partials/flash') %>
+
+  <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+    <div>
+      <h1 class="page-title">Feedback Moderation & Oversight</h1>
+      <div class="page-subtitle mb-0">Review student course ratings and qualitative academic comments.</div>
+    </div>
+  </div>
+
+  <% if (feedbackList && feedbackList.length > 0) { %>
+    <div class="card-slw overflow-hidden mb-4">
+      <div class="table-responsive">
+        <table class="table-slw">
+          <thead>
+            <tr>
+              <th>Course</th>
+              <th>Student</th>
+              <th>Rating</th>
+              <th>Comment</th>
+              <th>Date</th>
+              <th class="text-end">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% feedbackList.forEach(fb => { %>
+              <tr>
+                <td>
+                  <span class="badge-slw badge-primary"><%= fb.course_title %></span>
+                </td>
+                <td class="small fw-semibold"><%= fb.student_name %></td>
+                <td>
+                  <div class="d-flex align-items-center gap-1 text-warning">
+                    <% for (let i = 1; i <= 5; i++) { %>
+                      <span class="material-symbols-outlined fs-6 <%= i <= fb.rating ? 'text-warning' : 'text-muted' %>">star</span>
+                    <% } %>
+                    <span class="small fw-bold text-dark ms-1"><%= fb.rating %></span>
+                  </div>
+                </td>
+                <td>
+                  <div class="small text-muted" style="max-width: 320px; white-space: pre-line;">
+                    <%= fb.comment || 'No written comment' %>
+                  </div>
+                </td>
+                <td class="small text-muted"><%= new Date(fb.created_at).toLocaleDateString() %></td>
+                <td class="text-end">
+                  <button type="button" 
+                          class="btn btn-sm btn-outline-danger py-1 px-2" 
+                          data-method="delete" 
+                          data-action="/admin/feedback/<%= fb.id %>"
+                          data-confirm="Delete this feedback entry?"
+                          title="Delete Feedback">
+                    <span class="material-symbols-outlined fs-6">delete</span>
+                  </button>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  <% } else { %>
+    <div class="card-slw p-5 text-center text-muted">
+      <span class="material-symbols-outlined fs-1 mb-2">rate_review</span>
+      <h2 class="h5">No student feedback found</h2>
+      <p class="small mb-0">Course reviews submitted by enrolled students will appear here.</p>
+    </div>
+  <% } %>
+</main>
+
+<%- include('../partials/footer') %>

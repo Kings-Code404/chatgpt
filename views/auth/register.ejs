@@ -1,0 +1,85 @@
+<%- include('../partials/head', { title: 'Create Account – Smart Learning' }) %>
+
+<div class="auth-page">
+  <div class="auth-card" style="max-width: 500px;">
+    <div class="auth-logo">
+      <img src="/images/logo.png" alt="Smart Learning Logo">
+      <div class="auth-title mt-2">Get Started</div>
+      <div class="auth-subtitle">Create your academic account on Smart Learning</div>
+    </div>
+
+    <%- include('../partials/flash') %>
+
+    <form action="/auth/register" method="POST">
+      <div class="mb-3">
+        <label for="full_name" class="form-label">Full Name</label>
+        <input type="text" class="form-control" id="full_name" name="full_name" placeholder="John Doe" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="email" class="form-label">Email Address</label>
+        <input type="email" class="form-control" id="email" name="email" placeholder="name@institution.edu" required>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">I want to join as</label>
+        <div class="row g-2">
+          <div class="col-6">
+            <input type="radio" class="btn-check" name="role" id="role_student" value="student" checked autocomplete="off">
+            <label class="btn btn-outline-primary w-100 p-2 text-start d-flex align-items-center gap-2 rounded-3 h-100" for="role_student" style="border-width: 1.5px;">
+              <span class="material-symbols-outlined fs-3">school</span>
+              <div>
+                <div class="fw-bold small">Student</div>
+                <div class="text-caption text-muted" style="font-size: 0.72rem;">Learn & take exams</div>
+              </div>
+            </label>
+          </div>
+          <div class="col-6">
+            <input type="radio" class="btn-check" name="role" id="role_teacher" value="teacher" autocomplete="off">
+            <label class="btn btn-outline-primary w-100 p-2 text-start d-flex align-items-center gap-2 rounded-3 h-100" for="role_teacher" style="border-width: 1.5px;">
+              <span class="material-symbols-outlined fs-3">menu_book</span>
+              <div>
+                <div class="fw-bold small">Teacher</div>
+                <div class="text-caption text-muted" style="font-size: 0.72rem;">Manage & instruct</div>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-2 mb-3">
+        <div class="col-md-6">
+          <label for="password" class="form-label">Password</label>
+          <div class="input-group">
+            <input type="password" class="form-control" id="password" name="password" placeholder="Min. 8 chars" required>
+            <button class="btn btn-outline-secondary" type="button" id="togglePasswordBtn" title="Toggle password visibility">
+              <span class="material-symbols-outlined fs-6 align-middle" id="togglePasswordIcon">visibility</span>
+            </button>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label for="confirm_password" class="form-label">Confirm Password</label>
+          <div class="input-group">
+            <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Repeat" required>
+            <button class="btn btn-outline-secondary" type="button" id="toggleConfirmPasswordBtn" title="Toggle password visibility">
+              <span class="material-symbols-outlined fs-6 align-middle" id="toggleConfirmPasswordIcon">visibility</span>
+            </button>
+          </div>
+        </div>
+        <div class="form-text small mt-1">Must contain at least 8 characters and a number.</div>
+      </div>
+
+      <button type="submit" class="btn btn-primary-slw w-100 justify-content-center py-2 mb-3">
+        <span>Create Account</span>
+        <span class="material-symbols-outlined fs-5">person_add</span>
+      </button>
+
+      <div class="text-center small text-muted">
+        Already have an account? 
+        <a href="/auth/login" class="fw-semibold text-decoration-none">Sign in</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

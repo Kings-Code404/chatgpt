@@ -1,0 +1,48 @@
+<%- include('../partials/head', { title: 'Broadcast Announcement – Smart Learning' }) %>
+<%- include('../partials/topbar') %>
+<%- include('../partials/sidebar') %>
+
+<main class="slw-content">
+  <%- include('../partials/flash') %>
+
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card-slw p-4 p-md-5">
+        <h1 class="page-title mb-1">Broadcast New Announcement</h1>
+        <div class="page-subtitle mb-4">Send an official notice to student, faculty, or all user inboxes.</div>
+
+        <form action="/admin/notifications" method="POST">
+          <div class="mb-3">
+            <label for="title" class="form-label">Announcement Title</label>
+            <input type="text" class="form-control" id="title" name="title" placeholder="e.g. Fall Semester Mid-Term Examination Schedule" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="target_role" class="form-label">Audience / Target Role</label>
+            <select class="form-select" id="target_role" name="target_role" required>
+              <option value="all" selected>All Users (Students, Teachers, and Staff)</option>
+              <option value="student">Students Only</option>
+              <option value="teacher">Teachers / Faculty Only</option>
+            </select>
+            <div class="form-text small">Each matching active account will receive this announcement in their notification center.</div>
+          </div>
+
+          <div class="mb-4">
+            <label for="message" class="form-label">Message Content</label>
+            <textarea class="form-control" id="message" name="message" rows="5" placeholder="Write your full announcement here..." required></textarea>
+          </div>
+
+          <div class="d-flex justify-content-between align-items-center">
+            <a href="/admin/notifications" class="btn btn-outline-slw">Cancel</a>
+            <button type="submit" class="btn btn-primary-slw px-4">
+              <span>Send Broadcast</span>
+              <span class="material-symbols-outlined fs-6">send</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</main>
+
+<%- include('../partials/footer') %>

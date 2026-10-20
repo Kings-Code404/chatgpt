@@ -1,0 +1,80 @@
+<%- include('../partials/head', { title: 'Exam Oversight – Smart Learning' }) %>
+<%- include('../partials/topbar') %>
+<%- include('../partials/sidebar') %>
+
+<main class="slw-content">
+  <%- include('../partials/flash') %>
+
+  <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+    <div>
+      <h1 class="page-title">Exam Oversight</h1>
+      <div class="page-subtitle mb-0">System-wide inspection of scheduled and published examinations.</div>
+    </div>
+  </div>
+
+  <% if (exams && exams.length > 0) { %>
+    <div class="card-slw overflow-hidden">
+      <div class="table-responsive">
+        <table class="table-slw">
+          <thead>
+            <tr>
+              <th>Course</th>
+              <th>Exam Title</th>
+              <th>Created By</th>
+              <th>Duration</th>
+              <th>Marks</th>
+              <th>Status</th>
+              <th class="text-end">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% exams.forEach(e => { %>
+              <tr>
+                <td>
+                  <span class="badge-slw badge-primary"><%= e.course_code %></span>
+                  <div class="small text-muted"><%= e.course_title %></div>
+                </td>
+                <td class="fw-semibold"><%= e.title %></td>
+                <td class="small text-muted"><%= e.creator_name || 'Faculty' %></td>
+                <td><%= e.duration_minutes %> mins</td>
+                <td><%= e.total_marks %> (Pass: <%= e.pass_marks %>)</td>
+                <td>
+                  <% if (e.status === 'published') { %>
+                    <span class="badge-slw badge-success">Published</span>
+                  <% } else if (e.status === 'draft') { %>
+                    <span class="badge-slw badge-warning">Draft</span>
+                  <% } else { %>
+                    <span class="badge-slw badge-neutral text-capitalize"><%= e.status %></span>
+                  <% } %>
+                </td>
+                <td class="text-end">
+                  <div class="d-inline-flex gap-1">
+                    <a href="/teacher/exams/<%= e.id %>/results" class="btn btn-sm btn-outline-slw py-1 px-2" title="Inspect Results">
+                      <span class="material-symbols-outlined fs-6">analytics</span>
+                      <span>Results</span>
+                    </a>
+                    <button type="button" 
+                            class="btn btn-sm btn-outline-danger py-1 px-2" 
+                            data-method="delete" 
+                            data-action="/admin/exams/<%= e.id %>"
+                            data-confirm="Delete exam <%= e.title %>?"
+                            title="Delete Exam">
+                      <span class="material-symbols-outlined fs-6">delete</span>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  <% } else { %>
+    <div class="card-slw p-5 text-center text-muted">
+      <span class="material-symbols-outlined fs-1 mb-2">quiz</span>
+      <h2 class="h5">No exams found in the system</h2>
+    </div>
+  <% } %>
+</main>
+
+<%- include('../partials/footer') %>

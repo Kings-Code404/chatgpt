@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Smart Learning - Online Examination</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary": "#ffffff",
+                    "outline": "#737686",
+                    "surface-variant": "#e1e2ed",
+                    "background": "#faf8ff",
+                    "primary-fixed-dim": "#b4c5ff",
+                    "on-primary-fixed-variant": "#003ea8",
+                    "inverse-on-surface": "#f0f0fb",
+                    "outline-variant": "#c3c6d7",
+                    "tertiary": "#943700",
+                    "surface-container-highest": "#e1e2ed",
+                    "surface-container-high": "#e7e7f3",
+                    "error": "#ba1a1a",
+                    "secondary": "#4b41e1",
+                    "error-container": "#ffdad6",
+                    "surface-container-low": "#f3f3fe",
+                    "on-primary": "#ffffff",
+                    "tertiary-container": "#bc4800",
+                    "on-surface": "#191b23",
+                    "on-secondary-fixed": "#0f0069",
+                    "inverse-primary": "#b4c5ff",
+                    "secondary-container": "#645efb",
+                    "tertiary-fixed-dim": "#ffb596",
+                    "on-secondary-container": "#fffbff",
+                    "secondary-fixed-dim": "#c3c0ff",
+                    "primary": "#004ac6",
+                    "on-background": "#191b23",
+                    "primary-container": "#2563eb",
+                    "surface-bright": "#faf8ff",
+                    "on-tertiary-container": "#ffede6",
+                    "on-primary-fixed": "#00174b",
+                    "secondary-fixed": "#e2dfff",
+                    "surface": "#faf8ff",
+                    "surface-container-lowest": "#ffffff",
+                    "on-error": "#ffffff",
+                    "tertiary-fixed": "#ffdbcd",
+                    "on-primary-container": "#eeefff",
+                    "on-secondary-fixed-variant": "#3323cc",
+                    "on-tertiary-fixed": "#360f00",
+                    "on-tertiary-fixed-variant": "#7d2d00",
+                    "on-secondary": "#ffffff",
+                    "surface-tint": "#0053db",
+                    "on-surface-variant": "#434655",
+                    "on-error-container": "#93000a",
+                    "primary-fixed": "#dbe1ff",
+                    "surface-dim": "#d9d9e5",
+                    "surface-container": "#ededf9",
+                    "inverse-surface": "#2e3039"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "sm": "8px",
+                    "sidebar-width": "280px",
+                    "md": "16px",
+                    "gutter": "24px",
+                    "lg": "24px",
+                    "unit": "4px",
+                    "2xl": "64px",
+                    "xs": "4px",
+                    "xl": "40px",
+                    "container-max": "1440px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Inter"],
+                    "body-md": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "display-lg-mobile": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "caption": ["Inter"],
+                    "label-md": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "display-lg-mobile": ["36px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "caption": ["12px", {"lineHeight": "1.4", "fontWeight": "400"}],
+                    "label-md": ["14px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(195, 198, 215, 0.3);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .active-question {
+            outline: 2px solid #004ac6;
+            outline-offset: 2px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md min-h-screen">
+<!-- Top Navigation (Shell Implementation) -->
+<header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-lg border-b border-outline-variant/20 shadow-sm h-16">
+<div class="flex items-center justify-between px-gutter w-full max-w-container-max mx-auto h-full">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary font-headline-lg text-headline-lg">menu_book</span>
+<span class="font-headline-lg text-headline-lg font-bold text-primary">Smart Learning</span>
+</div>
+<div class="flex items-center gap-md">
+<div class="hidden md:flex flex-col items-end">
+<span class="font-label-md text-label-md text-on-surface">Advanced Mathematics</span>
+<span class="text-caption font-caption text-outline">Mid-term Assessment</span>
+</div>
+<div class="h-10 w-10 rounded-full bg-primary-container flex items-center justify-center overflow-hidden border border-outline-variant/30">
+<img alt="User avatar" class="w-full h-full object-cover" data-alt="A professional headshot of a student in a bright studio environment, featuring soft rim lighting and a clean background. The individual has a focused, friendly expression, wearing contemporary academic attire. The overall aesthetic is clean, high-key, and professional, aligning with a premium educational platform's light-mode design system." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBhXxcE65n1gsGo8lIuKGlEJaOrLQgLRChovsI0Z2l1Ls_fipQK1tMna0CghXsJtKlotGCIZ7UrWzZbkaMRHF7PMPl9lr_Z1MEGiCKuZBopRh24TeF332bznnG_di9pasP6Z64cQNNvjQatdZ2zAaQdJ1t5LoIAmGyki5jbBirOst9QaffgQ4bEGsd980q6QNxwUVaLp2_LbNEGhRkFbpGEUfTOUgHR1C9rFJ5DUR36jTRyLjjnl-VSFDmXzEMowkWsjoUkLgRi3vs"/>
+</div>
+</div>
+</div>
+</header>
+<main class="pt-24 pb-20 px-gutter max-w-container-max mx-auto grid grid-cols-1 lg:grid-cols-12 gap-lg relative">
+<!-- Left Sidebar: Progress & Navigation -->
+<aside class="lg:col-span-3 space-y-lg order-2 lg:order-1">
+<div class="glass-panel p-md rounded-xl shadow-sm sticky top-24">
+<div class="mb-md">
+<h3 class="font-headline-md text-headline-md text-primary mb-xs">Progress</h3>
+<div class="flex justify-between items-center mb-xs">
+<span class="text-label-md font-label-md text-outline">Questions Answered</span>
+<span class="text-label-md font-label-md text-primary">12 / 40</span>
+</div>
+<div class="w-full bg-surface-container-high h-2 rounded-full overflow-hidden">
+<div class="bg-gradient-to-r from-primary to-secondary h-full rounded-full transition-all duration-500" style="width: 30%"></div>
+</div>
+</div>
+<div class="mt-lg">
+<h3 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider mb-sm">Question Map</h3>
+<div class="grid grid-cols-5 gap-sm">
+<!-- Example grid items -->
+<button class="h-10 w-10 flex items-center justify-center rounded-lg bg-primary-container text-on-primary-container font-label-md">1</button>
+<button class="h-10 w-10 flex items-center justify-center rounded-lg bg-primary-container text-on-primary-container font-label-md">2</button>
+<button class="h-10 w-10 flex items-center justify-center rounded-lg bg-primary text-white font-label-md ring-2 ring-primary ring-offset-2">3</button>
+<button class="h-10 w-10 flex items-center justify-center rounded-lg bg-surface-container-high text-on-surface-variant font-label-md">4</button>
+<button class="h-10 w-10 flex items-center justify-center rounded-lg bg-surface-container-high text-on-surface-variant font-label-md">5</button>
+<button class="h-10 w-10 flex items-center justify-center rounded-lg bg-surface-container-high text-on-surface-variant font-label-md">6</button>
+<button class="h-10 w-10 flex items-center justify-center rounded-lg border-2 border-primary text-primary font-label-md">7</button>
+<button class="h-10 w-10 flex items-center justify-center rounded-lg bg-surface-container-high text-on-surface-variant font-label-md">8</button>
+<button class="h-10 w-10 flex items-center justify-center rounded-lg bg-surface-container-high text-on-surface-variant font-label-md">9</button>
+<button class="h-10 w-10 flex items-center justify-center rounded-lg bg-surface-container-high text-on-surface-variant font-label-md">10</button>
+</div>
+<div class="mt-md flex flex-wrap gap-md text-caption font-caption text-outline">
+<div class="flex items-center gap-xs"><span class="w-3 h-3 rounded-full bg-primary-container"></span> Answered</div>
+<div class="flex items-center gap-xs"><span class="w-3 h-3 rounded-full border border-primary"></span> Marked</div>
+<div class="flex items-center gap-xs"><span class="w-3 h-3 rounded-full bg-surface-container-high"></span> Pending</div>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content: MCQ Interface -->
+<section class="lg:col-span-9 order-1 lg:order-2 space-y-lg">
+<!-- Sticky Timer Bar -->
+<div class="sticky top-16 z-40 bg-surface/90 backdrop-blur-md py-sm flex justify-between items-center border-b border-outline-variant/10">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">timer</span>
+<div class="flex items-baseline gap-xs">
+<span class="font-headline-md text-headline-md text-on-surface tabular-nums" id="timer">01:45:32</span>
+<span class="text-caption font-caption text-outline">Remaining</span>
+</div>
+</div>
+<button class="bg-error text-white px-lg py-sm rounded-xl font-label-md text-label-md hover:opacity-90 transition-opacity active:scale-95" onclick="toggleModal('submitModal')">
+                    Finish Exam
+                </button>
+</div>
+<!-- Question Card -->
+<div class="glass-panel p-xl rounded-2xl shadow-lg border border-outline-variant/20">
+<div class="flex justify-between items-start mb-lg">
+<div class="px-md py-xs bg-primary/10 text-primary rounded-full font-label-md text-label-md">
+                        Question 3 of 40
+                    </div>
+<button class="flex items-center gap-xs text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-md">flag</span>
+<span class="font-label-md text-label-md">Mark for Review</span>
+</button>
+</div>
+<div class="space-y-lg">
+<h2 class="font-headline-md text-headline-md text-on-surface leading-relaxed">
+                        If a linear transformation \( T: \mathbb{V} \to \mathbb{W} \) is injective, which of the following statements about the null space \( \text{ker}(T) \) must be true?
+                    </h2>
+<!-- MCQ Options -->
+<div class="grid grid-cols-1 gap-md">
+<label class="group flex items-center p-md rounded-xl border-2 border-outline-variant/30 bg-surface hover:border-primary/50 hover:bg-primary/5 transition-all cursor-pointer">
+<input class="hidden peer" name="mcq" type="radio"/>
+<div class="w-6 h-6 rounded-full border-2 border-outline-variant peer-checked:border-primary peer-checked:bg-primary flex items-center justify-center transition-all mr-md">
+<div class="w-2 h-2 rounded-full bg-white opacity-0 peer-checked:opacity-100"></div>
+</div>
+<span class="text-body-lg font-body-lg text-on-surface-variant group-hover:text-on-surface">The null space contains only the zero vector.</span>
+</label>
+<label class="group flex items-center p-md rounded-xl border-2 border-primary bg-primary/5 shadow-sm transition-all cursor-pointer">
+<input checked="" class="hidden peer" name="mcq" type="radio"/>
+<div class="w-6 h-6 rounded-full border-2 border-primary bg-primary flex items-center justify-center mr-md">
+<div class="w-2 h-2 rounded-full bg-white"></div>
+</div>
+<span class="text-body-lg font-body-lg text-on-surface">The dimension of the null space is equal to the dimension of \(\mathbb{V}\).</span>
+</label>
+<label class="group flex items-center p-md rounded-xl border-2 border-outline-variant/30 bg-surface hover:border-primary/50 hover:bg-primary/5 transition-all cursor-pointer">
+<input class="hidden peer" name="mcq" type="radio"/>
+<div class="w-6 h-6 rounded-full border-2 border-outline-variant peer-checked:border-primary peer-checked:bg-primary flex items-center justify-center transition-all mr-md">
+<div class="w-2 h-2 rounded-full bg-white opacity-0 peer-checked:opacity-100"></div>
+</div>
+<span class="text-body-lg font-body-lg text-on-surface-variant group-hover:text-on-surface">The null space is a subspace of \(\mathbb{W}\).</span>
+</label>
+<label class="group flex items-center p-md rounded-xl border-2 border-outline-variant/30 bg-surface hover:border-primary/50 hover:bg-primary/5 transition-all cursor-pointer">
+<input class="hidden peer" name="mcq" type="radio"/>
+<div class="w-6 h-6 rounded-full border-2 border-outline-variant peer-checked:border-primary peer-checked:bg-primary flex items-center justify-center transition-all mr-md">
+<div class="w-2 h-2 rounded-full bg-white opacity-0 peer-checked:opacity-100"></div>
+</div>
+<span class="text-body-lg font-body-lg text-on-surface-variant group-hover:text-on-surface">The transformation \(T\) cannot be injective if \(\text{dim}(\mathbb{V}) &gt; \text{dim}(\mathbb{W})\).</span>
+</label>
+</div>
+</div>
+<!-- Nav Buttons -->
+<div class="mt-2xl flex justify-between items-center gap-md">
+<button class="flex items-center gap-sm px-xl py-md rounded-xl border border-outline-variant text-on-surface-variant font-label-md hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined">arrow_back</span>
+                        Previous
+                    </button>
+<div class="flex gap-md">
+<button class="px-xl py-md rounded-xl border border-primary text-primary font-label-md hover:bg-primary/5 transition-colors">
+                            Clear Selection
+                        </button>
+<button class="flex items-center gap-sm px-xl py-md rounded-xl bg-primary text-white font-label-md shadow-md hover:brightness-110 active:scale-95 transition-all">
+                            Save &amp; Next
+                            <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Contextual Help Card -->
+<div class="bg-surface-container-low p-lg rounded-2xl border border-outline-variant/10 flex gap-lg">
+<div class="bg-primary/10 p-md rounded-xl flex items-center justify-center h-fit">
+<span class="material-symbols-outlined text-primary">lightbulb</span>
+</div>
+<div>
+<h4 class="font-label-md text-label-md text-on-surface font-bold mb-xs">Exam Tip</h4>
+<p class="text-body-md text-on-surface-variant">Remember to review the 'Rank-Nullity Theorem' for questions regarding linear transformations. Most questions in this section rely on those fundamental principles.</p>
+</div>
+</div>
+</section>
+</main>
+<!-- Success Modal -->
+<div class="fixed inset-0 z-[100] flex items-center justify-center p-md bg-on-surface/40 backdrop-blur-sm hidden" id="submitModal">
+<div class="bg-surface w-full max-w-md rounded-2xl shadow-2xl overflow-hidden scale-95 transition-transform duration-300">
+<div class="p-xl text-center">
+<div class="w-16 h-16 bg-error-container text-error rounded-full flex items-center justify-center mx-auto mb-lg">
+<span class="material-symbols-outlined text-display-lg-mobile" style="font-variation-settings: 'FILL' 1;">warning</span>
+</div>
+<h3 class="font-headline-lg text-headline-lg text-on-surface mb-sm">Confirm Submission?</h3>
+<p class="text-body-md text-on-surface-variant mb-xl">
+                    You have 28 unanswered questions remaining. Once submitted, you will not be able to modify your answers.
+                </p>
+<div class="flex flex-col gap-sm">
+<button class="w-full py-md bg-error text-white rounded-xl font-headline-md shadow-md hover:bg-error/90 transition-colors" onclick="toggleModal('submitModal')">
+                        Submit Anyway
+                    </button>
+<button class="w-full py-md bg-surface-container-highest text-on-surface font-label-md rounded-xl hover:bg-surface-container-high transition-colors" onclick="toggleModal('submitModal')">
+                        Return to Exam
+                    </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Mobile Navigation Shell -->
+<nav class="lg:hidden fixed bottom-0 left-0 w-full bg-surface/90 backdrop-blur-2xl border-t border-outline-variant/30 flex justify-around items-center px-4 py-2 pb-safe z-50">
+<div class="flex flex-col items-center justify-center text-on-surface-variant p-2">
+<span class="material-symbols-outlined">grid_view</span>
+<span class="font-label-md text-label-md">Map</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-primary-container/30 text-primary rounded-xl px-4 py-1">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">quiz</span>
+<span class="font-label-md text-label-md">Exam</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant p-2">
+<span class="material-symbols-outlined">help</span>
+<span class="font-label-md text-label-md">Support</span>
+</div>
+</nav>
+<footer class="bg-surface-container-lowest py-12 border-t border-outline-variant mt-2xl">
+<div class="max-w-container-max mx-auto px-gutter grid grid-cols-1 md:grid-cols-3 gap-lg">
+<div class="space-y-md">
+<span class="font-headline-md text-headline-md text-primary font-bold">Smart Learning</span>
+<p class="text-caption font-caption text-outline">Excellence in digital education and assessment solutions for the modern learner.</p>
+</div>
+<div class="flex flex-col gap-sm">
+<h4 class="font-label-md text-label-md text-on-surface font-bold uppercase">Resources</h4>
+<a class="text-on-surface-variant hover:text-primary font-caption text-caption" href="#">Exam Instructions</a>
+<a class="text-on-surface-variant hover:text-primary font-caption text-caption" href="#">Technical Support</a>
+<a class="text-on-surface-variant hover:text-primary font-caption text-caption" href="#">Privacy Policy</a>
+</div>
+<div class="flex flex-col gap-sm">
+<h4 class="font-label-md text-label-md text-on-surface font-bold uppercase">System Status</h4>
+<div class="flex items-center gap-xs">
+<span class="w-2 h-2 rounded-full bg-green-500"></span>
+<span class="text-caption font-caption text-outline">Secure Connection Active</span>
+</div>
+<p class="text-caption font-caption text-outline">© 2024 Smart Learning. All rights reserved.</p>
+</div>
+</div>
+</footer>
+<script>
+        function toggleModal(id) {
+            const modal = document.getElementById(id);
+            modal.classList.toggle('hidden');
+            const inner = modal.querySelector('div');
+            if (!modal.classList.contains('hidden')) {
+                setTimeout(() => {
+                    inner.classList.remove('scale-95');
+                    inner.classList.add('scale-100');
+                }, 10);
+            } else {
+                inner.classList.add('scale-95');
+                inner.classList.remove('scale-100');
+            }
+        }
+
+        // Simple Countdown logic
+        let time = 3600 + 45*60 + 32; // 01:45:32 in seconds
+        const timerEl = document.getElementById('timer');
+        
+        setInterval(() => {
+            if (time > 0) {
+                time--;
+                const hours = Math.floor(time / 3600);
+                const minutes = Math.floor((time % 3600) / 60);
+                const seconds = time % 60;
+                timerEl.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                // Visual warning when low
+                if (time < 300) {
+                    timerEl.classList.add('text-error');
+                }
+            }
+        }, 1000);
+
+        // Option selection micro-interaction
+        document.querySelectorAll('input[name="mcq"]').forEach(input => {
+            input.addEventListener('change', (e) => {
+                document.querySelectorAll('label').forEach(label => {
+                    label.classList.remove('border-primary', 'bg-primary/5', 'shadow-sm');
+                    label.classList.add('border-outline-variant/30', 'bg-surface');
+                });
+                const label = e.target.closest('label');
+                label.classList.add('border-primary', 'bg-primary/5', 'shadow-sm');
+                label.classList.remove('border-outline-variant/30', 'bg-surface');
+            });
+        });
+    </script>
+</body></html>

@@ -1,0 +1,103 @@
+<%- include('../partials/head', { title: 'Courses Catalog – Smart Learning' }) %>
+<%- include('../partials/topbar') %>
+
+<div class="container py-5 mt-4">
+  <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+    <div>
+      <h1 class="text-headline-lg mb-1">Course Catalog</h1>
+      <p class="text-muted mb-0">Browse academic courses offered across departments.</p>
+    </div>
+    <% if (!currentUser) { %>
+      <div>
+        <a href="/auth/register" class="btn btn-primary-slw">Enroll as Student</a>
+      </div>
+    <% } %>
+  </div>
+
+  <!-- Search & Filter bar -->
+  <div class="card-slw p-3 mb-4">
+    <form action="/courses" method="GET" class="row g-2 align-items-center">
+      <div class="col-md-7">
+        <div class="input-group">
+          <span class="input-group-text bg-white border-end-0">
+            <span class="material-symbols-outlined text-muted">search</span>
+          </span>
+          <input type="text" name="search" class="form-control border-start-0" placeholder="Search by course code or title..." value="<%= search %>">
+        </div>
+      </div>
+      <div class="col-md-3">
+        <select name="category" class="form-select">
+          <option value="">All Categories</option>
+          <% if (typeof categories !== 'undefined' && categories.length > 0) { %>
+            <% categories.forEach(cat => { %>
+              <option value="<%= cat %>" <%= category === cat ? 'selected' : '' %>><%= cat %></option>
+            <% }) %>
+          <% } else { %>
+            <option value="Computer Science" <%= category === 'Computer Science' ? 'selected' : '' %>>Computer Science</option>
+            <option value="Mathematics" <%= category === 'Mathematics' ? 'selected' : '' %>>Mathematics</option>
+            <option value="Engineering" <%= category === 'Engineering' ? 'selected' : '' %>>Engineering</option>
+            <option value="Science" <%= category === 'Science' ? 'selected' : '' %>>Science</option>
+          <% } %>
+        </select>
+      </div>
+      <div class="col-md-2">
+        <button type="submit" class="btn btn-outline-slw w-100 justify-content-center">Filter</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Course Cards Grid -->
+  <% if (courses && courses.length > 0) { %>
+    <div class="row g-4 mb-4">
+      <% courses.forEach(c => { %>
+        <div class="col-md-6 col-lg-4">
+          <div class="course-card h-100">
+            <div class="course-card-header"></div>
+            <div class="course-card-body">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <span class="badge-slw badge-primary"><%= c.code %></span>
+                <span class="small text-muted"><%= c.credits %> Credits</span>
+              </div>
+              <h2 class="h5 fw-bold mb-2">
+                <a href="/courses/<%= c.id %>" class="text-dark text-decoration-none"><%= c.title %></a>
+              </h2>
+              <p class="text-muted small mb-3 text-truncate-2" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
+                <%= c.description || 'No description provided.' %>
+              </p>
+              <div class="small text-muted mt-auto">
+                <span class="material-symbols-outlined fs-6 align-middle">person</span>
+                <span class="align-middle"><%= c.teacher_names || 'Faculty assigned upon enrollment' %></span>
+              </div>
+            </div>
+            <div class="course-card-footer d-flex justify-content-between align-items-center">
+              <span class="badge-slw badge-neutral"><%= c.category || 'General' %></span>
+              <a href="/courses/<%= c.id %>" class="btn btn-sm btn-outline-slw">View Course</a>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+
+    <!-- Pagination -->
+    <% if (totalPages > 1) { %>
+      <nav class="d-flex justify-content-center">
+        <ul class="pagination">
+          <% for (let i = 1; i <= totalPages; i++) { %>
+            <li class="page-item <%= page === i ? 'active' : '' %>">
+              <a class="page-link" href="/courses?page=<%= i %>&search=<%= encodeURIComponent(search) %>&category=<%= encodeURIComponent(category) %>"><%= i %></a>
+            </li>
+          <% } %>
+        </ul>
+      </nav>
+    <% } %>
+
+  <% } else { %>
+    <div class="card-slw p-5 text-center text-muted">
+      <span class="material-symbols-outlined fs-1 mb-2">search_off</span>
+      <h3 class="h5">No courses found</h3>
+      <p class="small mb-0">Try adjusting your search criteria or clearing filters.</p>
+    </div>
+  <% } %>
+</div>
+
+<%- include('../partials/footer') %>

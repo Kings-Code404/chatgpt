@@ -1,0 +1,45 @@
+<%- include('../partials/head', { title: 'Sign In – Smart Learning' }) %>
+
+<div class="auth-page">
+  <div class="auth-card">
+    <div class="auth-logo">
+      <img src="/images/logo.png" alt="Smart Learning Logo">
+      <div class="auth-title mt-2">Welcome Back</div>
+      <div class="auth-subtitle">Sign in to your Smart Learning account</div>
+    </div>
+
+    <%- include('../partials/flash') %>
+
+    <form action="/auth/login" method="POST" novalidate>
+      <div class="mb-3">
+        <label for="email" class="form-label">Email Address</label>
+        <input type="email" class="form-control" id="email" name="email" placeholder="name@institution.edu" required autocomplete="email">
+      </div>
+
+      <div class="mb-3">
+        <div class="d-flex justify-content-between align-items-center mb-1">
+          <label for="password" class="form-label mb-0">Password</label>
+          <a href="/auth/forgot-password" class="small text-decoration-none">Forgot password?</a>
+        </div>
+        <div class="input-group">
+          <input type="password" class="form-control" id="password" name="password" placeholder="••••••••" required autocomplete="current-password">
+          <button class="btn btn-outline-secondary" type="button" id="togglePasswordBtn" title="Toggle password visibility">
+            <span class="material-symbols-outlined fs-6 align-middle" id="togglePasswordIcon">visibility</span>
+          </button>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary-slw w-100 justify-content-center py-2 mb-3">
+        <span>Sign In</span>
+        <span class="material-symbols-outlined fs-5">arrow_forward</span>
+      </button>
+
+      <div class="text-center small text-muted">
+        Don't have an account? 
+        <a href="/auth/register" class="fw-semibold text-decoration-none">Create account</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

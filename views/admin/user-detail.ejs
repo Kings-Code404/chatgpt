@@ -1,0 +1,86 @@
+<%- include('../partials/head', { title: `User: ${user.full_name}` }) %>
+<%- include('../partials/topbar') %>
+<%- include('../partials/sidebar') %>
+
+<main class="slw-content">
+  <%- include('../partials/flash') %>
+
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card-slw p-4 p-md-5">
+        <div class="d-flex justify-content-between align-items-start mb-4 pb-3 border-bottom">
+          <div class="d-flex align-items-center gap-3">
+            <div class="avatar fs-4" style="width: 54px; height: 54px;">
+              <%= user.full_name.charAt(0).toUpperCase() %>
+            </div>
+            <div>
+              <h1 class="page-title mb-1"><%= user.full_name %></h1>
+              <div class="d-flex align-items-center gap-2">
+                <span class="badge-slw badge-primary text-uppercase"><%= user.role %></span>
+                <span class="badge-slw <%= user.status === 'active' ? 'badge-success' : 'badge-error' %> text-capitalize"><%= user.status %></span>
+              </div>
+            </div>
+          </div>
+          <a href="/admin/users/<%= user.id %>/edit" class="btn btn-sm btn-outline-slw">
+            <span class="material-symbols-outlined fs-6">edit</span>
+            <span>Edit User</span>
+          </a>
+        </div>
+
+        <div class="row g-3 small mb-4">
+          <div class="col-sm-6">
+            <div class="text-muted">Email Address</div>
+            <div class="fw-semibold"><%= user.email %></div>
+          </div>
+          <div class="col-sm-6">
+            <div class="text-muted">Account Registered</div>
+            <div class="fw-semibold"><%= new Date(user.created_at).toLocaleString() %></div>
+          </div>
+          <% if (profile.phone) { %>
+            <div class="col-sm-6">
+              <div class="text-muted">Phone</div>
+              <div class="fw-semibold"><%= profile.phone %></div>
+            </div>
+          <% } %>
+          <% if (profile.department) { %>
+            <div class="col-sm-6">
+              <div class="text-muted">Department</div>
+              <div class="fw-semibold"><%= profile.department %></div>
+            </div>
+          <% } %>
+          <% if (profile.enrollment_no) { %>
+            <div class="col-sm-6">
+              <div class="text-muted">Enrollment No</div>
+              <div class="fw-semibold"><%= profile.enrollment_no %></div>
+            </div>
+          <% } %>
+          <% if (profile.employee_id) { %>
+            <div class="col-sm-6">
+              <div class="text-muted">Employee ID</div>
+              <div class="fw-semibold"><%= profile.employee_id %></div>
+            </div>
+          <% } %>
+          <% if (profile.qualification) { %>
+            <div class="col-sm-6">
+              <div class="text-muted">Qualification</div>
+              <div class="fw-semibold"><%= profile.qualification %></div>
+            </div>
+          <% } %>
+        </div>
+
+        <% if (profile.bio) { %>
+          <div class="p-3 rounded-3 bg-light border small mb-4">
+            <div class="text-muted mb-1">Bio / Academic Statement:</div>
+            <div style="white-space: pre-line;"><%= profile.bio %></div>
+          </div>
+        <% } %>
+
+        <div class="d-flex justify-content-between">
+          <a href="/admin/users" class="btn btn-outline-slw">Back to Users</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<%- include('../partials/footer') %>
